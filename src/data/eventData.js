@@ -1,7 +1,8 @@
 /**
  * Data Event & Kalender Agenda Magister Kenotariatan UNISSULA
  */
-import yudisium from "../assets/images/agenda/yudisium.jpeg";
+import yudisium from "../assets/images/agenda/yudisium.jpg";
+import funrun from "../assets/images/agenda/funrun.jpg";
 
 export const eventCategories = [
   "Semua Kategori",
@@ -195,6 +196,37 @@ export const eventData = [
     registrationUrl: "https://unissula.ac.id/coaching-clinic",
     cp: "Pusat Riset Mahasiswa: 0877-3344-5566",
     isFeatured: false,
+  },
+  {
+    id: 9,
+    slug: "sultan-agung-fun-run-2026",
+    title: "Sultan Agung Fun Run",
+    date: "2026-09-27",
+    time: "06:00 - 10:00 WIB",
+    category: "Akademik & Kemahasiswaan",
+    venue:
+      "Halaman Kantor Gubernur Jawa Tengah, Jl. Pahlawan No.9, Kota Semarang",
+    organizer: "Universitas Islam Sultan Agung (UNISSULA)",
+    description:
+      "Ajang lari bersama yang mempertemukan sivitas akademika UNISSULA, alumni, dan masyarakat umum dalam suasana sehat dan penuh silaturahmi di kawasan Kantor Gubernur Jawa Tengah.",
+    fullDescription:
+      "Universitas Islam Sultan Agung menyelenggarakan Sultan Agung Fun Run sebagai ajang olahraga " +
+      "bersama yang terbuka bagi sivitas akademika, alumni, mitra, serta masyarakat umum. Kegiatan " +
+      "ini menjadi ruang temu lintas fakultas dan lintas angkatan dalam suasana yang sehat, santai, " +
+      "dan penuh kekeluargaan.\n\n" +
+      "Titik start dan finis mengambil tempat di halaman Kantor Gubernur Jawa Tengah, Jl. Pahlawan " +
+      "No.9, Kota Semarang, dengan rute yang melintasi ruas jalan protokol kota. Peserta diimbau " +
+      "hadir lebih awal untuk registrasi ulang, pengambilan nomor peserta, dan pemanasan bersama " +
+      "sebelum pelepasan.\n\n" +
+      "Bagi keluarga besar Magister Kenotariatan FH UNISSULA, kegiatan ini menjadi kesempatan " +
+      "mempererat silaturahmi antara mahasiswa, dosen, tenaga kependidikan, dan alumni di luar ruang " +
+      "kuliah, sekaligus mendukung budaya hidup sehat sebagai bagian dari kesiapan menjalankan " +
+      "profesi.\n\n" +
+      "Dengan semangat Bismillah Membangun Generasi Khaira Ummah, Sultan Agung Fun Run diharapkan " +
+      "tidak hanya menjadi perayaan olahraga, tetapi juga sarana memperkenalkan UNISSULA lebih dekat " +
+      "kepada masyarakat Kota Semarang.",
+    image: funrun,
+    isFeatured: true,
   },
 ];
 

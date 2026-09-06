@@ -146,19 +146,11 @@ export default function EventDetail() {
                 tanpa perlu menggulir. */}
             {event.image && (
               <figure className="w-full overflow-hidden rounded-xs border border-gray-200 bg-gray-50 shadow-2xs">
-                <a
-                  href={event.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Buka gambar ukuran penuh"
-                  className="block group/flyer"
-                >
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-auto max-h-[calc(100vh-var(--header-h)-18rem)] object-contain mx-auto transition-transform duration-500 group-hover/flyer:scale-[1.015]"
-                  />
-                </a>
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-auto max-h-[calc(100vh-var(--header-h)-18rem)] object-contain mx-auto"
+                />
               </figure>
             )}
 

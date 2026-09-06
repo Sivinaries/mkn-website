@@ -113,17 +113,17 @@ const pejabatPelaksana = [
     title: "GUGUS PENJAMINAN MUTU",
     members: [
       {
-        jabatan: "Gugus Penjaminan Mutu",
+        jabatan: "Ketua Gugus Penjaminan Mutu",
         name: "Prof. Dr. Soegianto, S.H., M.Kn.",
         photo: imgSoegianto,
       }, 
       {
-        jabatan: "Gugus Penjaminan Mutu",
+        jabatan: "Sekretaris Gugus Penjaminan Mutu",
         name: "Dr. Denny Suwondo, S.H., M.H.",
         photo: imgDenny,
       },
       {
-        jabatan: "Gugus Penjaminan Mutu",
+        jabatan: "Anggota Gugus Penjaminan Mutu",
         name: "Anugrah Surya Kusuma, S.H., M.H.",
         photo: imgDirPerpus,
       },
@@ -557,7 +557,7 @@ export default function StrukturOrganisasi() {
                     Direktur Perpustakaan
                   </p>
                   <span className="text-xs text-gray-500 leading-tight">
-                    Anugrah Surya K., S.H., M.H.
+                    R. Hengky Aditya Wibisono S.E.
                   </span>
                 </div>
 

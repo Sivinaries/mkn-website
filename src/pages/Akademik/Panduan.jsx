@@ -142,6 +142,7 @@ function KartuPedoman({ item }) {
           </span>
         )}
       </div>
+
     </div>
   );
 }
@@ -202,9 +203,6 @@ export default function Panduan() {
             {t(halaman.judul)}
           </h1>
           <div className="w-full h-[2px] bg-primary my-4" />
-          {/* <p className="text-sm sm:text-base text-body leading-relaxed max-w-5xl">
-            {t(halaman.intro)}
-          </p> */}
         </div>
 
         {/* List Card Panduan Akademik */}
