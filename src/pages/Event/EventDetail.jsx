@@ -139,9 +139,11 @@ export default function EventDetail() {
               </Link>
             </div>
 
-            {/* Flyer / Dokumentasi Acara — banner besar selebar kolom konten.
-                object-contain + max-h menjaga poster potret maupun banner lanskap
-                tampil utuh tanpa terpotong. */}
+            {/* Flyer / Dokumentasi Acara — banner selebar kolom konten.
+                object-contain menjaga poster potret maupun banner lanskap tampil
+                utuh tanpa terpotong. Tingginya dibatasi sisa layar dikurangi
+                header + jarak + judul, supaya judul acara tetap ikut terlihat
+                tanpa perlu menggulir. */}
             {event.image && (
               <figure className="w-full overflow-hidden rounded-xs border border-gray-200 bg-gray-50 shadow-2xs">
                 <a
@@ -154,7 +156,7 @@ export default function EventDetail() {
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="w-full h-auto max-h-[78vh] object-contain mx-auto transition-transform duration-500 group-hover/flyer:scale-[1.015]"
+                    className="w-full h-auto max-h-[calc(100vh-var(--header-h)-18rem)] object-contain mx-auto transition-transform duration-500 group-hover/flyer:scale-[1.015]"
                   />
                 </a>
               </figure>
