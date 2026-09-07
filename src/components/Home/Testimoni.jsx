@@ -72,15 +72,17 @@ const testimonialData = [
     description:
       "Pendidikan yang menuntut dan pengalaman menangani kasus hukum nyata membekali saya dengan sangat baik untuk berkarier di bidang hukum korporasi.",
     image: Fatiroh,
-    role: "Alumni 2015",
+    occupation: "Notaris-PPAT Kabupaten Pekalongan",
+    role: "Alumni Tahun 2015",
   },
   {
     id: 2,
     name: "Ismail Fahmi, S.H., M.H., M.Kn.",
     description:
-      "Bimbingan para dosen dan lingkungan yang saling mendukung membuat perjalanan studi hukum saya benar-benar mengubah cara pandang.",
+      "Menempuh studi di Magister Kenotariatan Unissula memperluas perspektif saya sebagai Jaksa, khususnya dalam bidang hukum keperdataan. Pemahaman yang diperoleh sangat mendukung peran Jaksa Pengacara Negara dalam memberikan legal opinion, mitigasi risiko perdata, hingga asset recovery untuk melindungi kepentingan dan keuangan negara. Bagi para penegak hukum yang ingin memperdalam keilmuan di bidang keperdataan, Magister Kenotariatan Unissula merupakan pilihan yang tepat untuk meningkatkan kompetensi dan profesionalisme.",
     image: Ismail,
-    role: "Alumni 2026",
+    occupation:"Aspisdus Kejati Kepulauan Riau",
+    role: "Alumni Tahun 2026",
   },
   {
     id: 3,
@@ -88,23 +90,26 @@ const testimonialData = [
     description:
       "Kuliah di Magister Kenotariatan itu emang butuh perjuangan ekstra, bukan cuma soal paham teori, tapi juga ngelatih ketelitian dan menjaga integritas. Kelak ketika setiap akta yang kalian buat punya dampak besar buat hidup orang lain. Tetap pegang teguh kejujuran dan etika, serta jangan pernah lelah buat terus update ilmu karena hukum bakal selalu berkembang.",
     image: Nurizka,
-    role: "Alumni 2024",
+    occupation: "Director of Agency di PT Chubb Life Insurance",
+    role: "Alumni Tahun 2024",
   },
   {
     id: 4,
     name: "Wahyu Noto Wibowo, S.H., M.Kn.",
     description:
-      "Kampus yang banyak sekali mencetak Notaris dan PPAT yang Bonafit, mempunyai program yang solid, terakreditasi unggul dengan penguatan karakter keIslaman yang sangat Khas serta di dukung oleh Dosen  praktisi yang berpengalaman dan ternama serta staff administrasi yang handal. Maju terus UNISSULA !!!",
+      "Bagi para bankir, mitigasi risiko pembiayaan bertumpu pada kesempurnaan perikatan dan jaminan. Studi pada Magister Kenotariatan UNISSULA mempertajam naluri saya membedah celah klausula perjanjian kredit serta validitas agunan secara presisi. Keilmuan ini mentransformasi analisis legal perbankan menjadi instrumen proteksi portofolio aset yang jauh lebih kokoh dan prudent.",
     image: Wahyu,
-    role: "Alumni 2015",
+    occupation: "Small Bisnis Manager BRI Region 10 Semarang",
+    role: "Alumni Tahun 2026",
   },
   {
     id: 5,
     name: "IPDA SIGET P., S.H., M.H., M.Kn., M.A.P.",
     description:
-      "Terima kasih UNISSULA sudah memberikan 3 gelar master, jaya di darat, laut dan udara, UNISSULAKU",
+      "Kuliah di Magister Kenotariatan mempertajam analisis saya sebagai anggota Polri,  guna memahami secara mendalam tentang aspek perdata, korporasi, dan keabsahan dokumen. Pengetahuan ini sangat krusial dalam membongkar modus kejahatan bisnis serta tindak pidana korupsi hingga asset recovery guna melindungi kepentingan Masyarakat dan keuangan negara. Bekal keilmuan ini membuat penegakan hukum jauh lebih presisi, objektif, dan profesional. Pilihan kuliah di Magister Kenotarian UNISSULA adalah pilihan terbaik bagi rekan-rekan dari Kepolisian.",
     image: Siget,
-    role: "Alumni 2024",
+    occupation: "Kanit Polres Temanggung",
+    role: "Alumni Tahun 2024",
   },
   {
     id: 6,
@@ -112,7 +117,8 @@ const testimonialData = [
     description:
       "Magister Kenotariatan UNISSULA telah membentuk saya secara ilmu dan karakter. Dari mahasiswa perantau hingga kini mengabdi sebagai dosen, semua berawal di sini.   Semoga prodi terus melahirkan lulusan yang berilmu, berintegritas, dan bermanfaat bagi bangsa. ",
     image: hetiyasari,
-    role: "Alumni 2024",
+    occupation: "Dosen UNWAHAS",
+    role: "Alumni Tahun 2024",
   },
   {
     id: 7,
@@ -120,7 +126,8 @@ const testimonialData = [
     description:
       "Salam untuk Generasi Khaira Ummah Para Alumni M.Kn UNISSULA di seluruh Indonesia yang saya banggakan, Kejar dan Tekad kan Mimpi jika Kalian sebagian besar ingin Menjadi Notaris - PPAT ikuti Step by Step aturan dan alurnya, Kalian Harus Bangga dengan Almamater mu, Kita bangun Alumni M.Kn UNISSULA Bermartabat, Kuat dan Berdayasaing Unggul.",
     image: Laeli,
-    role: "Alumni 2015",
+    occupation: "Sekertaris Pengda INI Kota Tegal",
+    role: "Alumni Tahun 2015",
   },
 ];
 
@@ -221,15 +228,24 @@ export default function Testimoni() {
                 <div>
                   {/* Name */}
                   <motion.div variants={itemVariants}>
-                    <h3 className="font-heading font-normal text-xl sm:text-2xl text-heading leading-snug group-hover:text-primary transition-colors">
+                    <h3 className="font-heading font-normal text-xl sm:text-lg text-heading leading-snug group-hover:text-primary transition-colors line-clamp-1
+                    ">
                       {item.name}
                     </h3>
+                    
                   </motion.div>
+                  <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
+                    <span>{item.occupation}</span>
+                  </div>
+
+                  <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
+                    <span>{item.role}</span>
+                  </div>
 
                   {/* Testimonial */}
                   <motion.p
                     variants={itemVariants}
-                    className="mt-3 text-sm text-body text-justify leading-relaxed italic"
+                    className="mt-3 text-sm text-body text-justify leading-relaxed italic line-clamp-8"
                   >
                     &ldquo;{item.description}&rdquo;
                   </motion.p>
@@ -240,11 +256,11 @@ export default function Testimoni() {
                   variants={itemVariants}
                   className="pt-4 mt-auto"
                 >
-                  <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
+                  {/* <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
                     <span>{item.role}</span>
 
                     <FiChevronRight className="text-sm transition-transform duration-150 group-hover/link:translate-x-0.5" />
-                  </div>
+                  </div> */}
                 </motion.div>
               </motion.div>
             </motion.article>

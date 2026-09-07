@@ -56,7 +56,7 @@ export default function ProfilHero() {
       {/* =========================
           HERO VIDEO
       ========================= */}
-      <div className="w-full h-[280px] sm:h-[360px] lg:h-[420px] bg-[#E8E6E1] relative overflow-hidden flex items-center justify-center">
+      <div className="w-full h-[280px] sm:h-[360px] md:h-[820px] bg-[#E8E6E1] relative overflow-hidden flex items-center justify-center">
 
         {/* Video Reveal */}
         <motion.div

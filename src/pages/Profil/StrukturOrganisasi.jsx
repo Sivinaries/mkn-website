@@ -49,7 +49,7 @@ const strukturPejabat = [
       "Pengelolaan laboratorium akta, pembinaan praktik pembuatan akta, dan simulasi manajemen kantor notaris.",
   },
   {
-    jabatan: "Direktur Perpustakaan",
+    jabatan: "Kepala Perpustakaan",
     tanggungJawab:
       "Pengelolaan koleksi pustaka hukum kenotariatan, layanan referensi, dan dukungan literatur penelitian tesis.",
   },
@@ -66,7 +66,7 @@ const strukturPejabat = [
   {
     jabatan: "Bidang Promosi & Humas",
     tanggungJawab:
-      "Sosialisasi program studi, promosi penerimaan mahasiswa baru, serta pengelolaan publikasi dan media.",
+      "Melaksanakan sosialisasi program studi, promosi penerimaan mahasiswa baru, pengelolaan publikasi dan media, serta membangun dan mengembangkan jejaring hubungan dengan alumni.",
   },
   {
     jabatan: "Bidang Sarana Prasarana",
@@ -116,7 +116,7 @@ const pejabatPelaksana = [
         jabatan: "Ketua Gugus Penjaminan Mutu",
         name: "Prof. Dr. Soegianto, S.H., M.Kn.",
         photo: imgSoegianto,
-      }, 
+      },
       {
         jabatan: "Sekretaris Gugus Penjaminan Mutu",
         name: "Dr. Denny Suwondo, S.H., M.H.",
@@ -127,7 +127,7 @@ const pejabatPelaksana = [
         name: "Anugrah Surya Kusuma, S.H., M.H.",
         photo: imgSurya,
       },
-      
+
     ],
   },
   {
@@ -244,7 +244,8 @@ export default function StrukturOrganisasi() {
           </div>
         </section>
 
-        {/* Section Bagan Organisasi Visual */}        <section className="space-y-6">
+        {/* Section Bagan Organisasi Visual */}
+        <section className="space-y-6">
           {/* ============================================================
               BAGAN STRUKTUR ORGANISASI
               Hirarki: Dekan → Kaprodi → Sekprodi → Kepala TU → Bidang
@@ -359,12 +360,10 @@ export default function StrukturOrganisasi() {
                   className="absolute bg-white border-2 border-primary/80 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 22, left: 500, width: 320, height: 92 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.14em] uppercase text-primary block leading-tight mb-1.5">
-                    DEKAN FAKULTAS HUKUM
+                  <span className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-tight mb-1.5">
+                    DEKAN
+                    <p>FAKULTAS HUKUM</p>
                   </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-snug">
-                    Prof. Dr. H. Jawade Hafidz, S.H., M.H.
-                  </p>
                 </div>
 
                 {/* ════════════════════════════════════════════════
@@ -372,17 +371,11 @@ export default function StrukturOrganisasi() {
                     Kotak: 280×100
                 ════════════════════════════════════════════════ */}
                 <div
-                  className="absolute bg-gradient-to-br from-slate-50 via-white to-amber-50/30 border-2 border-slate-300 p-4 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center hover:border-primary/50 transition-colors"
+                  className="absolute bg-gradient-to-br from-red-50 via-red to-amber-50/30 border-2 border-red-300 p-4 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center hover:border-primary/50 transition-colors"
                   style={{ top: 158, left: 50, width: 280, height: 100 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.14em] uppercase text-primary block mb-1">
-                    PENUNJANG TRI DHARMA
-                  </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-snug">
-                    Unit Penunjang Akademik
-                  </p>
-                  <span className="text-xs text-gray-500 mt-1">
-                    Laboratorium Akta &amp; Perpustakaan
+                  <span className="text-lg font-bold tracking-[0.14em] uppercase text-primary block mb-1">
+                    UNIT PENUNJANG AKADEMIK
                   </span>
                 </div>
 
@@ -394,12 +387,10 @@ export default function StrukturOrganisasi() {
                   className="absolute bg-white border-2 border-primary p-4 text-center rounded-xs shadow-sm flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 158, left: 506, width: 308, height: 100 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.12em] uppercase text-primary block leading-tight mb-1.5">
+                  <span className="text-lg font-bold tracking-[0.12em] uppercase text-primary block leading-tight mb-1.5">
                     KETUA PROGRAM STUDI (KAPRODI)
                   </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-snug">
-                    Dr. Nanang Sri Darmadi, S.H., M.H.
-                  </p>
+
                 </div>
 
                 {/* ════════════════════════════════════════════════
@@ -407,17 +398,11 @@ export default function StrukturOrganisasi() {
                     Kotak: 270×100, kiri mulai x=1002
                 ════════════════════════════════════════════════ */}
                 <div
-                  className="absolute bg-gradient-to-br from-red-50/30 via-white to-red-50/20 border-2 border-primary/70 p-4 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center hover:border-primary transition-colors"
+                  className="absolute bg-gradient-to-br from-red-50 via-red to-amber-50/30 border-2 border-red-300 p-4 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center hover:border-primary/50 transition-colors"
                   style={{ top: 158, left: 1002, width: 280, height: 100 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.14em] uppercase text-primary block mb-1">
-                    PENJAMINAN MUTU AKADEMIK
-                  </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-snug">
-                    Gugus Penjamin Mutu
-                  </p>
-                  <span className="text-xs text-gray-500 mt-1">
-                    Audit Mutu Internal &amp; Akreditasi
+                  <span className="text-lg font-bold tracking-[0.14em] uppercase text-primary block mb-1">
+                    GUGUS PENJAMIN MUTU
                   </span>
                 </div>
 
@@ -429,12 +414,9 @@ export default function StrukturOrganisasi() {
                   className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 300, left: 506, width: 308, height: 92 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.12em] uppercase text-primary block leading-tight mb-1.5">
+                  <span className="text-lg font-bold tracking-[0.12em] uppercase text-primary block leading-tight mb-1.5">
                     SEKRETARIS PRODI (SEKPRODI)
                   </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-snug">
-                    Dr. Toni Triyanto, S.H., M.H.
-                  </p>
                 </div>
 
                 {/* ════════════════════════════════════════════════
@@ -442,15 +424,14 @@ export default function StrukturOrganisasi() {
                     Kotak: 280×64
                 ════════════════════════════════════════════════ */}
                 <div
-                  className="absolute bg-red-50/80 border border-primary/40 px-5 py-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center hover:border-primary transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 432, left: 520, width: 280, height: 64 }}
                 >
-                  <span className="text-[11px] font-bold tracking-[0.14em] uppercase text-primary block leading-none mb-1">
-                    KEPALA TATA USAHA
+                  <span className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none mb-1">
+                    KOORDINATOR
+                    <p>TATA USAHA</p>
                   </span>
-                  <p className="font-heading text-sm font-bold text-heading leading-tight">
-                    Ikrom, S.H., M.H.
-                  </p>
+
                 </div>
 
                 {/* ════════════════════════════════════════════════
@@ -461,66 +442,46 @@ export default function StrukturOrganisasi() {
 
                 {/* Bidang 1: Akademik */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-2 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 544, left: 346, width: 196, height: 120 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiBookOpen />
-                  </div>
-                  <p className="font-heading text-[13px] font-bold text-heading leading-tight">
-                    Bidang Akademik
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    BIDANG AKADEMIK
                   </p>
-                  <span className="text-xs text-gray-500 leading-none">
-                    Suma'in, S.Pd.
-                  </span>
+
                 </div>
 
                 {/* Bidang 2: Keuangan */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-2 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 544, left: 558, width: 196, height: 120 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiDollarSign />
-                  </div>
-                  <p className="font-heading text-[13px] font-bold text-heading leading-tight">
-                    Bidang Keuangan
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    BIDANG KEUANGAN
                   </p>
-                  <span className="text-xs text-gray-500 leading-none">
-                    Laili Rohmah, S.E.
-                  </span>
+
                 </div>
 
                 {/* Bidang 3: Promosi & Humas */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-2 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 544, left: 770, width: 196, height: 120 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiGlobe />
-                  </div>
-                  <p className="font-heading text-[13px] font-bold text-heading leading-tight">
-                    Promosi &amp; Humas
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    PROMOSI &amp; HUMAS
                   </p>
-                  <span className="text-xs text-gray-500 leading-none">
-                    M. Mutohar &amp; Aidha N.
-                  </span>
+
                 </div>
 
                 {/* Bidang 4: Sarana Prasarana */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-2 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 544, left: 974, width: 196, height: 120 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiHome />
-                  </div>
-                  <p className="font-heading text-[13px] font-bold text-heading leading-tight">
-                    Sarana Prasarana
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    SARANA PRASARANA
                   </p>
-                  <span className="text-xs text-gray-500 leading-none">
-                    Ahmad K. &amp; Nur Alamsyah
-                  </span>
+
                 </div>
 
                 {/* ════════════════════════════════════════════════
@@ -531,34 +492,23 @@ export default function StrukturOrganisasi() {
 
                 {/* A. Direktur Laboratorium Akta & Manajemen Kantor Notaris */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-1.5 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 716, left: 14, width: 220, height: 118 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiEdit3 />
-                  </div>
-                  <p className="font-heading text-[12px] font-bold text-heading leading-snug">
-                    Direktur Lab. Akta &amp; Kantor Notaris
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    KEPALA PERPUSTAKAAN
                   </p>
-                  <span className="text-xs text-gray-500 leading-tight">
-                    Doni Catur S., S.H., M.Kn.
-                  </span>
                 </div>
 
                 {/* B. Direktur Perpustakaan */}
                 <div
-                  className="absolute bg-white border border-gray-200 p-3 text-center rounded-xs shadow-2xs flex flex-col items-center justify-center space-y-1.5 hover:border-primary/40 transition-colors"
+                  className="absolute bg-white border-2 border-primary/70 p-4 text-center rounded-xs shadow-xs flex flex-col items-center justify-center hover:border-primary transition-colors"
                   style={{ top: 716, left: 346, width: 196, height: 118 }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-base shrink-0">
-                    <FiBook />
-                  </div>
-                  <p className="font-heading text-[13px] font-bold text-heading leading-snug">
-                    Direktur Perpustakaan
+                  <p className="text-lg font-bold tracking-[0.14em] uppercase text-primary block leading-none">
+                    DIREKTUR LAB
                   </p>
-                  <span className="text-xs text-gray-500 leading-tight">
-                    R. Hengky Aditya Wibisono S.E.
-                  </span>
+
                 </div>
 
               </div>{/* /relative canvas */}

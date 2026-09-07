@@ -71,29 +71,42 @@ const jurnalData = [
   {
     id: 1,
     title: {
-      id: "SANLaR",
-      en: "SANLaR",
-    },
-    description: {
-      id: "Jurnal ilmiah kenotariatan dan pertanahan.",
-      en: "Academic journal on notarial and land law studies.",
-    },
-    link: "http://jurnal.unissula.ac.id/index.php/SANLaR",
-  },
-  {
-    id: 2,
-    title: {
       id: "Jurnal Akta",
       en: "Akta Journal",
     },
     description: {
-      id: "Jurnal ilmiah yang membahas kajian hukum dan kenotariatan.",
+      id: "Jurnal AKTA berfokus pada kajian ilmiah, hasil penelitian, serta tinjauan kritis di bidang ilmu hukum kontemporer dengan penekanan utama pada bidang hukum perdata, kenotariatan, dan keagrariaan.",
       en: "Academic journal covering legal and notarial studies.",
     },
     link: "http://jurnal.unissula.ac.id/index.php/akta",
   },
   {
+    id: 2,
+    title: {
+      id: "SANLaR (Sultan Agung Notariat Law Review)",
+      en: "SANLaR",
+    },
+    description: {
+      id: "Sesuai dengan namanya—Konstatering (proses merumuskan atau mengonstatir fakta hukum kedalam bentuk akta)—jurnal ini memuat artikel ringkasan dari hasil penelitian tesis mahasiswa yang berfokus pada;",
+      en: "Academic journal on notarial and land law studies.",
+    },
+    link: "http://jurnal.unissula.ac.id/index.php/SANLaR",
+  },
+  {
     id: 3,
+    title: {
+      id: "Jurnal Konstatering",
+      en: "Konstatering Journal",
+    },
+    description: {
+      id: "Sesuai dengan namanya—Konstatering (proses merumuskan atau mengonstatir fakta hukum kedalam bentuk akta)—jurnal ini memuat artikel ringkasan dari hasil penelitian tesis mahasiswa yang berfokus pada;",
+      en: "Academic journal featuring legal and notarial studies.",
+    },
+    link: "https://jurnal.unissula.ac.id/index.php/jk",
+  },
+
+  {
+    id: 4,
     title: {
       id: "Jurnal Tabelius",
       en: "Tabelius Journal",
@@ -103,18 +116,6 @@ const jurnalData = [
       en: "Academic journal in the fields of law and notarial studies.",
     },
     link: "https://jurnal.unissula.ac.id/index.php/tabelius",
-  },
-  {
-    id: 4,
-    title: {
-      id: "Jurnal Konstatering",
-      en: "Konstatering Journal",
-    },
-    description: {
-      id: "Jurnal ilmiah yang memuat kajian hukum dan kenotariatan.",
-      en: "Academic journal featuring legal and notarial studies.",
-    },
-    link: "https://jurnal.unissula.ac.id/index.php/jk",
   },
 ];
 
@@ -162,7 +163,7 @@ function KartuJurnal({ item }) {
             {t(item.title)}
           </h2>
 
-          <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+          <p className="mt-2 text-sm text-gray-500 leading-relaxed text-justify">
             {t(item.description)}
           </p>
         </motion.div>

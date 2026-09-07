@@ -26,7 +26,7 @@ import imgSarpras2 from "../../assets/images/struktur-organisasi/nur-alamsyah.jp
 
 export const tenagaKependidikan = [
   {
-    jabatan: "Kepala Tata Usaha",
+    jabatan: "Koordinator Tata Usaha",
     name: "Ikrom, S.H., M.H.",
     photo: imgIkrom,
     tugas:
@@ -40,7 +40,7 @@ export const tenagaKependidikan = [
       "Pengelolaan laboratorium akta, pembinaan praktik pembuatan akta, dan simulasi manajemen kantor notaris.",
   },
   {
-    jabatan: "Direktur Perpustakaan",
+    jabatan: "Kepala Perpustakaan",
     name: "R. Hengky Aditya Wibisono S.E.",
     photo: imgDirPerpus,
     tugas:

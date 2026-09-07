@@ -108,7 +108,7 @@ export default function Footer() {
               />
               <span className="flex flex-col justify-center text-primary font-heading font-bold leading-tight tracking-normal">
                 <span className="text-[13px] sm:text-[15px]">MAGISTER KENOTARIATAN</span>
-                <span className="text-[13px] sm:text-[15px]">UNISSULA</span>
+                <span className="text-[13px] sm:text-[15px]">FAKULTAS HUKUM UNISSULA</span>
               </span>
             </Link>
             <p className="text-body text-xs sm:text-[13px] leading-relaxed max-w-xs">

@@ -111,12 +111,16 @@ export const navLinks = [
         href: "/akademik/kalender",
       },
       {
-        title: { id: "Sistem Informasi", en: "Academic Information System" },
+        title: { id: "E-Learning", en: "Academic Information System" },
         href: "/akademik/sistem-informasi",
       },
       {
-        title: { id: "E-Jurnal", en: "Journals" },
+        title: { id: "E-Journal", en: "Journals" },
         href: "/akademik/jurnal",
+      },
+      {
+        title: { id: "E-Library", en: "Journals" },
+        href: "/akademik/perpustakaan",
       },
     ],
   },

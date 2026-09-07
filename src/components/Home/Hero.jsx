@@ -111,11 +111,11 @@ export default function Hero() {
             eager
             src={logoUnissula}
             alt="Lambang UNISSULA"
-            className="w-24 h-24 sm:w-28 sm:h-28 object-contain mb-8 sm:mb-10 drop-shadow-lg"
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-56 md:h-56 object-contain mb-8 sm:mb-10 drop-shadow-lg"
           />
 
           {/* Main Title */}
-          <h1 className="font-heading font-extrabold text-hero-heading tracking-normal uppercase leading-[1.08] drop-shadow-md">
+          {/* <h1 className="font-heading font-extrabold text-hero-heading tracking-normal uppercase leading-[1.08] drop-shadow-md">
             <span className="block text-3xl sm:text-5xl md:text-6xl">
               MAGISTER KENOTARIATAN
             </span>
@@ -123,7 +123,7 @@ export default function Hero() {
             <span className="block text-2xl sm:text-4xl md:text-5xl tracking-wide">
               FAKULTAS HUKUM UNISSULA
             </span>
-          </h1>
+          </h1> */}
 
           {/* Subtitle */}
           <p className="mt-6 text-sm sm:text-base md:text-3xl font-sans text-white max-w-3xl leading-relaxed tracking-wide drop-shadow-sm">
@@ -150,14 +150,14 @@ export default function Hero() {
           {/* ACQUIN */}
           <div className="px-4 py-2 sm:py-1 text-center">
             <span className="text-xs font-semibold tracking-widest text-heading uppercase">
-              SERTIFIKASI INTERNASIONAL ACQUIN
+              AKREDITASI INTERNASIONAL ASIC DENGAN PREDIKAT PREMIER
             </span>
           </div>
 
           {/* Alumni */}
           <div className="px-4 py-2 sm:py-1 text-center">
             <span className="text-xs font-semibold tracking-widest text-heading uppercase">
-              500+ ALUMNI BERKARIR GLOBAL
+              DIVERSIFIKASI PROFESI ALUMNI
             </span>
           </div>
 

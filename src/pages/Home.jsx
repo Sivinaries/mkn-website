@@ -52,8 +52,6 @@ export default function Home() {
         <AcademicFocus />
         <Announcement />
 
-
-
         {/* Research & Community Service Section */}
         {/* <ResearchCommunity /> */}
 

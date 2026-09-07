@@ -71,10 +71,18 @@ const linkSistem = [
   {
     id: 1,
     title: {
-      id: "Sistem Informasi UNISSULA",
+      id: "E Learning ",
       en: "UNISSULA Information System",
     },
-    link: "https://example.com",
+    link: "https://sim.unissula.ac.id/gate/login",
+  },
+  {
+    id: 2,
+    title: {
+      id: "E Learning ",
+      en: "UNISSULA Information System",
+    },
+    link: "https://sim.unissula.ac.id/gate/login",
   },
 ];
 
@@ -199,7 +207,7 @@ export default function SistemInformasi() {
             variants={headerItemVariants}
             className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight"
           >
-            Sistem Informasi
+            Sistem Informasi Manajemen
           </motion.h1>
 
           {/* Animated underline */}

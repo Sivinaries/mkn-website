@@ -11,12 +11,17 @@ import Keg6 from "../../assets/images/ikanot/keg6.jpg";
 import Keg7 from "../../assets/images/ikanot/keg7.jpg";
 import Keg8 from "../../assets/images/ikanot/keg8.jpg";
 import Keg9 from "../../assets/images/ikanot/keg9.jpg";
+import Keg10 from "../../assets/images/ikanot/keg10.jpg"
+import Keg11 from "../../assets/images/ikanot/keg11.jpg"
+import Keg12 from "../../assets/images/ikanot/keg12.jpg"
+import Keg13 from "../../assets/images/ikanot/keg13.jpg"
+import Logo from "../../assets/images/ikanot/logo.jpg"
 
 // Data resmi IKANOTSULA & Lowongan Pekerjaan
 const ikanotsulaData = {
   title: "IKANOTSULA (Ikatan Alumni Magister Kenotariatan UNISSULA)",
   category: "ORGANISASI ALUMNI",
-  image: imgIkanotsula,
+  image: Logo,
   meta: [
     { label: "Tanggal Berdiri", value: "21 November 2015" },
     { label: "SK Pengesahan", value: "1056/A.1/SA-H/V/2024" },
@@ -91,11 +96,15 @@ const ikanotsulaData = {
     // { id: 2, image: Keg2 },
     { id: 3, image: Keg3 },
     // { id: 4, image: Keg4 },
-    { id: 5, image: Keg5 },
+    // { id: 5, image: Keg5 },
     { id: 6, image: Keg6 },
     { id: 7, image: Keg7 },
-    { id: 8, image: Keg8 },
+    // { id: 8, image: Keg8 },
     { id: 9, image: Keg9 },
+    { id: 13, image: Keg13 },
+    { id: 10, image: Keg10 },
+    { id: 11, image: Keg11 },
+    { id: 12, image: Keg12 },
   ],
   pengurusInti: [
     {
@@ -156,7 +165,7 @@ export default function IkanotsulaDetail() {
               <Img
                 src={organization.image}
                 alt={organization.title}
-                className="w-full h-full object-cover object-center rounded-md hover:scale-105 transition-transform duration-500"
+                className="w-fit h-full object-fit object-center rounded-md hover:scale-105 transition-transform duration-500"
                 eager
               />
             </div>
@@ -217,6 +226,16 @@ export default function IkanotsulaDetail() {
               </blockquote>
             )}
           </section>
+
+            <section className="space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-heading font-bold text-heading pb-3 border-b-2 border-gray-900">
+                Struktur Organisasi
+              </h2>
+              <div className="overflow-x-auto bg-white rounded-lg border border-gray-200">
+                
+              </div>
+            </section>
+
 
           {/* BIDANG KERJA */}
           {organization.bidangKerja && organization.bidangKerja.length > 0 && (

@@ -3,6 +3,7 @@
  */
 import yudisium from "../assets/images/agenda/yudisium.jpg";
 import funrun from "../assets/images/agenda/funrun.jpg";
+import kuliah from "../assets/images/agenda/agenda-1.jpg"
 
 export const eventCategories = [
   "Semua Kategori",
@@ -116,6 +117,48 @@ export const eventData = [
       "tidak hanya diwujudkan melalui aktivitas olahraga, tetapi juga menjadi inspirasi untuk " +
       "terus bergerak, berkarya, dan memberikan manfaat bagi sesama.",
     image: funrun,
+    cp: "+62 823-1222-8181 (Ikrom, S.H., M.H.)",
+    isFeatured: true,
+  },
+  {
+    id: 10,
+    slug: "kuliah-umum-bersertifkat",
+    // Naskah diambil dari dokumen prodi "Deskripsi Sultan Agung Fun Run 5.5K
+    // MKn UNISSULA", disiapkan khusus untuk publikasi di situs ini.
+    title: "Kuliah Umum Bersertifikat",
+    date: "2026-09-26",
+    time: "05.00 WIB sampai selesai",
+    category: "Akademik & Kemahasiswaan",
+    venue:
+      "Halaman Kantor Gubernur Jawa Tengah, Jl. Pahlawan No.9, Kota Semarang",
+    organizer: "Universitas Islam Sultan Agung (UNISSULA)",
+    description:
+      "Lari bersama sejauh 5,5 kilometer bertajuk “Bergerak Tanpa Batas”, dengan titik " +
+      "start dan finis di Kantor Gubernur Jawa Tengah, Kota Semarang.",
+    fullDescription:
+      "Dalam rangka membangun semangat hidup sehat, kebersamaan, dan mempererat silaturahmi " +
+      "keluarga besar Sultan Agung bersama masyarakat, Sultan Agung Fun Run 5.5K akan " +
+      "diselenggarakan pada Minggu, 27 September 2026, mulai pukul 05.00 WIB hingga selesai, " +
+      "dengan titik start dan finish di Kantor Gubernur Jawa Tengah, Kota Semarang. Mengusung " +
+      "semangat “Bergerak Tanpa Batas”, kegiatan ini mengajak seluruh peserta menikmati " +
+      "olahraga lari sejauh 5,5 kilometer dalam suasana yang sehat, menyenangkan, dan penuh " +
+      "kebersamaan.\n\n" +
+      "Rute Fun Run akan melintasi sejumlah ruas utama Kota Semarang, dimulai dari Kantor " +
+      "Gubernur Jawa Tengah menuju Jl. Gajah Mada, Jl. Depok, Jl. Pemuda, Tugu Muda, " +
+      "Jl. Pandanaran, Jl. Tri Lomba Juang, Taman Indonesia Kaya, Jl. Pahlawan, kemudian " +
+      "kembali finis di Kantor Gubernur Jawa Tengah.\n\n" +
+      "Dengan biaya pendaftaran sebesar Rp125.000, peserta akan memperoleh berbagai fasilitas, " +
+      "antara lain jersey, medali, BIB, goodie bag, voucher MCU, refreshment, official photo, " +
+      "serta kesempatan mendapatkan beragam doorprize menarik. Hadiah yang disiapkan antara lain " +
+      "2 tiket umrah, 5 motor Scoopy, 10 sepeda listrik, 10 kulkas, 10 mesin cuci, 10 rice " +
+      "cooker, 10 LED TV, serta 10 logam mulia.\n\n" +
+      "Program Studi Magister Kenotariatan Fakultas Hukum UNISSULA turut mendukung semangat " +
+      "Sultan Agung Fun Run sebagai bagian dari upaya membangun budaya hidup sehat, memperkuat " +
+      "kebersamaan, serta menghadirkan interaksi positif antara sivitas akademika dan " +
+      "masyarakat. Melalui kegiatan ini, diharapkan semangat “Bergerak Tanpa Batas” " +
+      "tidak hanya diwujudkan melalui aktivitas olahraga, tetapi juga menjadi inspirasi untuk " +
+      "terus bergerak, berkarya, dan memberikan manfaat bagi sesama.",
+    image: kuliah,
     cp: "+62 823-1222-8181 (Ikrom, S.H., M.H.)",
     isFeatured: true,
   },
