@@ -1,16 +1,61 @@
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 import { useT } from "../../i18n/languageContext";
 import RichText from "../../components/ui/RichText";
 import { visi, halaman } from "../../data/profil/visiData";
 
-/**
- * Halaman Visi.
- *
- * Isinya hanya satu kalimat, jadi tata letaknya sengaja dibuat tanpa kartu,
- * kotak, maupun kolom pendamping: rumusan visi diberi ruang lapang dan ukuran
- * besar supaya ia sendiri yang menjadi isi halaman. Menambah pembungkus di
- * sekelilingnya justru membuat halaman terasa kosong, bukan penuh.
- */
+const viewportSettings = {
+  once: true,
+  amount: 0.2,
+};
+
+// Container animation
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+// Standard content animation
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+// Special animation for the main vision statement
+const visionVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+    filter: "blur(6px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.2,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function VisiMisi() {
   const t = useT();
 
@@ -21,37 +66,100 @@ export default function VisiMisi() {
         <meta name="description" content={t(halaman.meta.description)} />
       </Helmet>
 
-      <section className="py-4 sm:py-10 lg:py-16">
-        <span className="text-xl font-semibold tracking-wider text-primary uppercase block">
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportSettings}
+        className="py-4 sm:py-10 lg:py-16"
+      >
+        {/* Eyebrow */}
+        <motion.span
+          variants={itemVariants}
+          className="text-xl font-semibold tracking-wider text-primary uppercase block"
+        >
           {t(halaman.eyebrow)}
-        </span>
-        <h1 className="mt-2 font-heading font-normal text-2xl sm:text-3xl text-heading/60 tracking-normal">
-          {t(halaman.judul)}
-        </h1>
-        <div className="w-full h-[2px] bg-primary mt-4" />
+        </motion.span>
 
+        {/* Title */}
+        <motion.h1
+          variants={itemVariants}
+          className="mt-2 font-heading font-normal text-2xl sm:text-3xl text-heading/60 tracking-normal"
+        >
+          {t(halaman.judul)}
+        </motion.h1>
+
+        {/* Divider */}
+        <motion.div
+          variants={itemVariants}
+          className="w-full h-[2px] bg-primary mt-4"
+        />
+
+        {/* Main Vision */}
         <blockquote className="mt-10 sm:mt-14 lg:mt-16 w-full">
-          <p className="font-heading font-normal text-heading text-[26px] sm:text-4xl lg:text-[46px] leading-[1.35] tracking-normal text-justify text-balance">
+          <motion.p
+            variants={visionVariants}
+            className="
+              font-heading
+              font-normal
+              text-heading
+              text-[26px]
+              sm:text-4xl
+              lg:text-[46px]
+              leading-[1.35]
+              tracking-normal
+              text-justify
+              text-balance
+            "
+          >
             <RichText>{t(visi)}</RichText>
-          </p>
+          </motion.p>
         </blockquote>
 
-        <div className="mt-10 sm:mt-14">
-          <div className="w-14 h-[2px] bg-primary" />
-          <footer className="mt-4 space-y-0.5">
+        {/* Attribution */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 sm:mt-14"
+        >
+          {/* Small Divider */}
+          <motion.div
+            initial={{
+              width: 0,
+              opacity: 0,
+            }}
+            whileInView={{
+              width: 56,
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut",
+            }}
+            viewport={viewportSettings}
+            className="h-[2px] bg-primary"
+          />
+
+          {/* Attribution Text */}
+          <motion.footer
+            variants={containerVariants}
+            className="mt-4 space-y-0.5"
+          >
             {halaman.atribusi.map((baris, idx) => (
-              <p
+              <motion.p
                 key={idx}
+                variants={itemVariants}
                 className={`text-sm sm:text-[15px] leading-relaxed ${
-                  idx === 0 ? "font-semibold text-heading" : "text-body"
+                  idx === 0
+                    ? "font-semibold text-heading"
+                    : "text-body"
                 }`}
               >
                 {t(baris)}
-              </p>
+              </motion.p>
             ))}
-          </footer>
-        </div>
-      </section>
+          </motion.footer>
+        </motion.div>
+      </motion.section>
     </>
   );
 }

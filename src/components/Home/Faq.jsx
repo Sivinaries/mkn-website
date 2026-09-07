@@ -1,12 +1,51 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { FiArrowRight, FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import faqImage from "../../assets/images/beranda/faq-1.jpeg";
 
 const viewportSettings = {
   once: true,
   amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const leftItemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const rightItemVariants = {
+  hidden: {
+    opacity: 0,
+    x: 35,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
 };
 
 const faqData = [
@@ -60,9 +99,9 @@ export default function FAQ() {
 
         {/* ================= HEADER ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportSettings}
           className="
             flex flex-col
@@ -74,131 +113,153 @@ export default function FAQ() {
             border-b border-gray-200
           "
         >
-          <div className="max-w-2xl">
-            <span className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
-              Bantuan & Informasi
-            </span>
-
+          <motion.div
+            variants={leftItemVariants}
+            className="max-w-2xl"
+          >
             <h2 className="mt-2 text-3xl sm:text-4xl md:text-[42px] font-heading font-normal text-heading leading-tight">
               Pertanyaan yang
               <br className="hidden sm:block" />
               Sering Ditanyakan
             </h2>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* ================= CONTENT ================= */}
-        <div className="
-          grid
-          grid-cols-1
-          md:grid-cols-12
-          gap-10
-          lg:gap-16
-          pt-10
-          lg:pt-14
-          items-start
-        ">
+        <div
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-12
+            gap-10
+            lg:gap-16
+            pt-10
+            lg:pt-14
+            items-start
+          "
+        >
 
           {/* ================= IMAGE ================= */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            initial={{
+              opacity: 0,
+              x: -40,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeOut",
+            }}
             viewport={viewportSettings}
             className="md:col-span-7 my-auto"
           >
-            <div className="
-              relative
-              overflow-hidden
-              rounded-md
-              h-[420px]
-              sm:h-[500px]
-              lg:h-[650px]
-              my-auto
-      
-            ">
+            <div className="relative w-full overflow-hidden rounded-md">
+
+              {/* Image Reveal */}
               <motion.img
                 src={faqImage}
                 alt="Mahasiswa fakultas hukum sedang berdiskusi"
                 initial={{
-                  filter: "grayscale(100%)",
-                  scale: 1.06,
+                  opacity: 0,
+                  scale: 1.08,
+                  filter: "grayscale(100%) blur(4px)",
                 }}
                 whileInView={{
-                  filter: "grayscale(0%)",
+                  opacity: 1,
                   scale: 1,
+                  filter: "grayscale(0%) blur(0px)",
                 }}
                 transition={{
                   duration: 1.5,
                   ease: "easeOut",
+                  delay: 0.1,
+                }}
+                viewport={viewportSettings}
+                className="
+                  block
+                  w-full
+                  h-auto
+                  object-contain
+                  transition-transform
+                  duration-700
+                  ease-out
+                  hover:scale-105
+                "
+              />
+
+              {/* Image Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{
+                  duration: 1,
+                  ease: "easeOut",
+                  delay: 0.5,
                 }}
                 viewport={viewportSettings}
                 className="
                   absolute
                   inset-0
-                  w-full
-                  h-full
-                  object-cover
-                  transition-transform
-                  duration-700
-                  group-hover:scale-105
+                  bg-gradient-to-t
+                  from-black/70
+                  via-black/10
+                  to-transparent
+                  pointer-events-none
                 "
               />
 
-              {/* Image overlay */}
-              <div className="
-                absolute
-                inset-0
-                bg-gradient-to-t
-                from-black/70
-                via-black/10
-                to-transparent
-              " />
+              {/* Image Caption */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportSettings}
+                className="absolute bottom-0 left-0 right-0 p-6 sm:p-8"
+              >
+                <motion.div
+                  variants={leftItemVariants}
+                  className="w-10 h-px bg-white/70 mb-4"
+                />
 
-              {/* Image caption */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <div className="w-10 h-px bg-white/70 mb-4" />
-
-                <p className="
-                  text-white
-                  text-sm
-                  sm:text-base
-                  font-heading
-                  leading-relaxed
-                  max-w-sm
-                ">
+                <motion.p
+                  variants={leftItemVariants}
+                  className="
+                    text-white
+                    text-sm
+                    sm:text-base
+                    font-heading
+                    leading-relaxed
+                    max-w-sm
+                  "
+                >
                   Temukan informasi seputar akademik, fasilitas,
                   pendaftaran, dan kehidupan mahasiswa.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
+
             </div>
           </motion.div>
 
           {/* ================= QUESTIONS ================= */}
-          <div className="md:col-span-5 lg:pl-2">
-
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
+            className="md:col-span-5 lg:pl-2"
+          >
             <div className="divide-y divide-gray-200 border-t border-gray-200">
 
-              {faqData.map((item, index) => {
+              {faqData.map((item) => {
                 const isOpen = openFAQ === item.id;
 
                 return (
                   <motion.article
                     key={item.id}
-                    initial={{
-                      opacity: 0,
-                      x: 35,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    transition={{
-                      duration: 0.7,
-                      ease: "easeOut",
-                      delay: index * 0.08,
-                    }}
-                    viewport={viewportSettings}
+                    variants={rightItemVariants}
                   >
                     <button
                       type="button"
@@ -215,51 +276,64 @@ export default function FAQ() {
                       <div className="flex items-start gap-5 sm:gap-8">
 
                         {/* Number */}
-                        <span className={`
-                          shrink-0
-                          pt-1
-                          text-xs
-                          font-semibold
-                          tracking-wider
-                          transition-colors
-                          duration-300
-                          ${isOpen
-                            ? "text-primary"
-                            : "text-gray-300 group-hover:text-primary"
-                          }
-                        `}>
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
+                        <motion.span
+                          animate={{
+                            color: isOpen ? "#8B0000" : undefined,
+                          }}
+                          className={`
+                            shrink-0
+                            pt-1
+                            text-xs
+                            font-semibold
+                            tracking-wider
+                            transition-colors
+                            duration-300
+                            ${
+                              isOpen
+                                ? "text-primary"
+                                : "text-gray-300 group-hover:text-primary"
+                            }
+                          `}
+                        >
+                          {String(item.id).padStart(2, "0")}
+                        </motion.span>
 
                         {/* Question */}
                         <div className="flex-1 min-w-0">
 
-                          <span className="
-                            text-[10px]
-                            sm:text-xs
-                            font-bold
-                            tracking-[0.16em]
-                            text-primary
-                            uppercase
-                          ">
+                          {/* Category */}
+                          <span
+                            className="
+                              text-[10px]
+                              sm:text-xs
+                              font-bold
+                              tracking-[0.16em]
+                              text-primary
+                              uppercase
+                            "
+                          >
                             {item.category}
                           </span>
 
-                          <h3 className={`
-                            mt-2.5
-                            font-heading
-                            font-normal
-                            text-lg
-                            sm:text-xl
-                            lg:text-[22px]
-                            leading-snug
-                            transition-colors
-                            duration-300
-                            ${isOpen
-                              ? "text-primary"
-                              : "text-heading group-hover:text-primary"
-                            }
-                          `}>
+                          {/* Question */}
+                          <h3
+                            className={`
+                              mt-2.5
+                              font-heading
+                              font-normal
+                              text-lg
+                              sm:text-xl
+                              lg:text-[22px]
+                              leading-snug
+                              transition-colors
+                              duration-300
+                              ${
+                                isOpen
+                                  ? "text-primary"
+                                  : "text-heading group-hover:text-primary"
+                              }
+                            `}
+                          >
                             {item.question}
                           </h3>
 
@@ -285,50 +359,74 @@ export default function FAQ() {
                                 }}
                                 className="overflow-hidden"
                               >
-                                <p className="
-                                  pt-4
-                                  pr-4
-                                  text-sm
-                                  sm:text-[15px]
-                                  text-gray-500
-                                  leading-7
-                                  max-w-2xl
-                                ">
+                                <motion.p
+                                  initial={{
+                                    opacity: 0,
+                                    y: -8,
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    y: 0,
+                                  }}
+                                  transition={{
+                                    duration: 0.3,
+                                    delay: 0.05,
+                                  }}
+                                  className="
+                                    pt-4
+                                    pr-4
+                                    text-sm
+                                    sm:text-[15px]
+                                    text-gray-500
+                                    leading-7
+                                    max-w-2xl
+                                  "
+                                >
                                   {item.answer}
-                                </p>
+                                </motion.p>
                               </motion.div>
                             )}
                           </AnimatePresence>
                         </div>
 
                         {/* Plus */}
-                        <span className="
-                          shrink-0
-                          flex
-                          items-center
-                          justify-center
-                          w-8
-                          h-8
-                          mt-0.5
-                          border
-                          border-gray-200
-                          rounded-full
-                          transition-all
-                          duration-300
-                          group-hover:border-primary
-                        ">
+                        <motion.span
+                          animate={{
+                            rotate: isOpen ? 45 : 0,
+                          }}
+                          transition={{
+                            duration: 0.3,
+                            ease: "easeOut",
+                          }}
+                          className="
+                            shrink-0
+                            flex
+                            items-center
+                            justify-center
+                            w-8
+                            h-8
+                            mt-0.5
+                            border
+                            border-gray-200
+                            rounded-full
+                            transition-colors
+                            duration-300
+                            group-hover:border-primary
+                          "
+                        >
                           <FiPlus
                             className={`
                               text-sm
-                              transition-all
+                              transition-colors
                               duration-300
-                              ${isOpen
-                                ? "rotate-45 text-primary"
-                                : "text-gray-400 group-hover:text-primary"
+                              ${
+                                isOpen
+                                  ? "text-primary"
+                                  : "text-gray-400 group-hover:text-primary"
                               }
                             `}
                           />
-                        </span>
+                        </motion.span>
 
                       </div>
                     </button>
@@ -337,8 +435,8 @@ export default function FAQ() {
               })}
 
             </div>
+          </motion.div>
 
-          </div>
         </div>
       </div>
     </section>

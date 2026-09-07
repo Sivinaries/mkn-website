@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import {
@@ -19,18 +20,100 @@ import { getBeritaImage } from "../../utils/imageResolver";
 import { generateSlug } from "../../utils/slugHelper";
 import Img from "../../components/ui/Img";
 
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+const viewportSettings = {
+  once: true,
+  amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const leftVariants = {
+  hidden: {
+    opacity: 0,
+    x: -35,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const rightVariants = {
+  hidden: {
+    opacity: 0,
+    x: 35,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
 /** Konversi string tanggal format Indonesia ("30 Oktober 2022") ke Date. */
 const BULAN_ID = {
-  januari: 0, februari: 1, maret: 2, april: 3, mei: 4, juni: 5,
-  juli: 6, agustus: 7, september: 8, oktober: 9, november: 10, desember: 11,
+  januari: 0,
+  februari: 1,
+  maret: 2,
+  april: 3,
+  mei: 4,
+  juni: 5,
+  juli: 6,
+  agustus: 7,
+  september: 8,
+  oktober: 9,
+  november: 10,
+  desember: 11,
 };
+
 function parseIndonesianDate(str) {
   if (!str) return new Date(0);
+
   const parts = str.trim().split(/\s+/);
+
   if (parts.length !== 3) return new Date(0);
+
   const [day, monthStr, year] = parts;
   const month = BULAN_ID[monthStr.toLowerCase()];
+
   if (month === undefined) return new Date(0);
+
   return new Date(Number(year), month, Number(day));
 }
 
@@ -38,16 +121,11 @@ const ITEMS_PER_PAGE = 10;
 
 /**
  * Kategori dibedakan lewat kolom `tags` di src/data/berita.json.
- * Entri tanpa tags dianggap Berita, sehingga data lama tetap tampil.
  */
 const TAG_PENGUMUMAN = "Pengumuman";
 
 /**
  * Teks antarmuka halaman Berita.
- *
- * Isi berita dan pengumuman sendiri (judul, tanggal, naskah) TIDAK diterjemahkan
- * di sini — keduanya data dinamis yang versi bahasanya dibuat saat penulisan
- * lewat dashboard admin.
  */
 const halaman = {
   meta: {
@@ -64,9 +142,22 @@ const halaman = {
         "UNISSULA Master of Notarial Law (MKn) Study Programme.",
     },
   },
-  breadcrumb: { id: "Berita & Pengumuman", en: "News & Announcements" },
-  eyebrow: { id: "BERITA & PENGUMUMAN", en: "NEWS & ANNOUNCEMENTS" },
-  judul: { id: "Kabar Terbaru", en: "Latest Updates" },
+
+  breadcrumb: {
+    id: "Berita & Pengumuman",
+    en: "News & Announcements",
+  },
+
+  eyebrow: {
+    id: "BERITA & PENGUMUMAN",
+    en: "NEWS & ANNOUNCEMENTS",
+  },
+
+  judul: {
+    id: "Kabar Terbaru",
+    en: "Latest Updates",
+  },
+
   intro: {
     id:
       "Kegiatan akademik, hasil penelitian, pengabdian masyarakat, agenda, dan pengumuman resmi Program Studi " +
@@ -75,18 +166,37 @@ const halaman = {
       "Academic activities, research findings, events, and official announcements of the " +
       "Master of Notarial Law Study Programme.",
   },
+
   ariaKategori: {
     id: "Kategori Berita dan Pengumuman",
     en: "News and Announcements categories",
   },
-  beritaUtama: { id: "BERITA UTAMA", en: "FEATURED" },
-  bacaSelengkapnya: { id: "BACA SELENGKAPNYA", en: "READ MORE" },
-  beritaLainnya: { id: "Berita Lainnya", en: "More News" },
-  judulPengumuman: { id: "Pengumuman", en: "Announcements" },
+
+  beritaUtama: {
+    id: "BERITA UTAMA",
+    en: "FEATURED",
+  },
+
+  bacaSelengkapnya: {
+    id: "BACA SELENGKAPNYA",
+    en: "READ MORE",
+  },
+
+  beritaLainnya: {
+    id: "Berita Lainnya",
+    en: "More News",
+  },
+
+  judulPengumuman: {
+    id: "Pengumuman",
+    en: "Announcements",
+  },
+
   pengumumanKosong: {
     id: "Belum ada pengumuman yang diterbitkan.",
     en: "No announcements have been published yet.",
   },
+
   pengumumanKosongDetail: {
     id: "Pengumuman resmi program studi akan ditampilkan di sini.",
     en: "Official study programme announcements will appear here.",
@@ -94,8 +204,20 @@ const halaman = {
 };
 
 const KATEGORI_TABS = [
-  { key: "berita", label: { id: "Berita", en: "News" } },
-  { key: "pengumuman", label: { id: "Pengumuman", en: "Announcements" } },
+  {
+    key: "berita",
+    label: {
+      id: "Berita",
+      en: "News",
+    },
+  },
+  {
+    key: "pengumuman",
+    label: {
+      id: "Pengumuman",
+      en: "Announcements",
+    },
+  },
 ];
 
 /**
@@ -117,7 +239,12 @@ function PengumumanCard({ item }) {
   const lampiran = Array.isArray(item.lampiran) ? item.lampiran : [];
 
   return (
-    <article className="group bg-white border border-gray-200 rounded-xs overflow-hidden hover:border-primary/40 hover:shadow-xs transition-all flex flex-col md:flex-row">
+    <motion.article
+      variants={itemVariants}
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="group bg-white border border-gray-200 rounded-xs overflow-hidden hover:border-primary/40 hover:shadow-xs transition-all flex flex-col md:flex-row"
+    >
       {itemImage ? (
         /* Varian bergambar: kolom flyer di kiri (di atas pada layar kecil) */
         <Link
@@ -126,11 +253,19 @@ function PengumumanCard({ item }) {
           aria-hidden="true"
           className="relative shrink-0 overflow-hidden bg-gray-100 border-b md:border-b-0 md:border-r border-gray-200 h-48 sm:h-56 md:h-auto md:w-64 lg:w-72"
         >
-          <Img
-            src={itemImage}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 1.08, filter: "grayscale(100%) blur(4px)" }}
+            whileInView={{ opacity: 1, scale: 1, filter: "grayscale(0%) blur(0px)" }}
+            transition={{ duration: 1.3, ease: "easeOut" }}
+            viewport={viewportSettings}
+            className="absolute inset-0"
+          >
+            <Img
+              src={itemImage}
+              alt=""
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            />
+          </motion.div>
         </Link>
       ) : (
         /* Varian tanpa gambar: pita aksen sebagai pengganti kolom flyer */
@@ -233,35 +368,48 @@ function PengumumanCard({ item }) {
           </Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 export default function BeritaIndex() {
   const t = useT();
   const ui = useUi();
+
   const [currentPage, setCurrentPage] = useState(1);
+
   const newsSectionRef = useRef(null);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Kategori aktif dibaca dari URL supaya tautannya bisa dibagikan
-  // dan tombol kembali peramban tetap berfungsi.
   const kategori =
-    searchParams.get("kategori") === "pengumuman" ? "pengumuman" : "berita";
+    searchParams.get("kategori") === "pengumuman"
+      ? "pengumuman"
+      : "berita";
+
   const isBerita = kategori === "berita";
 
   const beritaItems = useMemo(
     () =>
       beritaList
         .filter((item) => item.tags !== TAG_PENGUMUMAN)
-        .sort((a, b) => parseIndonesianDate(b.tanggal) - parseIndonesianDate(a.tanggal)),
+        .sort(
+          (a, b) =>
+            parseIndonesianDate(b.tanggal) -
+            parseIndonesianDate(a.tanggal)
+        ),
     []
   );
+
   const pengumumanItems = useMemo(
     () =>
       beritaList
         .filter((item) => item.tags === TAG_PENGUMUMAN)
-        .sort((a, b) => parseIndonesianDate(b.tanggal) - parseIndonesianDate(a.tanggal)),
+        .sort(
+          (a, b) =>
+            parseIndonesianDate(b.tanggal) -
+            parseIndonesianDate(a.tanggal)
+        ),
     []
   );
 
@@ -269,24 +417,41 @@ export default function BeritaIndex() {
     setSearchParams(key === "berita" ? {} : { kategori: key });
   };
 
-  // Halaman kembali ke awal setiap berpindah kategori.
-  useEffect(() => setCurrentPage(1), [kategori]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [kategori]);
 
   const featuredNews = beritaItems[0];
-  const allOtherNews = useMemo(() => beritaItems.slice(1), [beritaItems]);
 
-  const totalPages = Math.ceil(allOtherNews.length / ITEMS_PER_PAGE);
+  const allOtherNews = useMemo(
+    () => beritaItems.slice(1),
+    [beritaItems]
+  );
+
+  const totalPages = Math.ceil(
+    allOtherNews.length / ITEMS_PER_PAGE
+  );
 
   const currentNewsList = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return allOtherNews.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const startIndex =
+      (currentPage - 1) * ITEMS_PER_PAGE;
+
+    return allOtherNews.slice(
+      startIndex,
+      startIndex + ITEMS_PER_PAGE
+    );
   }, [allOtherNews, currentPage]);
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
+
     setCurrentPage(page);
+
     if (newsSectionRef.current) {
-      newsSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      newsSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -294,45 +459,104 @@ export default function BeritaIndex() {
     <>
       <Helmet>
         <title>{t(halaman.meta.title)}</title>
-        <meta name="description" content={t(halaman.meta.description)} />
+        <meta
+          name="description"
+          content={t(halaman.meta.description)}
+        />
       </Helmet>
 
       <main className="flex flex-col min-h-screen bg-white font-body text-body">
-        {/* Header Navbar */}
         <Navbar />
 
         <div className="w-full flex-grow max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 sm:space-y-20">
-          {/* Breadcrumb & Main Header */}
-          <section className="space-y-6">
-            <Breadcrumb customTitle={t(halaman.breadcrumb)} />
 
-            <div className="space-y-3">
-              <span className="text-xs font-bold tracking-[0.16em] uppercase text-primary block">
+          {/* =====================================================
+              HEADER
+          ===================================================== */}
+
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
+            className="space-y-6"
+          >
+            <motion.div variants={leftVariants}>
+              <Breadcrumb
+                customTitle={t(halaman.breadcrumb)}
+              />
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              className="space-y-3"
+            >
+              <motion.span
+                variants={leftVariants}
+                className="text-xs font-bold tracking-[0.16em] uppercase text-primary block"
+              >
                 {t(halaman.eyebrow)}
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-heading font-normal text-heading tracking-tight">
-                {t(halaman.judul)}
-              </h1>
-              <div className="w-full max-w-sm h-[2.5px] bg-primary mt-3 mb-4" />
-              <p className="text-base sm:text-lg text-body leading-relaxed max-w-3xl">
-                {t(halaman.intro)}
-              </p>
-            </div>
-          </section>
+              </motion.span>
 
-          {/* Pemisah kategori: Berita / Pengumuman */}
-          <nav
+              <motion.h1
+                variants={leftVariants}
+                className="text-4xl sm:text-5xl lg:text-[56px] font-heading font-normal text-heading tracking-tight"
+              >
+                {t(halaman.judul)}
+              </motion.h1>
+
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  width: 0,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  width: "100%",
+                }}
+                transition={{
+                  duration: 0.9,
+                  ease: "easeOut",
+                }}
+                viewport={viewportSettings}
+                className="max-w-sm h-[2.5px] bg-primary mt-3 mb-4"
+              />
+
+              <motion.p
+                variants={itemVariants}
+                className="text-base sm:text-lg text-body leading-relaxed max-w-3xl"
+              >
+                {t(halaman.intro)}
+              </motion.p>
+            </motion.div>
+          </motion.section>
+
+          {/* =====================================================
+              CATEGORY TABS
+          ===================================================== */}
+
+          <motion.nav
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
             className="flex items-center gap-6 sm:gap-10 border-b border-gray-200 -mt-10 sm:-mt-14 overflow-x-auto scrollbar-none"
             aria-label={t(halaman.ariaKategori)}
           >
             {KATEGORI_TABS.map((tab) => {
               const active = kategori === tab.key;
+
               return (
-                <button
+                <motion.button
                   key={tab.key}
+                  variants={itemVariants}
                   type="button"
-                  onClick={() => handleKategoriChange(tab.key)}
-                  aria-current={active ? "page" : undefined}
+                  onClick={() =>
+                    handleKategoriChange(tab.key)
+                  }
+                  aria-current={
+                    active ? "page" : undefined
+                  }
                   className={`shrink-0 whitespace-nowrap py-3.5 sm:py-4 text-xs sm:text-sm font-semibold tracking-[0.14em] uppercase transition-colors border-b-2 cursor-pointer ${
                     active
                       ? "border-primary text-primary"
@@ -340,84 +564,188 @@ export default function BeritaIndex() {
                   }`}
                 >
                   {t(tab.label)}
-                </button>
+                </motion.button>
               );
             })}
-          </nav>
+          </motion.nav>
 
-          {/* Section Berita Utama (Featured News dari item pertama berita.json) */}
+          {/* =====================================================
+              FEATURED NEWS
+          ===================================================== */}
+
           {isBerita && featuredNews && (
-            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-              {/* Left Column: Image Box */}
-              <div className="lg:col-span-6">
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+            >
+              {/* IMAGE */}
+
+              <motion.div
+                variants={leftVariants}
+                className="lg:col-span-6"
+              >
                 <Link
-                  to={`/berita/${generateSlug(featuredNews.title, featuredNews.slug)}`}
+                  to={`/berita/${generateSlug(
+                    featuredNews.title,
+                    featuredNews.slug
+                  )}`}
                   className="block w-full aspect-[4/3] bg-[#E8E6E1] rounded-xs relative overflow-hidden group"
                 >
-                  <Img
-                    eager
-                    src={getBeritaImage(featuredNews.gambar)}
-                    alt={featuredNews.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-md"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      scale: 1.08,
+                      filter:
+                        "grayscale(100%) blur(4px)",
                     }}
-                  />
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                      filter:
+                        "grayscale(0%) blur(0px)",
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      ease: "easeOut",
+                    }}
+                    viewport={viewportSettings}
+                    className="w-full h-full"
+                  >
+                    <Img
+                      eager
+                      src={getBeritaImage(
+                        featuredNews.gambar
+                      )}
+                      alt={featuredNews.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 rounded-md"
+                      onError={(e) => {
+                        e.currentTarget.style.display =
+                          "none";
+                      }}
+                    />
+                  </motion.div>
                 </Link>
-              </div>
+              </motion.div>
 
-              {/* Right Column: Article Details */}
-              <div className="lg:col-span-6 space-y-4">
-                <span className="text-xs font-bold tracking-wider text-primary uppercase block">
-                  {t(halaman.beritaUtama)} · {featuredNews.tanggal ? featuredNews.tanggal.toUpperCase() : "OKTOBER 2022"}
-                </span>
+              {/* CONTENT */}
 
-                <Link to={`/berita/${generateSlug(featuredNews.title, featuredNews.slug)}`}>
-                  <h2 className="font-heading font-normal text-3xl sm:text-4xl text-heading leading-tight hover:text-primary transition-colors">
-                    {featuredNews.title}
-                  </h2>
-                </Link>
+              <motion.div
+                variants={rightVariants}
+                className="lg:col-span-6 space-y-4"
+              >
+                <motion.span
+                  variants={itemVariants}
+                  className="text-xs font-bold tracking-wider text-primary uppercase block"
+                >
+                  {t(halaman.beritaUtama)} ·{" "}
+                  {featuredNews.tanggal
+                    ? featuredNews.tanggal.toUpperCase()
+                    : "OKTOBER 2022"}
+                </motion.span>
 
-                <p className="text-sm sm:text-base text-body leading-relaxed pt-1 line-clamp-4">
-                  {featuredNews.content}
-                </p>
-
-                <div className="pt-2">
+                <motion.div variants={itemVariants}>
                   <Link
-                    to={`/berita/${generateSlug(featuredNews.title, featuredNews.slug)}`}
+                    to={`/berita/${generateSlug(
+                      featuredNews.title,
+                      featuredNews.slug
+                    )}`}
+                  >
+                    <h2 className="font-heading font-normal text-3xl sm:text-4xl text-heading leading-tight hover:text-primary transition-colors">
+                      {featuredNews.title}
+                    </h2>
+                  </Link>
+                </motion.div>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-sm sm:text-base text-body leading-relaxed pt-1 line-clamp-4"
+                >
+                  {featuredNews.content}
+                </motion.p>
+
+                <motion.div
+                  variants={itemVariants}
+                  className="pt-2"
+                >
+                  <Link
+                    to={`/berita/${generateSlug(
+                      featuredNews.title,
+                      featuredNews.slug
+                    )}`}
                     className="inline-flex items-center text-xs font-bold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/btn"
                   >
-                    <span>{t(halaman.bacaSelengkapnya)}</span>
+                    <span>
+                      {t(halaman.bacaSelengkapnya)}
+                    </span>
+
                     <span className="ml-1.5 transition-transform group-hover/btn:translate-x-1">
                       →
                     </span>
                   </Link>
-                </div>
-              </div>
-            </section>
+                </motion.div>
+              </motion.div>
+            </motion.section>
           )}
 
-          {/* Section Berita Lainnya dengan Pagination Max 10 per halaman */}
+          {/* =====================================================
+              MORE NEWS
+          ===================================================== */}
+
           {isBerita && allOtherNews.length > 0 && (
-            <section ref={newsSectionRef} className="space-y-6 pt-4 scroll-mt-20">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-heading pb-3">
+            <motion.section
+              ref={newsSectionRef}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              className="space-y-6 pt-4 scroll-mt-20"
+            >
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-heading pb-3"
+              >
                 <h2 className="font-heading font-normal text-3xl sm:text-4xl text-heading tracking-normal">
                   {t(halaman.beritaLainnya)}
                 </h2>
-                <span className="text-xs text-gray-500 font-medium">
-                  Menampilkan {(currentPage - 1) * ITEMS_PER_PAGE + 1} -{" "}
-                  {Math.min(currentPage * ITEMS_PER_PAGE, allOtherNews.length)} dari {allOtherNews.length} berita
-                </span>
-              </div>
 
-              <div className="divide-y divide-gray-200">
+                <span className="text-xs text-gray-500 font-medium">
+                  Menampilkan{" "}
+                  {(currentPage - 1) *
+                    ITEMS_PER_PAGE +
+                    1}{" "}
+                  -{" "}
+                  {Math.min(
+                    currentPage * ITEMS_PER_PAGE,
+                    allOtherNews.length
+                  )}{" "}
+                  dari {allOtherNews.length} berita
+                </span>
+              </motion.div>
+
+              <motion.div
+                variants={containerVariants}
+                className="divide-y divide-gray-200"
+              >
                 {currentNewsList.map((news) => (
-                  <article key={news.id} className="py-6 sm:py-7 space-y-2 group first:pt-2">
+                  <motion.article
+                    key={news.id}
+                    variants={itemVariants}
+                    className="py-6 sm:py-7 space-y-2 group first:pt-2"
+                  >
                     <span className="text-xs text-gray-500 block">
-                      {news.tanggal || "Oktober 2022"} · {news.tags || "News"}
+                      {news.tanggal || "Oktober 2022"} ·{" "}
+                      {news.tags || "News"}
                     </span>
 
-                    <Link to={`/berita/${generateSlug(news.title, news.slug)}`}>
+                    <Link
+                      to={`/berita/${generateSlug(
+                        news.title,
+                        news.slug
+                      )}`}
+                    >
                       <h3 className="font-heading font-semibold text-lg sm:text-xl text-heading leading-snug group-hover:text-primary transition-colors">
                         {news.title}
                       </h3>
@@ -426,16 +754,23 @@ export default function BeritaIndex() {
                     <p className="text-sm sm:text-[15px] text-body leading-relaxed max-w-5xl line-clamp-3">
                       {news.content}
                     </p>
-                  </article>
+                  </motion.article>
                 ))}
-              </div>
+              </motion.div>
 
-              {/* Pagination Controls */}
+              {/* PAGINATION */}
+
               {totalPages > 1 && (
-                <div className="pt-8 pb-4 flex items-center justify-center gap-2">
-                  {/* Previous Button */}
+                <motion.div
+                  variants={itemVariants}
+                  className="pt-8 pb-4 flex items-center justify-center gap-2"
+                >
                   <button
-                    onClick={() => handlePageChange(currentPage - 1)}
+                    onClick={() =>
+                      handlePageChange(
+                        currentPage - 1
+                      )
+                    }
                     disabled={currentPage === 1}
                     aria-label={ui("previous")}
                     className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-xs border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:text-primary active:scale-98 disabled:opacity-40 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs"
@@ -444,14 +779,30 @@ export default function BeritaIndex() {
                     <span>{ui("previous")}</span>
                   </button>
 
-                  {/* Page Numbers */}
                   <div className="flex items-center gap-1.5">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                      <button
+                    {Array.from(
+                      { length: totalPages },
+                      (_, i) => i + 1
+                    ).map((pageNum) => (
+                      <motion.button
                         key={pageNum}
-                        onClick={() => handlePageChange(pageNum)}
-                        aria-label={`${ui("page")} ${pageNum}`}
-                        aria-current={currentPage === pageNum ? "page" : undefined}
+                        whileHover={{
+                          y: -2,
+                        }}
+                        whileTap={{
+                          scale: 0.95,
+                        }}
+                        onClick={() =>
+                          handlePageChange(pageNum)
+                        }
+                        aria-label={`${ui(
+                          "page"
+                        )} ${pageNum}`}
+                        aria-current={
+                          currentPage === pageNum
+                            ? "page"
+                            : undefined
+                        }
                         className={`min-w-[38px] h-9 flex items-center justify-center text-xs font-bold rounded-xs border transition-all cursor-pointer select-none ${
                           currentPage === pageNum
                             ? "bg-primary text-white border-primary shadow-xs"
@@ -459,64 +810,94 @@ export default function BeritaIndex() {
                         }`}
                       >
                         {pageNum}
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
 
-                  {/* Next Button */}
                   <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() =>
+                      handlePageChange(
+                        currentPage + 1
+                      )
+                    }
+                    disabled={
+                      currentPage === totalPages
+                    }
                     aria-label={ui("next")}
                     className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-xs border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:text-primary active:scale-98 disabled:opacity-40 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs"
                   >
                     <span>{ui("next")}</span>
                     <FiChevronRight className="ml-1 text-sm" />
                   </button>
-                </div>
+                </motion.div>
               )}
-            </section>
+            </motion.section>
           )}
 
-          {/* Tab Pengumuman — daftar pengumuman lengkap dengan gambar flyer dan dokumen lampiran */}
+          {/* =====================================================
+              ANNOUNCEMENTS
+          ===================================================== */}
+
           {!isBerita && (
-            <section className="space-y-6">
-              <div className="border-b border-heading pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              className="space-y-6"
+            >
+              {/* HEADER */}
+
+              <motion.div
+                variants={itemVariants}
+                className="border-b border-heading pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2"
+              >
                 <div>
                   <h2 className="font-heading font-normal text-3xl sm:text-4xl text-heading tracking-normal">
                     {t(halaman.judulPengumuman)}
                   </h2>
+
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    Pengumuman resmi dan edaran akademik Program Studi Magister Kenotariatan UNISSULA.
+                    Pengumuman resmi dan edaran akademik
+                    Program Studi Magister Kenotariatan
+                    UNISSULA.
                   </p>
                 </div>
+
                 <span className="text-xs font-semibold text-primary uppercase tracking-wider bg-red-50 border border-primary/20 px-3 py-1 rounded-xs w-fit">
                   {pengumumanItems.length} Pengumuman
                 </span>
-              </div>
+              </motion.div>
 
               {pengumumanItems.length > 0 ? (
-                <div className="space-y-6">
+                <motion.div
+                  variants={containerVariants}
+                  className="space-y-6"
+                >
                   {pengumumanItems.map((item) => (
                     <PengumumanCard key={item.id} item={item} />
                   ))}
-                </div>
+                </motion.div>
               ) : (
-                <div className="border border-dashed border-gray-300 bg-white p-10 sm:p-14 text-center rounded-xs">
+                <motion.div
+                  variants={itemVariants}
+                  className="border border-dashed border-gray-300 bg-white p-10 sm:p-14 text-center rounded-xs"
+                >
                   <p className="text-sm font-medium text-gray-500">
                     {t(halaman.pengumumanKosong)}
                   </p>
-                  <p className="mt-1.5 text-xs text-gray-400 max-w-md mx-auto leading-relaxed">
-                    {t(halaman.pengumumanKosongDetail)}
-                  </p>
-                </div>
-              )}
-            </section>
-          )}
 
+                  <p className="mt-1.5 text-xs text-gray-400 max-w-md mx-auto leading-relaxed">
+                    {t(
+                      halaman.pengumumanKosongDetail
+                    )}
+                  </p>
+                </motion.div>
+              )}
+            </motion.section>
+          )}
         </div>
 
-        {/* Footer */}
         <Footer />
       </main>
     </>

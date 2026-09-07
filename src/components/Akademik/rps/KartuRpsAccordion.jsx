@@ -10,9 +10,10 @@ export default function KartuRpsAccordion({ mk }) {
 
   return (
     <div className="bg-white border border-gray-200 rounded-xs p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5 sm:gap-8 hover:border-gray-300 transition-all duration-200 shadow-2xs group">
-      {/* Sisi Kiri: Ikon Buku + Badge Semester + Judul + Deskripsi */}
-      <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
-        <div className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0 p-2.5 bg-primary/5 rounded-xs border border-primary/10 group-hover:bg-primary/10 transition-colors">
+      {/* Sisi Kiri */}
+      <div className="flex items-center gap-4 sm:gap-5 flex-1 min-w-0">
+        {/* Icon Buku - Tengah Vertikal */}
+        <div className="text-primary text-2xl sm:text-3xl shrink-0 flex items-center justify-center">
           <FiBookOpen />
         </div>
 
@@ -33,7 +34,7 @@ export default function KartuRpsAccordion({ mk }) {
         </div>
       </div>
 
-      {/* Sisi Kanan: Tombol Unduh Berkas */}
+      {/* Sisi Kanan */}
       <div className="shrink-0 flex items-center self-start sm:self-center pl-14 sm:pl-0">
         <a
           href={mk.folderUrl}

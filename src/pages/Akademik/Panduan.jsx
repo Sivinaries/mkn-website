@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { FiBookOpen, FiFileText, FiDownload } from "react-icons/fi";
 import { useT } from "../../i18n/languageContext";
@@ -8,6 +9,70 @@ import pedomanAkademik from "../../assets/pdf/Pedoman Akademik 2021.pdf";
 import pedomanLaboratorium from "../../assets/pdf/Pedoman Praktek Laboratorium Manajemen Kantor Notaris & PPAT.pdf";
 import pedomanProposalTesis from "../../assets/pdf/Pedoman Penulisan Proposal & Tesis.pdf";
 import sopYudisiumWisuda from "../../assets/pdf/Standar Operasional Prosedur (SOP) Yudisium & Wisuda.pdf";
+
+/* =========================
+   Animation Settings
+========================= */
+
+const viewportSettings = {
+  once: true,
+  amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const headerItemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
+const contentVariants = {
+  hidden: {
+    opacity: 0,
+    y: 15,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 /**
  * Dokumen pedoman akademik.
@@ -29,7 +94,8 @@ const academicGuidelines = [
       en: "Guidelines for the Notary/PPAT Office Management Laboratory",
     },
     fileUrl: pedomanLaboratorium,
-    fileName: "Pedoman-Praktek-Laboratorium-Manajemen-Kantor-Notaris-PPAT.pdf",
+    fileName:
+      "Pedoman-Praktek-Laboratorium-Manajemen-Kantor-Notaris-PPAT.pdf",
   },
   {
     id: 3,
@@ -39,8 +105,6 @@ const academicGuidelines = [
     },
     fileUrl: pedomanProposalTesis,
     fileName: "Pedoman-Penulisan-Proposal-dan-Tesis.pdf",
-    // Jalan masuk pengajuan izin riset diletakkan tepat setelah kartu ini agar
-    // berurutan dengan pedoman penulisan proposal dan tesis.
     diikutiFormIzinRiset: true,
   },
   {
@@ -70,7 +134,10 @@ const halaman = {
         "Programme, together with applications for research and interview permits.",
     },
   },
-  judul: { id: "Panduan Akademik", en: "Academic Guidelines" },
+  judul: {
+    id: "Panduan Akademik",
+    en: "Academic Guidelines",
+  },
   intro: {
     id:
       "Panduan akademik memuat ketentuan penyelenggaraan pendidikan Magister Kenotariatan: " +
@@ -80,8 +147,14 @@ const halaman = {
       "Law programme: study load and duration, registration, teaching, academic leave, and " +
       "graduation.",
   },
-  unduh: { id: "Unduh PDF", en: "Download PDF" },
-  belumTersedia: { id: "Belum tersedia", en: "Not yet available" },
+  unduh: {
+    id: "Unduh PDF",
+    en: "Download PDF",
+  },
+  belumTersedia: {
+    id: "Belum tersedia",
+    en: "Not yet available",
+  },
   izinRiset: {
     judul: {
       id: "Pengajuan Izin Riset, Wawancara, dan Penelitian",
@@ -109,41 +182,76 @@ function KartuPedoman({ item }) {
   const t = useT();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xs p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-6 lg:gap-12 hover:border-gray-300 transition-all duration-200 shadow-2xs group">
+    <motion.div
+      variants={cardVariants}
+      whileHover={{
+        y: -4,
+        transition: {
+          duration: 0.25,
+        },
+      }}
+      className="bg-white border border-gray-200 rounded-xs p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-6 lg:gap-12 hover:border-gray-300 transition-all duration-200 shadow-2xs group"
+    >
       {/* Sisi Kiri: Ikon Buku + Judul */}
-      <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
-        <div className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0">
+      <div className="flex items-center gap-4 sm:gap-5 flex-1 min-w-0">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+          }}
+          viewport={viewportSettings}
+          className="text-primary text-2xl sm:text-3xl shrink-0 flex items-center justify-center"
+        >
           <FiBookOpen />
-        </div>
+        </motion.div>
 
-        <div className="flex-1 min-w-0 max-w-2xl">
+        <motion.div
+          variants={contentVariants}
+          className="flex-1 min-w-0 max-w-2xl"
+        >
           <h2 className="font-heading font-bold text-base sm:text-[18px] text-heading leading-snug group-hover:text-primary transition-colors">
             {t(item.title)}
           </h2>
-        </div>
+        </motion.div>
       </div>
 
       {/* Sisi Kanan: Keadaan berkas */}
-      <div className="shrink-0 flex items-center self-start sm:self-center pl-10 sm:pl-0">
+      <motion.div
+        variants={contentVariants}
+        className="shrink-0 flex items-center self-start sm:self-center pl-10 sm:pl-0"
+      >
         {item.fileUrl ? (
-          <a
+          <motion.a
             href={item.fileUrl}
             download={item.fileName}
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{
+              scale: 1.03,
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
             className="inline-flex items-center justify-center gap-2 px-6 py-2.5 border border-primary bg-primary text-white hover:bg-primary/90 rounded-xs text-xs sm:text-sm font-semibold transition-colors"
           >
-            <FiDownload className="text-base" />
+            <motion.span
+              whileHover={{ y: -1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FiDownload className="text-base" />
+            </motion.span>
+
             <span>{t(halaman.unduh)}</span>
-          </a>
+          </motion.a>
         ) : (
           <span className="inline-flex items-center justify-center gap-2 px-6 py-2.5 border border-dashed border-gray-300 bg-gray-50 text-gray-400 rounded-xs text-xs sm:text-sm font-semibold cursor-not-allowed select-none">
             {t(halaman.belumTersedia)}
           </span>
         )}
-      </div>
-
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -157,28 +265,53 @@ function PengajuanIzinRiset() {
   const t = useT();
 
   return (
-    <div className="bg-primary/5 border border-primary/30 rounded-xs p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-6 lg:gap-12">
+    <motion.div
+      variants={cardVariants}
+      whileHover={{
+        y: -3,
+        transition: {
+          duration: 0.25,
+        },
+      }}
+      className="bg-primary/5 border border-primary/30 rounded-xs p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-6 lg:gap-12"
+    >
       <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
-        <div className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+          }}
+          viewport={viewportSettings}
+          className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0"
+        >
           <FiFileText />
-        </div>
+        </motion.div>
 
-        <div className="space-y-2 flex-1 min-w-0 max-w-2xl">
+        <motion.div
+          variants={contentVariants}
+          className="space-y-2 flex-1 min-w-0 max-w-2xl"
+        >
           <h2 className="font-heading font-bold text-base sm:text-[18px] text-heading leading-snug">
             {t(halaman.izinRiset.judul)}
           </h2>
+
           <p className="text-xs sm:text-sm text-body leading-relaxed">
             {t(halaman.izinRiset.keterangan)}
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="shrink-0 flex items-center self-start sm:self-center pl-10 sm:pl-0">
+      <motion.div
+        variants={contentVariants}
+        className="shrink-0 flex items-center self-start sm:self-center pl-10 sm:pl-0"
+      >
         <span className="inline-flex items-center justify-center gap-2 px-6 py-2.5 border border-dashed border-gray-300 bg-white/60 text-gray-400 rounded-xs text-xs sm:text-sm font-semibold cursor-not-allowed select-none">
           {t(halaman.izinRiset.tombol)}
         </span>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -190,30 +323,67 @@ export default function Panduan() {
     <>
       <Helmet>
         <title>{t(halaman.meta.title)}</title>
-        <meta name="description" content={t(halaman.meta.description)} />
+        <meta
+          name="description"
+          content={t(halaman.meta.description)}
+        />
       </Helmet>
 
       <div className="space-y-10 font-body text-body">
         {/* Header Title Section */}
-        <div>
-          <span className="text-xs font-bold tracking-[0.16em] uppercase text-primary block">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+        >
+          <motion.span
+            variants={headerItemVariants}
+            className="text-xs font-bold tracking-[0.16em] uppercase text-primary block"
+          >
             {ui("sectionAcademic")}
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight">
+          </motion.span>
+
+          <motion.h1
+            variants={headerItemVariants}
+            className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight"
+          >
             {t(halaman.judul)}
-          </h1>
-          <div className="w-full h-[2px] bg-primary my-4" />
-        </div>
+          </motion.h1>
+
+          <motion.div
+            initial={{
+              width: 0,
+            }}
+            whileInView={{
+              width: "100%",
+            }}
+            transition={{
+              duration: 0.9,
+              ease: "easeOut",
+              delay: 0.15,
+            }}
+            viewport={viewportSettings}
+            className="h-[2px] bg-primary my-4"
+          />
+        </motion.div>
 
         {/* List Card Panduan Akademik */}
-        <div className="space-y-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="space-y-4"
+        >
           {academicGuidelines.map((item) => (
             <Fragment key={item.id}>
               <KartuPedoman item={item} />
+
               {item.diikutiFormIzinRiset && <PengajuanIzinRiset />}
             </Fragment>
           ))}
-        </div>
+        </motion.div>
       </div>
     </>
   );
