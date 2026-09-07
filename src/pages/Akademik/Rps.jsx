@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import {
   FiSearch,
@@ -64,8 +65,69 @@ const halaman = {
   },
 };
 
+const viewportSettings = {
+  once: true,
+  amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const headerItemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
+const bannerVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function Rps() {
   const t = useT();
+
   const [semesterAktif, setSemesterAktif] = useState("all");
   const [kataKunci, setKataKunci] = useState("");
 
@@ -73,9 +135,11 @@ export default function Rps() {
   const mataKuliahTerfilter = useMemo(() => {
     return daftarMataKuliahRps.filter((mk) => {
       const matchSemester =
-        semesterAktif === "all" || String(mk.semester) === semesterAktif;
+        semesterAktif === "all" ||
+        String(mk.semester) === semesterAktif;
 
       const q = kataKunci.toLowerCase().trim();
+
       const matchSearch =
         !q ||
         mk.kode.toLowerCase().includes(q) ||
@@ -92,33 +156,72 @@ export default function Rps() {
     <>
       <Helmet>
         <title>{t(halaman.meta.title)}</title>
-        <meta name="description" content={t(halaman.meta.description)} />
+        <meta
+          name="description"
+          content={t(halaman.meta.description)}
+        />
       </Helmet>
 
       <div className="space-y-10 font-body text-body">
         {/* Header Title Section */}
-        <div>
-          <span className="text-xs font-bold tracking-[0.16em] uppercase text-primary block">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+        >
+          <motion.span
+            variants={headerItemVariants}
+            className="text-xs font-bold tracking-[0.16em] uppercase text-primary block"
+          >
             {t(halaman.label)}
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight">
-            {t(halaman.judul)}
-          </h1>
-          <div className="w-full h-[2px] bg-primary my-4" />
-        </div>
+          </motion.span>
 
-        {/* Toolbar Interaktif: Filter Tab Semester + Search Bar */}
-        <div className="space-y-5 pt-2">
+          <motion.h1
+            variants={headerItemVariants}
+            className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight"
+          >
+            {t(halaman.judul)}
+          </motion.h1>
+
+          <motion.div
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: "100%", opacity: 1 }}
+            transition={{
+              duration: 0.9,
+              ease: "easeOut",
+              delay: 0.2,
+            }}
+            viewport={viewportSettings}
+            className="h-[2px] bg-primary my-4"
+          />
+        </motion.div>
+
+        {/* Toolbar Interaktif */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="space-y-5 pt-2"
+        >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Tabs Navigasi Semester */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none border-b border-gray-200 md:border-b-0">
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none border-b border-gray-200 md:border-b-0"
+            >
               {daftarSemesterRps.map((sem) => {
                 const isActive = semesterAktif === sem.id;
+
                 return (
-                  <button
+                  <motion.button
                     key={sem.id}
                     type="button"
                     onClick={() => setSemesterAktif(sem.id)}
+                    whileTap={{ scale: 0.96 }}
+                    whileHover={{ y: -1 }}
+                    transition={{ duration: 0.2 }}
                     className={`shrink-0 px-4 py-2 rounded-xs text-xs sm:text-sm font-semibold tracking-wide transition-all ${
                       isActive
                         ? "bg-primary text-white shadow-2xs"
@@ -126,14 +229,18 @@ export default function Rps() {
                     }`}
                   >
                     {t(sem.label)}
-                  </button>
+                  </motion.button>
                 );
               })}
-            </div>
+            </motion.div>
 
-            {/* Kolom Pencarian Mata Kuliah */}
-            <div className="relative w-full md:w-72 lg:w-80">
+            {/* Kolom Pencarian */}
+            <motion.div
+              variants={itemVariants}
+              className="relative w-full md:w-72 lg:w-80"
+            >
               <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
+
               <input
                 type="text"
                 value={kataKunci}
@@ -141,80 +248,184 @@ export default function Rps() {
                 placeholder={t(halaman.cariPlaceholder)}
                 className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xs text-xs sm:text-sm text-heading placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
               />
-            </div>
+            </motion.div>
           </div>
 
           {/* Baris Informasi Hasil */}
-          <div className="flex items-center justify-between text-xs text-body px-1">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-between text-xs text-body px-1"
+          >
             <span>
-              Menampilkan <strong>{mataKuliahTerfilter.length}</strong> mata kuliah
-              {semesterAktif !== "all" ? ` pada Semester ${semesterAktif}` : ""}
+              Menampilkan{" "}
+              <strong>{mataKuliahTerfilter.length}</strong>{" "}
+              mata kuliah
+              {semesterAktif !== "all"
+                ? ` pada Semester ${semesterAktif}`
+                : ""}
             </span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Daftar Kartu Mata Kuliah */}
         {mataKuliahTerfilter.length > 0 ? (
-          <div className="space-y-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
+            className="space-y-4"
+          >
             {mataKuliahTerfilter.map((mk) => (
-              <KartuRpsAccordion key={mk.id} mk={mk} />
+              <motion.div
+                key={mk.id}
+                variants={itemVariants}
+              >
+                <KartuRpsAccordion mk={mk} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         ) : (
-          <div className="bg-white border border-dashed border-gray-300 rounded-xs p-10 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto text-xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: 0.7,
+              ease: "easeOut",
+            }}
+            viewport={viewportSettings}
+            className="bg-white border border-dashed border-gray-300 rounded-xs p-10 text-center space-y-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+              }}
+              viewport={viewportSettings}
+              className="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto text-xl"
+            >
               <FiSearch />
-            </div>
+            </motion.div>
+
             <div className="space-y-1">
               <p className="text-sm font-semibold text-heading">
                 {t(halaman.tidakDitemukan)}
               </p>
+
               <p className="text-xs text-body">
-                Coba gunakan kata kunci lain atau pilih tab "Semua Semester".
+                Coba gunakan kata kunci lain atau pilih tab
+                "Semua Semester".
               </p>
             </div>
-            <button
+
+            <motion.button
               type="button"
               onClick={() => {
                 setKataKunci("");
                 setSemesterAktif("all");
               }}
+              whileHover={{
+                y: -2,
+                scale: 1.02,
+              }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xs text-xs font-semibold hover:bg-primary/90 transition-colors"
             >
               {t(halaman.resetCari)}
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         )}
 
-        {/* Banner Repositori Google Drive Terpusat */}
-        <div className="bg-primary/5 border border-primary/30 rounded-xs p-6 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        {/* Banner Repositori Google Drive */}
+        <motion.div
+          variants={bannerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="bg-primary/5 border border-primary/30 rounded-xs p-6 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+        >
           <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
-            <div className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0 p-3 bg-white border border-primary/20 rounded-xs shadow-2xs">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.7,
+                ease: "easeOut",
+                delay: 0.15,
+              }}
+              viewport={viewportSettings}
+              className="text-primary text-2xl sm:text-3xl mt-0.5 shrink-0 p-3 bg-white border border-primary/20 rounded-xs shadow-2xs"
+            >
               <FiFolder />
-            </div>
-            <div className="space-y-1.5 min-w-0">
-              <h3 className="font-heading font-bold text-lg sm:text-xl text-heading">
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              className="space-y-1.5 min-w-0"
+            >
+              <motion.h3
+                variants={itemVariants}
+                className="font-heading font-bold text-lg sm:text-xl text-heading"
+              >
                 {t(halaman.gdriveBanner.judul)}
-              </h3>
-              <p className="text-xs sm:text-sm text-body leading-relaxed max-w-3xl">
+              </motion.h3>
+
+              <motion.p
+                variants={itemVariants}
+                className="text-xs sm:text-sm text-body leading-relaxed max-w-3xl"
+              >
                 {t(halaman.gdriveBanner.deskripsi)}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </div>
 
-          <div className="shrink-0 flex items-center self-start lg:self-center">
-            <a
+          <motion.div
+            initial={{ opacity: 0, x: 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+              delay: 0.2,
+            }}
+            viewport={viewportSettings}
+            className="shrink-0 flex items-center self-start lg:self-center"
+          >
+            <motion.a
               href={GDRIVE_RPS_ROOT_URL}
               target="_blank"
               rel="noopener noreferrer"
+              whileHover={{
+                y: -2,
+                scale: 1.02,
+              }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
               className="inline-flex items-center gap-2 px-5 py-3 bg-primary text-white hover:bg-primary/90 rounded-xs text-xs sm:text-sm font-semibold transition-colors shadow-2xs group"
             >
               <FiFolder className="text-base" />
-              <span>{t(halaman.gdriveBanner.tombol)}</span>
-              <FiExternalLink className="text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
-          </div>
-        </div>
+
+              <span>
+                {t(halaman.gdriveBanner.tombol)}
+              </span>
+
+              <motion.span
+                whileHover={{
+                  x: 3,
+                  y: -2,
+                }}
+                className="inline-flex"
+              >
+                <FiExternalLink className="text-xs" />
+              </motion.span>
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </>
   );

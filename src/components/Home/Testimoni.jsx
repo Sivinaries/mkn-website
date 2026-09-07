@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 import Img from "../ui/Img";
 
@@ -11,6 +10,46 @@ import Wahyu from "../../assets/images/testi/wahyu-noto.png";
 const viewportSettings = {
   once: true,
   amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
 };
 
 const testimonialData = [
@@ -59,60 +98,50 @@ export default function Testimoni() {
 
         {/* Section Header */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            ease: "easeOut",
-          }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportSettings}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-heading font-normal text-heading tracking-normal">
-            Kata Mereka
-          </h2>
+          <motion.div variants={itemVariants}>
+            <h2 className="text-3xl sm:text-4xl font-heading font-normal text-heading tracking-normal">
+              Kata Mereka
+            </h2>
+          </motion.div>
         </motion.div>
 
         {/* Testimonials */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-start">
-          {testimonialData.map((item, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-start"
+        >
+          {testimonialData.map((item) => (
             <motion.article
               key={item.id}
-              initial={{
-                opacity: 0,
-                y: 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.8,
-                ease: "easeOut",
-                delay: index * 0.12,
-              }}
-              viewport={viewportSettings}
+              variants={cardVariants}
               className="flex flex-col group h-full"
             >
               {/* Image */}
               <div className="relative w-full aspect-[9/12] md:aspect-[9/16] bg-gray-100 overflow-hidden rounded-xs">
                 <motion.div
                   initial={{
-                    filter: "grayscale(100%)",
+                    opacity: 0,
+                    scale: 1.08,
+                    filter: "grayscale(100%) blur(3px)",
                   }}
                   whileInView={{
-                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    scale: 1,
+                    filter: "grayscale(0%) blur(0px)",
                   }}
                   transition={{
                     duration: 1.5,
                     ease: "easeOut",
-                    delay: 0.2 + index * 0.12,
+                    delay: 0.1,
                   }}
                   viewport={viewportSettings}
                   className="w-full h-full"
@@ -126,7 +155,8 @@ export default function Testimoni() {
                       object-cover
                       object-center
                       transition-transform
-                      duration-500
+                      duration-700
+                      ease-out
                       group-hover:scale-105
                     "
                   />
@@ -135,46 +165,42 @@ export default function Testimoni() {
 
               {/* Card Content */}
               <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.7,
-                  ease: "easeOut",
-                  delay: 0.3 + index * 0.12,
-                }}
-                viewport={viewportSettings}
+                variants={containerVariants}
                 className="pt-5 flex flex-col flex-grow justify-between"
               >
                 <div>
-                  <h3 className="font-heading font-normal text-xl sm:text-2xl text-heading leading-snug group-hover:text-primary transition-colors">
-                    {item.name}
-                  </h3>
+                  {/* Name */}
+                  <motion.div variants={itemVariants}>
+                    <h3 className="font-heading font-normal text-xl sm:text-2xl text-heading leading-snug group-hover:text-primary transition-colors">
+                      {item.name}
+                    </h3>
+                  </motion.div>
 
-                  <p className="mt-3 text-sm text-body leading-relaxed italic">
+                  {/* Testimonial */}
+                  <motion.p
+                    variants={itemVariants}
+                    className="mt-3 text-sm text-body leading-relaxed italic"
+                  >
                     &ldquo;{item.description}&rdquo;
-                  </p>
+                  </motion.p>
                 </div>
 
-                {/* Link */}
-                <div className="pt-4 mt-auto">
-                  <div
-                    className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link"
-                  >
+                {/* Role */}
+                <motion.div
+                  variants={itemVariants}
+                  className="pt-4 mt-auto"
+                >
+                  <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
                     <span>{item.role}</span>
 
                     <FiChevronRight className="text-sm transition-transform duration-150 group-hover/link:translate-x-0.5" />
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );

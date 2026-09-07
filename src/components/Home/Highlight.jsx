@@ -12,7 +12,66 @@ const viewportSettings = {
   amount: 0.2,
 };
 
-function AnimatedNumber({ value, duration = 1800, start }) {
+// =========================================
+// CARD CONTAINER
+// =========================================
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+// =========================================
+// CARD ANIMATION
+// =========================================
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 35,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
+// =========================================
+// CONTENT ANIMATION
+// =========================================
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 15,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+
+// =========================================
+// ANIMATED NUMBER
+// =========================================
+function AnimatedNumber({
+  value,
+  duration = 1800,
+  start,
+}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -26,14 +85,16 @@ function AnimatedNumber({ value, duration = 1800, start }) {
     let animationFrame;
 
     const animate = (currentTime) => {
-      if (!startTime) startTime = currentTime;
+      if (!startTime) {
+        startTime = currentTime;
+      }
 
       const progress = Math.min(
         (currentTime - startTime) / duration,
         1
       );
 
-      // Ease out
+      // Ease out cubic
       const easeOut = 1 - Math.pow(1 - progress, 3);
 
       setCount(Math.floor(easeOut * target));
@@ -47,7 +108,9 @@ function AnimatedNumber({ value, duration = 1800, start }) {
 
     animationFrame = requestAnimationFrame(animate);
 
-    return () => cancelAnimationFrame(animationFrame);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
   }, [value, duration, start]);
 
   const suffix = value.includes("+") ? "+" : "";
@@ -60,6 +123,10 @@ function AnimatedNumber({ value, duration = 1800, start }) {
   );
 }
 
+
+// =========================================
+// HIGHLIGHT
+// =========================================
 function Highlight() {
   const statistics = [
     {
@@ -87,10 +154,24 @@ function Highlight() {
   return (
     <section className="w-full bg-hero-heading font-body py-12 sm:py-18 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="
+            mx-auto
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-4
+            sm:gap-5
+          "
+        >
           {statistics.map((item, index) => {
             const Icon = item.icon;
-            const isNumber = !isNaN(parseInt(item.value, 10));
 
             return (
               <HighlightCard
@@ -98,21 +179,24 @@ function Highlight() {
                 item={item}
                 index={index}
                 Icon={Icon}
-                isNumber={isNumber}
               />
             );
           })}
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
 }
 
+
+// =========================================
+// HIGHLIGHT CARD
+// =========================================
 function HighlightCard({
   item,
   index,
   Icon,
-  isNumber,
 }) {
   const ref = useRef(null);
 
@@ -121,23 +205,13 @@ function HighlightCard({
     amount: viewportSettings.amount,
   });
 
+  // Hanya angka dengan "+" yang menggunakan count-up
+  const isCountUp = item.value.includes("+");
+
   return (
     <motion.div
       ref={ref}
-      initial={{
-        opacity: 0,
-        y: 35,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.7,
-        ease: "easeOut",
-        delay: index * 0.12,
-      }}
-      viewport={viewportSettings}
+      variants={cardVariants}
       className="
         p-3
         group
@@ -156,12 +230,16 @@ function HighlightCard({
         justify-center
         text-center
         hover:scale-105
+        hover:border-primary/40
       "
     >
-      {/* Icon */}
+
+      {/* =====================================
+          ICON
+      ===================================== */}
       <motion.div
         initial={{
-          scale: 0.8,
+          scale: 0,
           opacity: 0,
         }}
         whileInView={{
@@ -171,12 +249,14 @@ function HighlightCard({
         transition={{
           duration: 0.6,
           ease: "easeOut",
-          delay: 0.15 + index * 0.12,
+          delay: 0.1 + index * 0.12,
         }}
         viewport={viewportSettings}
         className="
-          p-3 md:p-6
-          mb-2 md:mb-4
+          p-3
+          md:p-6
+          mb-2
+          md:mb-4
           flex
           items-center
           justify-center
@@ -192,9 +272,21 @@ function HighlightCard({
         <Icon className="text-2xl md:text-4xl" />
       </motion.div>
 
-      {/* Value */}
-      <div className="text-3xl sm:text-4xl font-bold text-[#9f1d20] leading-none">
-        {isNumber ? (
+
+      {/* =====================================
+          VALUE
+      ===================================== */}
+      <motion.div
+        variants={itemVariants}
+        className="
+          text-3xl
+          sm:text-4xl
+          font-bold
+          text-[#9f1d20]
+          leading-none
+        "
+      >
+        {isCountUp ? (
           <AnimatedNumber
             value={item.value}
             start={isInView}
@@ -202,28 +294,24 @@ function HighlightCard({
         ) : (
           item.value
         )}
-      </div>
+      </motion.div>
 
-      {/* Label */}
+
+      {/* =====================================
+          LABEL
+      ===================================== */}
       <motion.div
-        initial={{
-          opacity: 0,
-          y: 8,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.5,
-          ease: "easeOut",
-          delay: 0.3 + index * 0.12,
-        }}
-        viewport={viewportSettings}
-        className="mt-2 text-sm sm:text-base text-gray-600"
+        variants={itemVariants}
+        className="
+          mt-2
+          text-sm
+          sm:text-base
+          text-gray-600
+        "
       >
         {item.label}
       </motion.div>
+
     </motion.div>
   );
 }

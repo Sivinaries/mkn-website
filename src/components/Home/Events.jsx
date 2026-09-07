@@ -4,10 +4,60 @@ import { FiArrowRight } from "react-icons/fi";
 import Img from "../ui/Img";
 import { eventData } from "../../data/eventData";
 
-
 const viewportSettings = {
   once: true,
   amount: 0.2,
+};
+
+// =========================================
+// CONTAINER ANIMATION
+// =========================================
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+// =========================================
+// HEADER / CONTENT ANIMATION
+// =========================================
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+// =========================================
+// CARD ANIMATION
+// =========================================
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
 };
 
 /* Tiga agenda terdekat; selebihnya ada di halaman /event. */
@@ -16,7 +66,12 @@ const eventsData = eventData.slice(0, 3);
 export default function Events() {
   const formatDateBadge = (dateString) => {
     const dateObj = new Date(dateString);
-    const day = dateObj.getDate().toString().padStart(2, "0");
+
+    const day = dateObj
+      .getDate()
+      .toString()
+      .padStart(2, "0");
+
     const month = dateObj.toLocaleDateString("id-ID", {
       month: "short",
     });
@@ -24,25 +79,17 @@ export default function Events() {
     return `${day} ${month}`;
   };
 
-
   return (
     <section className="w-full bg-white font-body py-16 sm:py-24 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-        {/* Section Header */}
+        {/* =========================================
+            SECTION HEADER
+        ========================================= */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            ease: "easeOut",
-          }}
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportSettings}
           className="text-center mb-14 sm:mb-20"
         >
@@ -51,46 +98,69 @@ export default function Events() {
           </h2>
         </motion.div>
 
-        {/* Grid 3-Kolom Acara */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14 items-stretch">
+
+        {/* =========================================
+            EVENT GRID
+        ========================================= */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-3
+            gap-10
+            lg:gap-14
+            items-stretch
+          "
+        >
           {eventsData.map((item, index) => (
             <motion.article
               key={item.id}
-              initial={{
-                opacity: 0,
-                y: 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.8,
-                ease: "easeOut",
-                delay: index * 0.15,
-              }}
-              viewport={viewportSettings}
+              variants={cardVariants}
               className="h-full"
             >
               <Link
                 to={`/event/${item.slug}`}
-                className="flex flex-col justify-between h-full bg-white rounded-md border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                className="
+                  flex
+                  flex-col
+                  justify-between
+                  h-full
+                  bg-white
+                  rounded-md
+                  border
+                  border-gray-100
+                  shadow-sm
+                  hover:shadow-md
+                  transition-shadow
+                  overflow-hidden
+                  group
+                "
               >
-                {/* Visual Header / Gambar Acara */}
+
+                {/* =====================================
+                    EVENT IMAGE
+                ===================================== */}
                 <div className="relative h-48 w-full overflow-hidden bg-gray-100">
+
                   <motion.div
                     initial={{
-                      filter: "grayscale(100%)",
-                      scale: 1.02,
+                      opacity: 0,
+                      scale: 1.08,
+                      filter: "grayscale(100%) blur(3px)",
                     }}
                     whileInView={{
-                      filter: "grayscale(0%)",
+                      opacity: 1,
                       scale: 1,
+                      filter: "grayscale(0%) blur(0px)",
                     }}
                     transition={{
                       duration: 1.3,
                       ease: "easeOut",
-                      delay: 0.15 + index * 0.15,
+                      delay: 0.1 + index * 0.12,
                     }}
                     viewport={viewportSettings}
                     className="w-full h-full"
@@ -103,7 +173,8 @@ export default function Events() {
                         h-full
                         object-cover
                         transition-transform
-                        duration-500
+                        duration-700
+                        ease-out
                         group-hover:scale-105
                       "
                     />
@@ -111,54 +182,109 @@ export default function Events() {
 
                 </div>
 
-                {/* Card Content */}
+
+                {/* =====================================
+                    CARD CONTENT
+                ===================================== */}
                 <motion.div
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.7,
-                    ease: "easeOut",
-                    delay: 0.25 + index * 0.15,
-                  }}
-                  viewport={viewportSettings}
+                  variants={itemVariants}
                   className="p-6 space-y-4"
                 >
+
                   {/* Date */}
-                  <span className="text-xs font-semibold tracking-wider text-primary uppercase">
+                  <motion.span
+                    variants={itemVariants}
+                    className="
+                      text-xs
+                      font-semibold
+                      tracking-wider
+                      text-primary
+                      uppercase
+                    "
+                  >
                     {formatDateBadge(item.date)}
-                  </span>
+                  </motion.span>
 
-                  {/* Judul Acara */}
-                  <h3 className="font-heading font-bold text-base lg:text-lg text-heading leading-snug group-hover:text-primary transition-colors cursor-pointer line-clamp-2">
+
+                  {/* Title */}
+                  <motion.h3
+                    variants={itemVariants}
+                    className="
+                      font-heading
+                      font-bold
+                      text-base
+                      lg:text-lg
+                      text-heading
+                      leading-snug
+                      group-hover:text-primary
+                      transition-colors
+                      cursor-pointer
+                      line-clamp-2
+                    "
+                  >
                     {item.title}
-                  </h3>
+                  </motion.h3>
 
-                  {/* Ringkasan Deskripsi */}
-                  <p className="text-xs sm:text-sm text-body line-clamp-3 leading-relaxed">
+
+                  {/* Description */}
+                  <motion.p
+                    variants={itemVariants}
+                    className="
+                      text-xs
+                      sm:text-sm
+                      text-body
+                      line-clamp-3
+                      leading-relaxed
+                    "
+                  >
                     {item.description}
-                  </p>
+                  </motion.p>
+
                 </motion.div>
+
               </Link>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Tautan ke halaman agenda lengkap */}
-        <div className="mt-12 sm:mt-16 flex justify-start">
+
+        {/* =========================================
+            VIEW ALL
+        ========================================= */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="mt-12 sm:mt-16 flex justify-start"
+        >
           <Link
             to="/event"
-            className="inline-flex  gap-2 text-xs font-bold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/all"
+            className="
+              inline-flex
+              gap-2
+              text-xs
+              font-bold
+              tracking-wider
+              text-primary
+              hover:text-[#680000]
+              uppercase
+              transition-colors
+              group/all
+            "
           >
             <span>LIHAT SEMUA AGENDA</span>
-            <FiArrowRight className="text-sm transition-transform duration-200 group-hover/all:translate-x-1" />
+
+            <FiArrowRight
+              className="
+                text-sm
+                transition-transform
+                duration-200
+                group-hover/all:translate-x-1
+              "
+            />
           </Link>
-        </div>
+        </motion.div>
 
       </div>
     </section>

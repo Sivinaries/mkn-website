@@ -1,10 +1,77 @@
+import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
 import { useT } from "../../i18n/languageContext";
 
+const viewportSettings = {
+  once: true,
+  amount: 0.2,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const headerItemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const navItemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 15,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+const contentVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
 const subMenus = [
-  { path: "uts-uas", label: { id: "UTS / UAS", en: "Midterm / Final" } },
-  { path: "tesis", label: { id: "Tesis", en: "Thesis" } },
+  {
+    path: "uts-uas",
+    label: { id: "UTS / UAS", en: "Midterm / Final" },
+  },
+  {
+    path: "tesis",
+    label: { id: "Tesis", en: "Thesis" },
+  },
 ];
 
 const halaman = {
@@ -23,11 +90,14 @@ const halaman = {
         "Notarial Law Study Programme.",
     },
   },
-    label: {
+  label: {
     id: "AKADEMIK",
     en: "ACADEMIC",
   },
-  judul: { id: "Panduan Ujian", en: "Examination Guidelines" },
+  judul: {
+    id: "Panduan Ujian",
+    en: "Examination Guidelines",
+  },
   intro: {
     id:
       "Panduan resmi pelaksanaan ujian di Program Magister Kenotariatan UNISSULA, " +
@@ -47,42 +117,93 @@ export default function PanduanUjian() {
     <>
       <Helmet>
         <title>{t(halaman.meta.title)}</title>
-        <meta name="description" content={t(halaman.meta.description)} />
+        <meta
+          name="description"
+          content={t(halaman.meta.description)}
+        />
       </Helmet>
 
       <div className="space-y-6">
-        <div>
-          <span className="text-xs font-bold tracking-[0.16em] uppercase text-primary block">
+        {/* Header */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+        >
+          <motion.span
+            variants={headerItemVariants}
+            className="text-xs font-bold tracking-[0.16em] uppercase text-primary block"
+          >
             {t(halaman.label)}
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight">
+          </motion.span>
+
+          <motion.h1
+            variants={headerItemVariants}
+            className="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold text-heading tracking-tight leading-tight"
+          >
             {t(halaman.judul)}
-          </h1>
-        </div>
+          </motion.h1>
+
+          {/* Animated underline */}
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: "100%" }}
+            transition={{
+              duration: 0.9,
+              ease: "easeOut",
+              delay: 0.15,
+            }}
+            viewport={viewportSettings}
+            className="h-[2px] bg-primary mt-4"
+          />
+        </motion.div>
 
         {/* Sub-navigation */}
-        <div className="flex gap-2 border-b border-gray-200 pb-0 overflow-x-auto scrollbar-none">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportSettings}
+          className="flex gap-2 border-b border-gray-200 pb-0 overflow-x-auto scrollbar-none"
+        >
           {subMenus.map((item) => (
-            <NavLink
+            <motion.div
               key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `shrink-0 whitespace-nowrap px-4 py-3 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase transition-colors border-b-2 -mb-px ${
-                  isActive
-                    ? "text-primary border-primary"
-                    : "text-body border-transparent hover:text-heading hover:border-gray-300"
-                }`
-              }
+              variants={navItemVariants}
+              whileHover={{
+                y: -2,
+                transition: {
+                  duration: 0.2,
+                },
+              }}
             >
-              {t(item.label)}
-            </NavLink>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `shrink-0 whitespace-nowrap inline-block px-4 py-3 text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase transition-colors border-b-2 -mb-px ${
+                    isActive
+                      ? "text-primary border-primary"
+                      : "text-body border-transparent hover:text-heading hover:border-gray-300"
+                  }`
+                }
+              >
+                {t(item.label)}
+              </NavLink>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Sub-page content */}
-        <div className="pt-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={contentVariants}
+          viewport={viewportSettings}
+          className="pt-2"
+        >
           <Outlet />
-        </div>
+        </motion.div>
       </div>
     </>
   );

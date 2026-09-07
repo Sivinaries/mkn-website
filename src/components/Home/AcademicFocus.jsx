@@ -12,6 +12,46 @@ const viewportSettings = {
   amount: 0.2,
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    x: -30,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function AcademicFocus() {
   const featured = beritaList[0];
   const sideArticles = beritaList.slice(1, 4);
@@ -22,36 +62,28 @@ export default function AcademicFocus() {
 
         {/* Section Header */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            ease: "easeOut",
-          }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportSettings}
           className="flex flex-col sm:flex-row sm:items-end justify-between pb-6 border-b border-gray-200 gap-4"
         >
-          <div>
-
+          <motion.div variants={itemVariants}>
             <h2 className="text-3xl sm:text-4xl md:text-[38px] font-heading font-normal text-heading tracking-normal">
               Berita Terbaru
             </h2>
-          </div>
+          </motion.div>
 
-          <Link
-            to="/berita"
-            className="inline-flex items-center space-x-1 text-xs font-bold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group pb-1"
-          >
-            <span>LIHAT SEMUA BERITA</span>
+          <motion.div variants={itemVariants}>
+            <Link
+              to="/berita"
+              className="inline-flex items-center space-x-1 text-xs font-bold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group pb-1"
+            >
+              <span>LIHAT SEMUA BERITA</span>
 
-            <FiArrowRight className="text-sm transition-transform duration-200 group-hover:translate-x-1" />
-          </Link>
+              <FiArrowRight className="text-sm transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* Content Grid */}
@@ -59,18 +91,9 @@ export default function AcademicFocus() {
 
           {/* Main Featured Article */}
           <motion.article
-            initial={{
-              opacity: 0,
-              y: 40,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
-            }}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={viewportSettings}
             className="lg:col-span-8 flex flex-col group"
           >
@@ -81,15 +104,19 @@ export default function AcademicFocus() {
             >
               <motion.div
                 initial={{
-                  filter: "grayscale(100%)",
+                  opacity: 0,
+                  scale: 1.08,
+                  filter: "grayscale(100%) blur(3px)",
                 }}
                 whileInView={{
-                  filter: "grayscale(0%)",
+                  opacity: 1,
+                  scale: 1,
+                  filter: "grayscale(0%) blur(0px)",
                 }}
                 transition={{
                   duration: 1.5,
                   ease: "easeOut",
-                  delay: 0.2,
+                  delay: 0.1,
                 }}
                 viewport={viewportSettings}
                 className="w-full h-full"
@@ -103,99 +130,121 @@ export default function AcademicFocus() {
                     object-cover
                     object-center
                     transition-transform
-                    duration-500
+                    duration-700
+                    ease-out
                     group-hover:scale-105
                     rounded-md
                   "
                 />
               </motion.div>
 
-              <span className="absolute top-4 left-4 bg-black/85 text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
-                BERITA UTAMA
-              </span>
-            </Link>
-
-            {/* Article Content */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                ease: "easeOut",
-                delay: 0.25,
-              }}
-              viewport={viewportSettings}
-              className="pt-6"
-            >
-              <Link
-                to={`/berita/${generateSlug(featured.title, featured.slug)}`}
-              >
-                <h3 className="font-heading font-normal text-2xl sm:text-3xl lg:text-3xl text-heading leading-snug group-hover:text-primary transition-colors">
-                  {featured.title}
-                </h3>
-              </Link>
-
-              <p className="mt-3.5 text-sm sm:text-base text-body leading-relaxed max-w-3xl line-clamp-3">
-                {featured.content}
-              </p>
-
-              <div className="mt-4 pt-1">
-                <span className="text-xs font-medium tracking-widest text-gray-400 uppercase">
-                  {featured.author} &nbsp;|&nbsp; {featured.tanggal}
-                </span>
-              </div>
-            </motion.div>
-          </motion.article>
-
-          {/* Side Articles */}
-          <div className="lg:col-span-4 space-y-7 lg:border-l lg:border-gray-200 lg:pl-10">
-            {sideArticles.map((article, index) => (
-              <motion.article
-                key={article.id}
+              <motion.span
                 initial={{
                   opacity: 0,
-                  y: 35,
+                  y: -10,
                 }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
                 }}
                 transition={{
-                  duration: 0.7,
+                  duration: 0.6,
                   ease: "easeOut",
-                  delay: index * 0.12,
+                  delay: 0.7,
                 }}
                 viewport={viewportSettings}
+                className="absolute top-4 left-4 bg-black/85 text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider"
+              >
+                BERITA UTAMA
+              </motion.span>
+            </Link>
+
+            {/* Article Content */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportSettings}
+              className="pt-6"
+            >
+              <motion.div variants={itemVariants}>
+                <Link
+                  to={`/berita/${generateSlug(featured.title, featured.slug)}`}
+                >
+                  <h3 className="font-heading font-normal text-2xl sm:text-3xl lg:text-3xl text-heading leading-snug group-hover:text-primary transition-colors">
+                    {featured.title}
+                  </h3>
+                </Link>
+              </motion.div>
+
+              <motion.p
+                variants={itemVariants}
+                className="mt-3.5 text-sm sm:text-base text-body leading-relaxed max-w-3xl line-clamp-3"
+              >
+                {featured.content}
+              </motion.p>
+
+              <motion.div
+                variants={itemVariants}
+                className="mt-4 pt-1"
+              >
+                <span className="text-xs font-medium tracking-widest text-gray-400 uppercase">
+                  {featured.author} &nbsp;|&nbsp; {featured.tanggal}
+                </span>
+              </motion.div>
+            </motion.div>
+          </motion.article>
+
+          {/* Side Articles */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportSettings}
+            className="lg:col-span-4 space-y-7 lg:border-l lg:border-gray-200 lg:pl-10"
+          >
+            {sideArticles.map((article) => (
+              <motion.article
+                key={article.id}
+                variants={itemVariants}
                 className="space-y-2 group pb-7 border-b border-gray-100 last:border-b-0 last:pb-0"
               >
-                <span className="text-xs font-bold tracking-wider text-primary uppercase block">
-                  {article.tags}
-                </span>
-
-                <Link
-                  to={`/berita/${generateSlug(article.title, article.slug)}`}
+                <motion.span
+                  variants={itemVariants}
+                  className="text-xs font-bold tracking-wider text-primary uppercase block"
                 >
-                  <h4 className="font-heading font-normal text-lg text-heading leading-snug group-hover:text-primary transition-colors cursor-pointer">
-                    {article.title}
-                  </h4>
-                </Link>
+                  {article.tags}
+                </motion.span>
 
-                <p className="text-sm text-body leading-relaxed line-clamp-2">
+                <motion.div variants={itemVariants}>
+                  <Link
+                    to={`/berita/${generateSlug(
+                      article.title,
+                      article.slug
+                    )}`}
+                  >
+                    <h4 className="font-heading font-normal text-lg text-heading leading-snug group-hover:text-primary transition-colors cursor-pointer">
+                      {article.title}
+                    </h4>
+                  </Link>
+                </motion.div>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-sm text-body leading-relaxed line-clamp-2"
+                >
                   {article.content}
-                </p>
+                </motion.p>
 
-                <span className="text-xs font-medium tracking-wider text-gray-400 uppercase block pt-1">
+                <motion.span
+                  variants={itemVariants}
+                  className="text-xs font-medium tracking-wider text-gray-400 uppercase block pt-1"
+                >
                   {article.tanggal}
-                </span>
+                </motion.span>
               </motion.article>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </div>
