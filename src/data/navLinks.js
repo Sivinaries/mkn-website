@@ -180,6 +180,10 @@ export const navLinks = [
     children: [
       { title: { id: "Ruang Kelas", en: "Classrooms" }, href: "/fasilitas/ruang-kelas" },
       {
+        title: { id: "Ruang Seminar", en: "Seminar Rooms" },
+        href: "/fasilitas/ruang-seminar",
+      },
+      {
         title: { id: "Laboratorium Akta", en: "Deed Laboratory" },
         href: "/fasilitas/laboratorium-akta",
       },
@@ -191,8 +195,11 @@ export const navLinks = [
         title: { id: "Pusat Riset Mahasiswa", en: "Student Research Center" },
         href: "/fasilitas/student-research-center",
       },
+      {
+        title: { id: "Podcast Kenotariatan", en: "Notary Podcast" },
+        href: "/fasilitas/podcast-kenotariatan",
+      },
       { title: { id: "Perpustakaan", en: "Library" }, href: "/fasilitas/perpustakaan" },
-      { title: { id: "Moot Court", en: "Moot Court" }, href: "/fasilitas/moot-court" },
     ],
   },
   {

@@ -1,7 +1,7 @@
 import { FaFilePdf } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import FacilitySectionHeader from "./FacilitySectionHeader";
-import Img from "../ui/Img";
+import FacilityGallery from "./FacilityGallery";
 
 /**
  * Isi halaman satu fasilitas: pengantar, galeri foto, video profil, daftar
@@ -26,43 +26,7 @@ export default function FacilityContent({ data }) {
       </section>
 
       {/* Galeri — foto pertama dibuat lebar penuh sebagai gambar utama */}
-      {galeri?.length > 0 && (
-        <section className="space-y-4">
-          <figure className="relative w-full aspect-[16/10] lg:aspect-[21/9] bg-neutral-100 overflow-hidden rounded-xs group">
-            <Img
-              src={galeri[0].src}
-              alt={galeri[0].keterangan}
-              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            <figcaption className="absolute bottom-4 left-5 right-5 text-white text-xs sm:text-sm font-medium drop-shadow-md">
-              {galeri[0].keterangan}
-            </figcaption>
-          </figure>
-
-          {galeri.length > 1 && (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {galeri.slice(1).map((foto) => (
-                <figure
-                  key={foto.keterangan}
-                  className="border border-gray-200 bg-white rounded-xs overflow-hidden"
-                >
-                  <div className="aspect-[4/3] bg-neutral-100 overflow-hidden">
-                    <Img
-                      src={foto.src}
-                      alt={foto.keterangan}
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-                  <figcaption className="p-3 text-xs text-gray-500 leading-relaxed border-t border-gray-100">
-                    {foto.keterangan}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+      <FacilityGallery galeri={galeri} />
 
       {/* Video profil — sengaja tanpa autoplay dan preload="none" supaya berkas
           besarnya baru diunduh ketika pengunjung menekan putar. */}

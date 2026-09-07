@@ -10,10 +10,9 @@ const informasiMenus =
   navLinks.find((n) => n.href === "/informasi" || n.href === "/penerimaan")?.children ?? [];
 
 const akademikContact = {
-  title: "KONTAK",
+  title: "KONTAK PMB",
   groups: [
     {
-      label: "PMB",
       items: [
         { name: "Hotline", phone: "+62 822-2362-2236" },
         { name: " ", phone: "+62 822-2000-9889" },

@@ -49,7 +49,7 @@ export default function CareerCenter() {
 
         <hr className="border-t border-gray-800 my-4" />
 
-        <p className="text-sm sm:text-base text-body leading-relaxed max-w-4xl">{pengantar}</p>
+        <p className="text-sm sm:text-base text-body text-justify leading-relaxed">{pengantar}</p>
 
         {/* Angka kunci */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
@@ -91,7 +91,7 @@ export default function CareerCenter() {
                     <h3 className="font-heading font-bold text-lg text-heading leading-snug">
                       {p.judul}
                     </h3>
-                    <p className="text-xs sm:text-sm text-body leading-relaxed">{p.desc}</p>
+                    <p className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto text-justify">{p.desc}</p>
                   </div>
                 </div>
                 <p className="text-[11px] text-gray-500 pt-2 border-t border-gray-100">{p.dasar}</p>
@@ -99,12 +99,17 @@ export default function CareerCenter() {
             ))}
           </div>
 
-          {/* Catatan magang */}
-          <div className="p-6 border-l-3 border-l-primary border border-gray-200 bg-gray-50/70 rounded-xs">
-            <p className="text-xs font-bold tracking-wider uppercase text-heading mb-2">
-              Sering disalahpahami
+          {/* Ketentuan magang, dikutip dari peraturan */}
+          <div className="p-6 border-l-3 border-l-primary border border-gray-200 bg-gray-50/70 rounded-xs space-y-4">
+            <p className="text-xs font-bold tracking-wider uppercase text-heading">
+              {catatanMagang.judul}
             </p>
-            <p className="text-xs sm:text-sm text-body leading-relaxed">{catatanMagang}</p>
+            {catatanMagang.butir.map((b, idx) => (
+              <div key={idx} className="space-y-1.5">
+                <p className="text-xs sm:text-sm text-body text-justify leading-relaxed">{b.isi}</p>
+                <p className="text-[11px] text-gray-500">{b.dasar}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -113,7 +118,7 @@ export default function CareerCenter() {
           <h2 className="font-heading font-bold text-xl sm:text-2xl text-heading tracking-tight">
             Delapan Syarat Pengangkatan
           </h2>
-          <p className="text-xs sm:text-sm text-body leading-relaxed max-w-4xl">
+          <p className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto max-w-4xl">
             Seluruh syarat berikut harus dipenuhi calon Notaris menurut Pasal 2 ayat (1) Permenkum
             22/2025.
           </p>
@@ -125,7 +130,7 @@ export default function CareerCenter() {
                   <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-red-50 text-primary flex items-center justify-center">
                     <FiCheck className="w-3 h-3 stroke-[2.5]" />
                   </span>
-                  <span className="text-xs sm:text-sm text-body leading-relaxed">{s}</span>
+                  <span className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">{s}</span>
                 </li>
               ))}
             </ul>
@@ -159,7 +164,7 @@ export default function CareerCenter() {
                       <span className="shrink-0 tabular-nums text-gray-400 text-xs pt-0.5 select-none">
                         {idx + 1}.
                       </span>
-                      <span className="text-xs sm:text-sm text-body leading-relaxed">{b}</span>
+                      <span className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">{b}</span>
                     </li>
                   ))}
                 </ol>
@@ -175,7 +180,7 @@ export default function CareerCenter() {
           <h2 className="font-heading font-bold text-xl sm:text-2xl text-heading tracking-tight">
             Tahapan Pendaftaran Daring
           </h2>
-          <p className="text-xs sm:text-sm text-body leading-relaxed max-w-4xl">
+          <p className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto max-w-4xl">
             Seluruh permohonan diajukan secara elektronik melalui ahu.go.id. Jadwal tiap tahap
             ditetapkan Ditjen AHU pada setiap pembukaan pendaftaran.
           </p>
@@ -192,7 +197,7 @@ export default function CareerCenter() {
                 <h3 className="font-heading font-bold text-base text-heading leading-snug">
                   {t.judul}
                 </h3>
-                <p className="mt-1.5 text-xs sm:text-sm text-body leading-relaxed max-w-4xl">
+                <p className="mt-1.5 text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto max-w-4xl">
                   {t.desc}
                 </p>
               </li>
@@ -207,7 +212,7 @@ export default function CareerCenter() {
           </h2>
 
           <div className="p-6 border border-gray-200 bg-white rounded-xs space-y-4 shadow-2xs">
-            <p className="text-xs sm:text-sm text-body leading-relaxed">{pindahWilayah.ringkas}</p>
+            <p className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">{pindahWilayah.ringkas}</p>
 
             <div className="pt-2 border-t border-gray-100 space-y-2.5">
               <p className="text-xs font-bold tracking-wider uppercase text-heading">
@@ -219,7 +224,7 @@ export default function CareerCenter() {
                     <span className="shrink-0 tabular-nums text-gray-400 text-xs pt-0.5 select-none">
                       {idx + 1}.
                     </span>
-                    <span className="text-xs sm:text-sm text-body leading-relaxed">{d}</span>
+                    <span className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">{d}</span>
                   </li>
                 ))}
               </ol>
@@ -262,7 +267,7 @@ export default function CareerCenter() {
             </table>
           </div>
 
-          <p className="text-xs text-body leading-relaxed">{biaya.catatan}</p>
+          <p className="text-xs text-body leading-relaxed text-justify hyphens-auto">{biaya.catatan}</p>
           <p className="text-[11px] text-gray-500 leading-relaxed">{biaya.dasar}</p>
         </section>
 
@@ -278,13 +283,13 @@ export default function CareerCenter() {
                 <span className="shrink-0 tabular-nums text-gray-400 text-xs pt-0.5 select-none">
                   {idx + 1}.
                 </span>
-                <span className="text-xs sm:text-sm text-body leading-relaxed">{d}</span>
+                <span className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">{d}</span>
               </li>
             ))}
           </ol>
 
           <div className="p-6 border-l-3 border-l-primary border border-gray-200 bg-gray-50/70 rounded-xs space-y-3">
-            <p className="text-xs sm:text-sm text-body leading-relaxed">
+            <p className="text-xs sm:text-sm text-body leading-relaxed text-justify hyphens-auto">
               Halaman ini merupakan rangkuman yang disusun program studi dari {sumberResmi.dokumen}.
               Persyaratan, jadwal, formasi wilayah, dan tarif dapat berubah mengikuti peraturan
               terbaru. Rujukan resmi dan terkini adalah laman {sumberResmi.nama}.

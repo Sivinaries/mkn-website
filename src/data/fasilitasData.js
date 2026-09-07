@@ -13,8 +13,6 @@
  * galeri daripada memakai foto fasilitas lain yang bukan miliknya.
  */
 
-import imgMootCourt from "../assets/images/fasilitas-moodcourt.jpeg";
-
 import labAkta1 from "../assets/images/fasilitas/lab-akta/lab-akta-1.png";
 import labAkta2 from "../assets/images/fasilitas/lab-akta/lab-akta-2.png";
 import labAkta3 from "../assets/images/fasilitas/lab-akta/lab-akta-3.png";
@@ -37,6 +35,15 @@ import kelas2C from "../assets/images/fasilitas/ruang-kelas/ruang-kelas-2c.jpg";
 import kelas2D from "../assets/images/fasilitas/ruang-kelas/ruang-kelas-2d.jpg";
 import kelas3F from "../assets/images/fasilitas/ruang-kelas/ruang-kelas-3f.jpg";
 import kelas3F2 from "../assets/images/fasilitas/ruang-kelas/ruang-kelas-3f-2.jpg";
+
+import seminarLt3 from "../assets/images/fasilitas/ruang-seminar/lt3/seminar-lt3.jpg";
+import seminarLt3Kegiatan from "../assets/images/fasilitas/ruang-seminar/lt3/seminar-lt3-2.jpg";
+import seminarLt1 from "../assets/images/fasilitas/ruang-seminar/lt1/seminar-lt1.jpg";
+import seminarLt1Kegiatan from "../assets/images/fasilitas/ruang-seminar/lt1/seminar-lt1-2.jpg";
+
+import podcastProduksi from "../assets/images/fasilitas/podcast/podcast-2.jpeg";
+import podcastSet from "../assets/images/fasilitas/podcast/podcast-1.jpeg";
+import podcastWawancara from "../assets/images/fasilitas/podcast/podcast-3.jpeg";
 
 export const laboratoriumAktaData = {
   header: {
@@ -168,23 +175,94 @@ export const ruangKelasData = {
   ],
 };
 
-export const mootCourtData = {
+/**
+ * Ruang Seminar terdiri atas dua ruangan dengan peruntukan berbeda, sehingga
+ * datanya dipisah dan halamannya menampilkan keduanya berurutan.
+ */
+export const ruangSeminarLantai3Data = {
   header: {
-    number: "06",
-    category: "PERADILAN SEMU",
-    title: "Laboratorium Peradilan Semu (Moot Court)",
+    category: "RUANG SEMINAR",
+    title: "Ruang Seminar Lantai 3 (Aula Fakultas Hukum)",
     paragraphs: [
-      "Memahami dinamika litigasi mutlak dibutuhkan calon Notaris/PPAT agar produk hukum yang dibuatnya aman dari celah sengketa. Laboratorium Peradilan Semu mereplikasi suasana ruang sidang yang sesungguhnya.",
-      "Fasilitas ini membiasakan mahasiswa menganalisis sengketa perdata atas sebuah akta, mempertahankan minuta akta di pengadilan, hingga bersimulasi memberikan keterangan ahli di muka majelis hakim.",
+      "Aula Fakultas Hukum Universitas Islam Sultan Agung (UNISSULA) merupakan fasilitas representatif yang digunakan untuk mendukung berbagai kegiatan akademik dan kelembagaan dalam skala besar. Aula ini dimanfaatkan untuk seminar nasional dan internasional, kuliah umum, konferensi, workshop, Focus Group Discussion (FGD), pembekalan mahasiswa, kegiatan kemahasiswaan, rapat terbuka, serta berbagai kegiatan akademik dan institusional lainnya.",
+      "Dengan kapasitas peserta yang besar dan penataan ruang bergaya auditorium, aula mendukung penyelenggaraan kegiatan secara tertib, nyaman, dan profesional.",
     ],
   },
   fasilitas: [
-    "Tata panggung ruang sidang lengkap: meja majelis hakim, meja panitera, serta meja penggugat/jaksa dan tergugat/kuasa hukum.",
-    "Kursi tersendiri untuk pemeriksaan saksi atau saksi ahli di tengah ruangan.",
-    "Palu sidang serta atribut pakaian dan toga untuk berbagai fungsi dalam persidangan.",
-    "Area tempat duduk tribun bagi pengunjung sidang untuk observasi pembelajaran mahasiswa lain.",
+    "Panggung utama.",
+    "Podium.",
+    "Meja dan kursi narasumber.",
+    "Kursi peserta dalam jumlah memadai.",
+    "Layar/display berukuran besar.",
+    "Sistem tata suara dan mikrofon.",
+    "Lighting.",
+    "Sistem pendingin udara (AC).",
   ],
   galeri: [
-    { src: imgMootCourt, keterangan: "Ruang peradilan semu program studi" },
+    { src: seminarLt3, keterangan: "Tata ruang aula bergaya auditorium" },
+    {
+      src: seminarLt3Kegiatan,
+      keterangan: "Aula saat digunakan untuk kegiatan akademik",
+    },
+  ],
+};
+
+export const ruangSeminarLantai1Data = {
+  header: {
+    category: "RUANG SEMINAR",
+    title: "Ruang Seminar Lantai 1",
+    paragraphs: [
+      "Ruang Seminar Lantai 1 Fakultas Hukum Universitas Islam Sultan Agung (UNISSULA) merupakan fasilitas akademik yang digunakan untuk mendukung berbagai kegiatan program studi dan fakultas, terutama ujian skripsi, tesis, ujian proposal, disertasi, rapat akademik, rapat koordinasi, diskusi ilmiah, pembekalan mahasiswa, serta pertemuan dengan dosen maupun mitra eksternal.",
+      "Ruang ini memiliki tata letak yang fleksibel sehingga dapat disesuaikan dengan kebutuhan kegiatan, baik dalam bentuk ruang ujian, forum rapat, maupun kegiatan seminar dan diskusi kelompok.",
+    ],
+  },
+  fasilitas: [
+    "Meja dan kursi peserta.",
+    "Meja penguji atau pimpinan rapat.",
+    "Podium.",
+    "LCD projector.",
+    "Layar presentasi.",
+    "Sistem tata suara dan speaker.",
+    "Lighting.",
+    "Pendingin udara (AC).",
+  ],
+  galeri: [
+    {
+      src: seminarLt1,
+      keterangan: "Meja penguji dan tata letak ruang seminar lantai 1",
+    },
+    {
+      src: seminarLt1Kegiatan,
+      keterangan: "Ruang seminar saat digunakan untuk Diklat Calon PPAT",
+    },
+  ],
+};
+
+export const podcastData = {
+  header: {
+    category: "PODCAST",
+    title: "Ruang Podcast Kenotariatan",
+    paragraphs: [
+      "Ruang Podcast Program Studi Magister Kenotariatan (M.Kn.) Fakultas Hukum UNISSULA merupakan fasilitas penunjang pembelajaran dan komunikasi akademik yang digunakan untuk produksi konten edukatif, wawancara dengan pakar dan praktisi, diskusi isu-isu kenotariatan, sosialisasi kegiatan program studi, serta diseminasi hasil penelitian dan pengabdian kepada masyarakat.",
+      "Keberadaan ruang podcast ini mendukung pengembangan pembelajaran berbasis media digital sekaligus memperluas penyebaran informasi dan pengetahuan hukum kenotariatan kepada mahasiswa, alumni, praktisi, dan masyarakat.",
+    ],
+  },
+  fasilitas: [
+    "Kamera video.",
+    "Tripod.",
+    "Mikrofon.",
+    "Headphone.",
+    "Perangkat perekam dan pengolah audio.",
+    "Lighting/softbox.",
+    "Monitor/display.",
+    "Meja dan kursi untuk narasumber.",
+  ],
+  galeri: [
+    {
+      src: podcastProduksi,
+      keterangan: "Proses perekaman podcast dengan tata lampu dan kamera",
+    },
+    { src: podcastSet, keterangan: "Set wawancara ruang podcast" },
+    { src: podcastWawancara, keterangan: "Sesi wawancara bersama narasumber" },
   ],
 };

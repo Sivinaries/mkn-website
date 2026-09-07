@@ -70,16 +70,37 @@ export const prasyarat = [
 ];
 
 /**
- * Catatan yang paling sering disalahpahami mahasiswa.
+ * Ketentuan magang, disalin dari rumusan peraturan.
  *
- * Magang 24 bulan ini BERBEDA dari Sertifikat Magang yang menjadi syarat
- * kelulusan program studi — lihat panduanEvaluasiData.js, syaratKelulusan.
+ * HANYA MEMUAT YANG TERTULIS DI DOKUMEN. Versi sebelumnya menyimpulkan bahwa
+ * magang ini berbeda dari Sertifikat Magang yang menjadi syarat kelulusan
+ * prodi — kesimpulan itu dicabut karena dokumen Ditjen AHU tidak menyebut
+ * syarat kelulusan prodi sama sekali, dan "Panduan Magang dan Ujian Magang"
+ * prodi belum pernah diterima sehingga durasi maupun waktunya tidak diketahui.
+ * Kaitan antara keduanya baru boleh ditulis setelah panduan itu ada.
  */
-export const catatanMagang =
-  "Magang 24 bulan ini dihitung SETELAH lulus strata dua kenotariatan, sehingga berbeda dari " +
-  "magang yang menjadi syarat kelulusan Program Studi Magister Kenotariatan. Sertifikat Magang " +
-  "yang diserahkan untuk yudisium tidak menggantikan surat keterangan magang 24 bulan yang " +
-  "dipersyaratkan Kementerian Hukum.";
+export const catatanMagang = {
+  judul: "Kapan Magang 24 Bulan Dihitung",
+  butir: [
+    {
+      isi:
+        "Calon Notaris telah menjalani magang atau nyata-nyata telah bekerja sebagai karyawan " +
+        "Notaris dalam waktu paling singkat 24 (dua puluh empat) bulan berturut-turut pada " +
+        "kantor Notaris, atas prakarsa sendiri atau atas rekomendasi Organisasi Notaris, " +
+        "setelah lulus strata dua kenotariatan.",
+      dasar: "Pasal 2 ayat (1) huruf f Permenkum 22/2025",
+    },
+    {
+      isi:
+        "Asli surat keterangan magang di kantor Notaris atau keterangan telah bekerja sebagai " +
+        "karyawan Notaris harus diketahui oleh Organisasi Notaris dan mendapatkan rekomendasi " +
+        "dari Organisasi Notaris, dalam waktu paling singkat 24 (dua puluh empat) bulan " +
+        "berturut-turut setelah lulus strata dua kenotariatan atau pendidikan spesialis " +
+        "notariat.",
+      dasar: "Pasal 2 ayat (2) huruf f Permenkum 22/2025",
+    },
+  ],
+};
 
 /** Pasal 2 ayat (1) Permenkum 22/2025 — delapan syarat pengangkatan. */
 export const syaratPengangkatan = [

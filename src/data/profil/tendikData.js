@@ -16,7 +16,7 @@
 
 import imgIkrom from "../../assets/images/struktur-organisasi/ikrom.jpg";
 import imgDirLab from "../../assets/images/struktur-organisasi/doni-catur-saefudin.jpg";
-import imgDirPerpus from "../../assets/images/struktur-organisasi/anugrah-surya-kusuma-2.jpg";
+import imgDirPerpus from "../../assets/images/struktur-organisasi/hengky.png";
 import imgAkademik from "../../assets/images/struktur-organisasi/sumain.jpg";
 import imgKeuangan from "../../assets/images/struktur-organisasi/laili-rohmah.jpg";
 import imgPromosi1 from "../../assets/images/struktur-organisasi/muhammad-mutohar.jpg";
@@ -42,7 +42,7 @@ export const tenagaKependidikan = [
   {
     jabatan: "Direktur Perpustakaan",
     name: "R. Hengky Aditya Wibisono S.E.",
-    photo: null,
+    photo: imgDirPerpus,
     tugas:
       "Pengelolaan koleksi pustaka hukum kenotariatan, layanan referensi, dan dukungan literatur penelitian tesis.",
   },

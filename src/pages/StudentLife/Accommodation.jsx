@@ -5,8 +5,10 @@ import { FiCheck } from "react-icons/fi";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import PageTabs from "../../components/ui/PageTabs";
+import HeroSlideshow from "../../components/ui/HeroSlideshow";
 import FacilitySectionHeader from "../../components/Fasilitas/FacilitySectionHeader";
-import { akomodasiData } from "../../data/akomodasiData";
+import FacilityGallery from "../../components/Fasilitas/FacilityGallery";
+import { akomodasiData, akomodasiHeroSlides } from "../../data/akomodasiData";
 
 const akomodasiTabs = [
   {
@@ -38,33 +40,15 @@ export default function Accommodation() {
         {/* Header Navbar */}
         <Navbar />
 
-        {/* Hero Section (Persis sama dengan FasilitasHero) */}
-        <section className="relative w-full bg-neutral-900 text-white overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <img
-              src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=2000&q=80"
-              alt="Kampus UNISSULA"
-              className="w-full h-full object-cover object-center filter brightness-50 contrast-105 rounded-md hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/70" />
-          </div>
-
-          <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24">
-            <div className="max-w-3xl space-y-4">
-              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-300">
-                Akomodasi
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-medium text-hero-heading leading-tight tracking-tight">
-                Hunian di Lingkungan Kampus
-              </h1>
-              <p className="text-sm sm:text-base lg:text-lg text-hero-description font-normal leading-relaxed pt-2">
-                Dua kelompok akomodasi menopang kenyamanan studi dan aktivitas di Magister
-                Kenotariatan, dari asrama mahasiswa berkarakter islami hingga wisma tamu
-                representatif bagi keluarga wisudawan dan tamu universitas.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Hero Section — komponen yang sama dengan hero Fasilitas. Putaran
+            fotonya tetap sama di kedua tab, jadi latarnya tidak ikut berganti
+            saat pengunjung berpindah antara asrama dan guest house. */}
+        <HeroSlideshow
+          fotoLatar={akomodasiHeroSlides}
+          eyebrow="Akomodasi"
+          judul="Hunian di Lingkungan Kampus"
+          deskripsi="Dua kelompok akomodasi menopang kenyamanan studi dan aktivitas di Magister Kenotariatan, dari asrama mahasiswa berkarakter islami hingga wisma tamu representatif bagi keluarga wisudawan dan tamu universitas."
+        />
 
         {/* Sticky Page Tabs (Persis sama dengan komponen tab di Fasilitas) */}
         <PageTabs tabs={akomodasiTabs} ariaLabel="Akomodasi Tabs" />
@@ -80,6 +64,9 @@ export default function Accommodation() {
                 paragraphs={item.header.paragraphs}
               />
             </section>
+
+            {/* Galeri foto akomodasi — komponen yang sama dengan halaman Fasilitas */}
+            <FacilityGallery galeri={item.galeri} />
 
             {/*
               Fasilitas Utama.

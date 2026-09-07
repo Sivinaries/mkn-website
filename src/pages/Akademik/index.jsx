@@ -11,10 +11,9 @@ const akademikMenus = navLinks.find((n) => n.href === "/akademik")?.children ?? 
 
 /** Narahubung akademik dan PMB, dikelompokkan agar terbaca rapi di sidebar. */
 const akademikContact = {
-  title: "KONTAK",
+  title: "KONTAK AKADEMIK",
   groups: [
     {
-      label: "Akademik",
       items: [
         { name: "Suma’in, S.Pd.", phone: "+62 823-1222-8282" },
         { name: "Ikrom, S.H., M.H.", phone: "+62 823-1222-8181" },

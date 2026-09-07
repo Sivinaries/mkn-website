@@ -18,6 +18,11 @@ export default function Announcement() {
   const featured = displayList[0];
   const sideArticles = displayList.slice(1, 4);
 
+  // Tidak semua pengumuman menyertakan flyer. Tanpa gambar, kartu utama jadi
+  // jauh lebih pendek daripada daftar di kolom kanan, jadi tampilannya
+  // disesuaikan agar tepi bawah kedua kolom tetap sejajar.
+  const hasFlyer = Boolean(featured.gambar);
+
   return (
     <section className="w-full bg-hero-headingy font-body py-16 sm:py-20 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,8 +64,9 @@ export default function Announcement() {
           </Link>
         </motion.div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pt-10 items-start">
+        {/* Content Grid — sengaja items-stretch (bukan items-start) supaya
+            kolom kiri bisa mengisi setinggi daftar di kolom kanan */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pt-10 items-stretch">
 
           {/* Main Featured Article */}
           <motion.article
@@ -77,10 +83,10 @@ export default function Announcement() {
               ease: "easeOut",
             }}
             viewport={viewportSettings}
-            className="lg:col-span-7 flex flex-col group"
+            className="lg:col-span-7 flex flex-col h-full group"
           >
             {/* Featured Announcement Image */}
-            {featured.gambar && (
+            {hasFlyer && (
               <Link
                 to={`/berita/${generateSlug(featured.title, featured.slug)}`}
                 className="overflow-hidden rounded-xs bg-gray-100 border border-gray-200 aspect-16/9 sm:aspect-21/9 relative block"
@@ -114,9 +120,23 @@ export default function Announcement() {
                 delay: 0.25,
               }}
               viewport={viewportSettings}
-              className="pt-5"
+              /* Tanpa flyer, blok isi mengambil sisa tinggi kolom (flex-1) dan
+                 diberi bingkai + pita aksen, sehingga ruang kosongnya terbaca
+                 sebagai padding kartu, bukan gap yang menggantung. */
+              className={
+                hasFlyer
+                  ? "pt-5"
+                  : "flex-1 flex flex-col bg-white border border-gray-200 rounded-xs border-l-3 border-l-primary p-6 sm:p-8"
+              }
             >
               <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 mb-2">
+                {/* Tanpa flyer, badge kategori tidak punya tempat menempel,
+                    jadi ikut ke baris metadata seperti kartu di kolom kanan */}
+                {!hasFlyer && featured.kategori && (
+                  <span className="text-[10px] font-bold tracking-wider text-primary uppercase bg-red-50 border border-primary/20 px-2 py-0.5 rounded-xs">
+                    {featured.kategori}
+                  </span>
+                )}
                 <span className="font-bold text-primary uppercase tracking-wider tabular-nums">
                   {featured.tanggal}
                 </span>
@@ -138,12 +158,23 @@ export default function Announcement() {
                 </h3>
               </Link>
 
-              <p className="mt-3 text-sm sm:text-base text-body leading-relaxed max-w-3xl line-clamp-3">
+              {/* Tanpa flyer ada ruang vertikal lebih, jadi ringkasannya
+                  boleh lebih panjang — mengisi tinggi kolom dengan isi, bukan
+                  dengan ruang kosong. */}
+              <p
+                className={`mt-3 text-sm sm:text-base text-body leading-relaxed max-w-3xl ${
+                  hasFlyer ? "line-clamp-3" : "line-clamp-6"
+                }`}
+              >
                 {featured.content}
               </p>
 
               {featured.lampiran && featured.lampiran.length > 0 && (
-                <div className="mt-4 pt-3 border-t border-gray-200/60 flex items-center gap-2">
+                <div
+                  className={`border-t border-gray-200/60 flex flex-wrap items-center gap-x-2 gap-y-1 ${
+                    hasFlyer ? "mt-4 pt-3" : "mt-auto pt-6"
+                  }`}
+                >
                   <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
                     Lampiran Tersedia:
                   </span>

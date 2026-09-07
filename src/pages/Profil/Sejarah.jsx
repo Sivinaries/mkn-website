@@ -1,10 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { FaFilePdf } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
+import { FiExternalLink, FiImage } from "react-icons/fi";
 
 import { useT } from "../../i18n/languageContext";
 import RichText from "../../components/ui/RichText";
-import Img from "../../components/ui/Img";
 import { timeline, halaman } from "../../data/profil/sejarahData";
 
 export default function Sejarah() {
@@ -63,34 +62,50 @@ export default function Sejarah() {
                   }`}
                 />
 
-                {/* Naskah di kiri, sertifikat di kanan pada layar lebar */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-start">
-                  <div className={item.sertifikat ? "lg:col-span-7" : "lg:col-span-12"}>
-                    <div className="font-heading font-bold text-xl sm:text-2xl text-primary leading-none tabular-nums">
-                      {item.year}
-                    </div>
-
-                    <h3 className="mt-2 font-heading font-semibold text-base sm:text-lg text-heading leading-snug">
-                      <RichText>{t(item.title)}</RichText>
-                    </h3>
-
-                    <p className="mt-1.5 text-sm sm:text-base text-body leading-relaxed max-w-3xl">
-                      <RichText>{t(item.desc)}</RichText>
-                    </p>
-
-                    {item.meta && (
-                      <p className="mt-2.5 text-xs text-gray-500 leading-relaxed">
-                        {t(item.meta)}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Kartu sertifikat: gambar dibuka ukuran penuh di tab baru,
-                      SK-nya menyusul sebagai tautan PDF di bawahnya. Orientasi
-                      sertifikat berbeda-beda (potret & lanskap), jadi gambar
-                      dipasang object-contain di dalam bingkai berukuran tetap. */}
-                  
+                <div className="font-heading font-bold text-xl sm:text-2xl text-primary leading-none tabular-nums">
+                  {item.year}
                 </div>
+
+                <h3 className="mt-2 font-heading font-semibold text-base sm:text-lg text-heading leading-snug">
+                  <RichText>{t(item.title)}</RichText>
+                </h3>
+
+                <p className="mt-1.5 text-sm sm:text-base text-body text-justify leading-relaxed max-w-3xl">
+                  <RichText>{t(item.desc)}</RichText>
+                </p>
+
+                {item.meta && (
+                  <p className="mt-2.5 text-xs text-gray-500 leading-relaxed">{t(item.meta)}</p>
+                )}
+
+                {/* Berkas bukti: sertifikat (gambar) dan SK (PDF), keduanya
+                    dibuka di tab baru agar pembaca tidak kehilangan posisi
+                    bacanya pada linimasa. */}
+                {item.sertifikat && (
+                  <div className="mt-3.5 flex flex-wrap items-center gap-x-5 gap-y-2">
+                    <a
+                      href={item.sertifikat.gambar}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                    >
+                      <FiImage className="text-sm shrink-0" />
+                      <span>{t(halaman.labelSertifikat)}</span>
+                      <FiExternalLink className="text-[11px] shrink-0 opacity-70" />
+                    </a>
+
+                    <a
+                      href={item.sertifikat.dokumen.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                    >
+                      <FaFilePdf className="text-sm shrink-0" />
+                      <span>{t(item.sertifikat.dokumen.label)}</span>
+                      <FiExternalLink className="text-[11px] shrink-0 opacity-70" />
+                    </a>
+                  </div>
+                )}
               </li>
             ))}
           </ol>

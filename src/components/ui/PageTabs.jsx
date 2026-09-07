@@ -67,11 +67,20 @@ export default function PageTabs({
           containerClassName
         )}
       >
-        {/* Horizontal Navigation Tabs */}
+        {/*
+          Horizontal Navigation Tabs.
+
+          Di bawah lg bilahnya tetap digulir mendatar — membungkus tujuh tab di
+          layar sempit menghasilkan blok yang terlalu tinggi. Mulai lg tab
+          dibiarkan membungkus ke baris berikutnya supaya tidak ada tab yang
+          tersembunyi di luar layar tanpa penanda apa pun: penggulirnya sengaja
+          tanpa scrollbar, jadi tab yang meluber praktis tak terlihat.
+        */}
         <nav
           ref={navRef}
           className={clsx(
-            "flex items-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none py-0 w-full flex-1 scroll-smooth overscroll-x-contain touch-pan-x",
+            "flex items-center gap-x-5 sm:gap-x-7 gap-y-0 overflow-x-auto scrollbar-none py-0 w-full flex-1 scroll-smooth overscroll-x-contain touch-pan-x",
+            "lg:flex-wrap lg:overflow-x-visible",
             navClassName
           )}
           aria-label={ariaLabel}
@@ -95,7 +104,10 @@ export default function PageTabs({
                 ref={isActive ? activeTabRef : null}
                 aria-current={isActive ? "page" : undefined}
                 className={clsx(
-                  "shrink-0 whitespace-nowrap py-3.5 sm:py-4 text-xs sm:text-sm font-semibold tracking-[0.14em] uppercase transition-colors border-b-2",
+                  // Jarak huruf dirapatkan dari 0.14em ke 0.1em: dengan tujuh
+                  // tab, selisih itu saja sudah menentukan muat atau tidaknya
+                  // bilah pada layar 1280–1440px.
+                  "shrink-0 whitespace-nowrap py-3.5 sm:py-4 text-xs sm:text-sm font-semibold tracking-widest uppercase transition-colors border-b-2",
                   isActive
                     ? clsx("border-primary text-primary", activeTabClassName)
                     : clsx(

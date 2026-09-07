@@ -1,62 +1,104 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import Img from "../ui/Img";
 
 import Fatiroh from "../../assets/images/testi/fatiroh.png";
 import Ismail from "../../assets/images/testi/ismail-fahmi.png";
 import Nurizka from "../../assets/images/testi/nurizka-fida.png";
 import Wahyu from "../../assets/images/testi/wahyu-noto.png";
+import Siget from "../../assets/images/testi/ipda-siget.png";
+import Laeli from "../../assets/images/testi/laeli-nurchamidah.png";
+import hetiyasari from "../../assets/images/testi/hetiyasari.png";
 
 const viewportSettings = {
   once: true,
   amount: 0.2,
 };
 
+/**
+ * Jumlah kartu yang tampil sekaligus.
+ *
+ * Daftar di bawah boleh diisi sebanyak apa pun; tombol navigasi muncul sendiri
+ * begitu jumlahnya lebih dari satu halaman. Sisa kartu pada halaman terakhir
+ * tetap rata kiri karena grid-nya berkolom tetap.
+ */
+const PER_HALAMAN = 5;
+
 const testimonialData = [
   {
     id: 1,
-    name: "Fatiroh SH M.HUM M.Kn",
+    name: "Fatiroh, S.H., M.Hum., M.Kn.",
     description:
       "Pendidikan yang menuntut dan pengalaman menangani kasus hukum nyata membekali saya dengan sangat baik untuk berkarier di bidang hukum korporasi.",
     image: Fatiroh,
-    role: "Alumni 2013",
-    linkHref: "/alumni/andi-wijaya",
+    role: "Alumni 2015",
   },
   {
     id: 2,
-    name: "Ismail Fahmi, SH, MH, M.Kn",
+    name: "Ismail Fahmi, S.H., M.H., M.Kn.",
     description:
       "Bimbingan para dosen dan lingkungan yang saling mendukung membuat perjalanan studi hukum saya benar-benar mengubah cara pandang.",
     image: Ismail,
-    role: "Alumni 2020",
-    linkHref: "/alumni/siti-aminah",
+    role: "Alumni 2026",
   },
   {
     id: 3,
     name: "Nurizka Firda, S.H., M.Kn., CFP, CWM",
     description:
-      "Mengikuti kompetisi peradilan semu memberi saya kepercayaan diri dan keterampilan praktis yang dibutuhkan di ruang sidang.",
+      "Kuliah di Magister Kenotariatan itu emang butuh perjuangan ekstra, bukan cuma soal paham teori, tapi juga ngelatih ketelitian dan menjaga integritas. Kelak ketika setiap akta yang kalian buat punya dampak besar buat hidup orang lain. Tetap pegang teguh kejujuran dan etika, serta jangan pernah lelah buat terus update ilmu karena hukum bakal selalu berkembang.",
     image: Nurizka,
-    role: "Mahasiswa Tingkat Akhir",
-    linkHref: "/mahasiswa/budi-santoso",
+    role: "Alumni 2024",
   },
   {
     id: 4,
-    name: "Wahyu Noto Wibowo,S.H.,M.Kn",
+    name: "Wahyu Noto Wibowo, S.H., M.Kn.",
     description:
-      "Institusi yang tidak sekadar mengajarkan hukum, tetapi menanamkan etika, integritas, dan kepedulian pada keadilan kepada setiap mahasiswanya.",
+      "Kampus yang banyak sekali mencetak Notaris dan PPAT yang Bonafit, mempunyai program yang solid, terakreditasi unggul dengan penguatan karakter keIslaman yang sangat Khas serta di dukung oleh Dosen  praktisi yang berpengalaman dan ternama serta staff administrasi yang handal. Maju terus UNISSULA !!!",
     image: Wahyu,
     role: "Alumni 2015",
-    linkHref: "/alumni/diana-putri",
+  },
+  {
+    id: 5,
+    name: "IPDA SIGET P., S.H., M.H., M.Kn., M.A.P.",
+    description:
+      "Terima kasih UNISSULA sudah memberikan 3 gelar master, jaya di darat, laut dan udara, UNISSULAKU",
+    image: Siget,
+    role: "Alumni 2024",
+  },
+  {
+    id: 6,
+    name: "Dr. Hetiyasari, S.H., M.Kn.",
+    description:
+      "Magister Kenotariatan UNISSULA telah membentuk saya secara ilmu dan karakter. Dari mahasiswa perantau hingga kini mengabdi sebagai dosen, semua berawal di sini.   Semoga prodi terus melahirkan lulusan yang berilmu, berintegritas, dan bermanfaat bagi bangsa. ",
+    image: hetiyasari,
+    role: "Alumni 2024",
+  },
+  {
+    id: 7,
+    name: "Hj. Laeli Nurchamidah, S.H., M.Kn.",
+    description:
+      "Salam untuk Generasi Khaira Ummah Para Alumni M.Kn UNISSULA di seluruh Indonesia yang saya banggakan, Kejar dan Tekad kan Mimpi jika Kalian sebagian besar ingin Menjadi Notaris - PPAT ikuti Step by Step aturan dan alurnya, Kalian Harus Bangga dengan Almamater mu, Kita bangun Alumni M.Kn UNISSULA Bermartabat, Kuat dan Berdayasaing Unggul.",
+    image: Laeli,
+    role: "Alumni 2015",
   },
 ];
 
 export default function Testimoni() {
+  const [halaman, setHalaman] = useState(0);
+
+  const jumlahHalaman = Math.ceil(testimonialData.length / PER_HALAMAN);
+  const mulai = halaman * PER_HALAMAN;
+  const tampil = testimonialData.slice(mulai, mulai + PER_HALAMAN);
+  const adaNavigasi = jumlahHalaman > 1;
+
+  // Berputar: dari halaman terakhir maju kembali ke halaman pertama.
+  const pindah = (arah) =>
+    setHalaman((kini) => (kini + arah + jumlahHalaman) % jumlahHalaman);
+
   return (
     <section className="w-full bg-white font-body py-16 sm:py-24 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Section Header */}
         <motion.div
           initial={{
@@ -79,9 +121,18 @@ export default function Testimoni() {
           </h2>
         </motion.div>
 
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-start">
-          {testimonialData.map((item, index) => (
+        {/*
+          Testimonials.
+
+          `key={halaman}` sengaja dipasang agar kartu dipasang ulang saat
+          halaman berganti, sehingga animasi masuk dan peralihan grayscale
+          ikut berjalan lagi.
+        */}
+        <div
+          key={halaman}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 items-start"
+        >
+          {tampil.map((item, index) => (
             <motion.article
               key={item.id}
               initial={{
@@ -156,16 +207,14 @@ export default function Testimoni() {
                     {item.name}
                   </h3>
 
-                  <p className="mt-3 text-sm text-body leading-relaxed italic">
+                  <p className="mt-3 text-sm text-body text-justify leading-relaxed italic">
                     &ldquo;{item.description}&rdquo;
                   </p>
                 </div>
 
                 {/* Link */}
                 <div className="pt-4 mt-auto">
-                  <div
-                    className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link"
-                  >
+                  <div className="inline-flex items-center space-x-1 text-xs font-semibold tracking-wider text-primary hover:text-[#680000] uppercase transition-colors group/link">
                     <span>{item.role}</span>
 
                     <FiChevronRight className="text-sm transition-transform duration-150 group-hover/link:translate-x-0.5" />
@@ -175,6 +224,46 @@ export default function Testimoni() {
             </motion.article>
           ))}
         </div>
+
+        {/* Navigasi halaman — hanya muncul bila kartunya lebih dari satu halaman */}
+        {adaNavigasi && (
+          <div className="mt-12 sm:mt-14 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => pindah(-1)}
+              aria-label="Testimoni sebelumnya"
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 text-heading hover:border-primary hover:bg-primary hover:text-white rounded-xs transition-colors cursor-pointer active:scale-95"
+            >
+              <FiChevronLeft className="text-lg" />
+            </button>
+
+            <div className="flex items-center gap-2.5">
+              {Array.from({ length: jumlahHalaman }, (_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setHalaman(i)}
+                  aria-label={`Halaman testimoni ${i + 1} dari ${jumlahHalaman}`}
+                  aria-current={i === halaman ? "true" : undefined}
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === halaman
+                      ? "w-8 bg-primary"
+                      : "w-3 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => pindah(1)}
+              aria-label="Testimoni berikutnya"
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 text-heading hover:border-primary hover:bg-primary hover:text-white rounded-xs transition-colors cursor-pointer active:scale-95"
+            >
+              <FiChevronRight className="text-lg" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

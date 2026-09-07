@@ -2,6 +2,7 @@ import imgIMANU1 from "../assets/images/imanu-4.jpeg";
 import imgIMANU3 from "../assets/images/pohon.jpg";
 import imgIMANU4 from "../assets/images/imanu-kegiatan.jpeg";
 import imgIMANU5 from "../assets/images/lomba-imanu.jpg";
+import imgIMANU6 from "../assets/images/imanu-1.jpeg";
 
 
 export const studentOrganizationsData = [
@@ -144,6 +145,7 @@ export const studentOrganizationsData = [
       { id: 1, title: " ", image: imgIMANU1 },
       { id: 2, title: " ", image: imgIMANU5 },
       { id: 3, title: " ", image: imgIMANU3 },
+      { id: 4, title: " ", image: imgIMANU6 },
     ],
 
     summary: [

@@ -11,9 +11,9 @@ import {
 import imgDekan from "../../assets/images/struktur-organisasi/dekan.png";
 import imgKaprodi from "../../assets/images/struktur-organisasi/kaprodi.png";
 import imgSekprodi from "../../assets/images/struktur-organisasi/sekprodi.png";
-import imgDenny from "../../assets/images/struktur-organisasi/dr-denny-suwondo.jpg";
-import imgSoegianto from "../../assets/images/struktur-organisasi/prof-dr-soegianto.jpg";
-import imgDirPerpus from "../../assets/images/struktur-organisasi/anugrah-surya-kusuma-2.jpg";
+import imgDenny from "../../assets/images/struktur-organisasi/denny.png";
+import imgSoegianto from "../../assets/images/struktur-organisasi/soegianto.png";
+import imgSurya from "../../assets/images/struktur-organisasi/anugrah-surya-kusuma-2.jpg";
 import Img from "../../components/ui/Img";
 import { tenagaKependidikan } from "../../data/profil/tendikData";
 
@@ -125,7 +125,7 @@ const pejabatPelaksana = [
       {
         jabatan: "Anggota Gugus Penjaminan Mutu",
         name: "Anugrah Surya Kusuma, S.H., M.H.",
-        photo: imgDirPerpus,
+        photo: imgSurya,
       },
       
     ],

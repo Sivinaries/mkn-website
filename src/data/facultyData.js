@@ -27,6 +27,7 @@ import imgArpangi from "../assets/images/dosen/Prof. Dr. Arpangi S.H.,M.H..png";
 import imgAris from "../assets/images/dosen/Dr. Moh. Aris Siswanto, S.H., M.H..png";
 import imgSriKusriyah from "../assets/images/dosen/Dr. Hj. Sri Kusriyah, S.H., M.Hum..png";
 import imgWidhiHandoko from "../assets/images/dosen/Prof. Dr. Widhi Handoko, S.H., Sp.N.png";
+import imgShallman from "../assets/images/dosen/Dr. Shallman, S.H.,M.Kn.png";
 
 export const facultyData = [
   {
@@ -1351,7 +1352,7 @@ export const facultyData = [
       "Dalam Program Studi Magister Kenotariatan (MKn), beliau mengampu mata kuliah inti praktik Teknik Pembuatan Akta Umum (TPA I), Hukum Perusahaan dan Perkembangan Pasar Modal, serta Laboratorium Akta 1.",
       "Karya publikasi beliau berfokus pada kekuatan pembuktian akta notaris, penyelesaian kredit bermasalah di bank perkreditan rakyat, serta perlindungan hukum akta perjanjian konsorsium proyek infrastruktur.",
     ],
-    image: null,
+    image: imgShallman,
     imageCaption: "Potret Dr. Shallman, S.H., M.Kn.",
     courses: [
       { name: "Teknik Pembuatan Akta Umum (TPA I)", placement: "Semester 1", sks: 2 },

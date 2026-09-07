@@ -1,119 +1,36 @@
-import { useEffect, useState } from "react";
 import {
   ruangKelasData,
+  ruangSeminarLantai3Data,
   laboratoriumAktaData,
   laboratoriumManajemenKantorData,
+  podcastData,
   perpustakaanData,
-  mootCourtData,
 } from "../../data/fasilitasData";
+import HeroSlideshow from "../ui/HeroSlideshow";
 
+/**
+ * Satu foto mewakili satu fasilitas, jadi hero-nya mengelilingi semuanya.
+ * Urutannya mengikuti urutan tab. Pusat Riset Mahasiswa belum menyerahkan
+ * foto, sehingga otomatis tersaring keluar.
+ */
 const fotoLatar = [
   ruangKelasData,
+  ruangSeminarLantai3Data,
   laboratoriumAktaData,
   laboratoriumManajemenKantorData,
+  podcastData,
   perpustakaanData,
-  mootCourtData,
 ]
   .map((fasilitas) => fasilitas.galeri?.[0])
   .filter(Boolean);
 
-const JEDA_MS = 3000;
-
 export default function FasilitasHero() {
-  const [aktif, setAktif] = useState(0);
-
-  useEffect(() => {
-    console.log("Jumlah foto:", fotoLatar.length);
-    console.log("Foto:", fotoLatar);
-
-    if (fotoLatar.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setAktif((prev) => {
-        const next = (prev + 1) % fotoLatar.length;
-
-        console.log("Slide:", prev, "→", next);
-
-        return next;
-      });
-    }, JEDA_MS);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
   return (
-    <section className="relative w-full bg-neutral-900 text-white overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
-        {fotoLatar.map((foto, idx) => (
-          <img
-            key={foto.src || idx}
-            src={foto.src}
-            alt=""
-            aria-hidden="true"
-            className={`
-              absolute inset-0
-              w-full h-full
-              object-cover object-center
-              brightness-50 contrast-105
-              transition-opacity duration-1000 ease-in-out
-              ${
-                idx === aktif
-                  ? "opacity-100"
-                  : "opacity-0"
-              }
-            `}
-          />
-        ))}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/70" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24">
-        <div className="max-w-3xl space-y-4">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gray-300">
-            Fasilitas
-          </span>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-medium text-hero-heading leading-tight tracking-tight">
-            Ruang untuk Belajar dan Meneliti
-          </h1>
-
-          <p className="text-sm sm:text-base lg:text-lg text-hero-description font-normal leading-relaxed pt-2">
-            Enam kelompok fasilitas menopang penyelenggaraan pendidikan
-            Magister Kenotariatan, dari ruang kelas dan laboratorium hingga
-            pusat riset mahasiswa, perpustakaan hukum, dan ruang peradilan
-            semu.
-          </p>
-        </div>
-      </div>
-
-      {/* Indicators */}
-      {fotoLatar.length > 1 && (
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-          {fotoLatar.map((foto, idx) => (
-            <button
-              key={foto.src || idx}
-              type="button"
-              onClick={() => setAktif(idx)}
-              className={`
-                h-1.5 rounded-full
-                transition-all duration-300
-                ${
-                  idx === aktif
-                    ? "w-7 bg-white"
-                    : "w-3 bg-white/40 hover:bg-white/70"
-                }
-              `}
-              aria-label={`Tampilkan foto ${idx + 1}`}
-              aria-current={idx === aktif}
-            />
-          ))}
-        </div>
-      )}
-    </section>
+    <HeroSlideshow
+      fotoLatar={fotoLatar}
+      eyebrow="Fasilitas"
+      judul="Ruang untuk Belajar dan Meneliti"
+      deskripsi="Tujuh kelompok fasilitas menopang penyelenggaraan pendidikan Magister Kenotariatan, dari ruang kelas, ruang seminar, dan laboratorium hingga pusat riset mahasiswa, ruang podcast, dan perpustakaan hukum."
+    />
   );
 }

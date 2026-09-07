@@ -113,7 +113,7 @@ export default function JobVacancies() {
 
           <hr className="border-t border-gray-800 my-4" />
 
-          <p className="text-sm sm:text-base text-body leading-relaxed max-w-4xl">
+          <p className="text-sm sm:text-base text-body text-justify leading-relaxed">
             Posisi karir bagi lulusan Magister Kenotariatan dari jaringan firma hukum, kantor notaris, institusi perbankan, dan instansi agraria mitra UNISSULA.
           </p>
 
@@ -143,7 +143,7 @@ export default function JobVacancies() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-heading tracking-tight leading-tight">
             Lowongan Pekerjaan & Magang
           </h1>
-          <p className="text-sm sm:text-base text-body leading-relaxed max-w-4xl">
+          <p className="text-sm sm:text-base text-body text-justify leading-relaxed max-w-4xl">
             Eksplorasi posisi karir eksklusif bagi lulusan Magister Kenotariatan dari jaringan firma hukum,
             kantor notaris terakreditasi, institusi perbankan, dan instansi agraria mitra UNISSULA.
           </p>

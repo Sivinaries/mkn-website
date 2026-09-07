@@ -19,7 +19,7 @@ export const eventData = [
     slug: "penglepasan-lulusan-ke-98-september-2026",
     title: "Penglepasan Lulusan Ke-98 Periode September 2026",
     date: "2026-09-18",
-    time: "14:00 - 17:30 WIB",
+    time: "14:00 sampai selesai",
     category: "Akademik & Kemahasiswaan",
     venue:
       "Gedung MAC (Majapahit Convention) / MAC Ballroom, Jl. Majapahit No.168, Gayamsari, Kota Semarang",
@@ -78,154 +78,45 @@ export const eventData = [
     isFeatured: true,
   },
   {
-    id: 3,
-    slug: "workshop-bedah-kasus-akta-perbankan-syariah",
-    title: "Workshop & Praktik: Teknik Penyusunan Akta Pembiayaan Perbankan Syariah & Hak Tanggungan",
-    date: "2026-09-02",
-    time: "08:30 - 15:00 WIB",
-    category: "Workshop & Praktik",
-    venue: "Laboratorium Kenotariatan & Peradilan Semu MKn UNISSULA",
-    speaker: "Praktisi Notaris Mitra Perbankan Syariah & Dosen Pengampu Hukum Perbankan",
-    organizer: "Laboratorium Kenotariatan UNISSULA",
-    description:
-      "Sesi simulasi intensif penyusunan klausula perjanjian murabahah, musyarakah mutanaqisah, dan proses pemasangan APHT elektronik terintegrasi.",
-    fullDescription:
-      "Peserta dibimbing langsung oleh notaris senior perbankan syariah dalam menelaah draf minuta, memeriksa syarat formal dan materiil, serta mencegah celah cacat yuridis dalam akta jaminan syariah.",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/workshop-akta",
-    cp: "Lab Kenotariatan: 0857-1234-5678",
-    isFeatured: false,
-  },
-  {
-    id: 4,
-    slug: "sidang-terbuka-promosi-doktor-dan-tesis-mkn",
-    title: "Sidang Ujian Tesis Terbuka Gelombang I Semester Gasal 2026/2027",
-    date: "2026-09-05",
-    time: "08:00 - 12:00 WIB",
-    category: "Ujian & Tesis",
-    venue: "Ruang Sidang Utama Pascasarjana Lt. 3",
-    speaker: "Dewan Penguji Tesis Magister Kenotariatan UNISSULA",
-    organizer: "Subbag Akademik Pascasarjana",
-    description:
-      "Pelaksanaan ujian komprehensif tesis mahasiswa Magister Kenotariatan di hadapan dewan penguji internal dan penguji eksternal dari kalangan praktisi notaris.",
-    fullDescription:
-      "Ujian terbuka ini menguji orisinalitas riset, metodologi penelitian hukum normatif maupun empiris, serta kontribusi temuan mahasiswa terhadap pembaharuan hukum kenotariatan di Indonesia.",
-    image:
-      "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/jadwal-ujian-tesis",
-    cp: "Sekretariat Pascasarjana",
-    isFeatured: false,
-  },
-  {
-    id: 5,
-    slug: "kuliah-tamu-internasional-hukum-bisnis-transnasional",
-    title: "International Guest Lecture: Cross-Border Contract Drafting and Notarial Systems in Common vs Civil Law",
-    date: "2026-09-10",
-    time: "13:30 - 16:00 WIB",
-    category: "Kuliah Pakar",
-    venue: "Ruang Pertemuan MKn 3.03 / Zoom Webinar Global",
-    speaker: "Visiting Professor from International Islamic University Malaysia (IIUM) & Leiden University",
-    organizer: "Kantor Urusan Internasional (KUI) & Prodi MKn UNISSULA",
-    description:
-      "Membahas komparasi peran notaris sipil (civil law notariat) dengan notary public dalam transaksi komersial transnasional dan klausula arbitrase internasional.",
-    fullDescription:
-      "Kuliah tamu internasional ini wajib diikuti oleh mahasiswa kelas reguler dan internasional guna memperluas wawasan perbandingan hukum perjanjian lintas batas negara.",
-    image:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/guest-lecture",
-    cp: "KUI UNISSULA: 0811-2233-4455",
-    isFeatured: true,
-  },
-  {
-    id: 6,
-    slug: "pelatihan-penggunaan-basis-data-hukum-perpustakaan",
-    title: "Pelatihan Literasi Hukum Digital: Penelusuran Jurnal Hukum Terindeks Scopus & Westlaw",
-    date: "2026-09-15",
-    time: "10:00 - 12:30 WIB",
-    category: "Akademik & Kemahasiswaan",
-    venue: "Perpustakaan Hukum & Laboratorium Komputer Hukum MKn",
-    speaker: "Tim Pustakawan Pascasarjana & Research Specialist",
-    organizer: "Perpustakaan Pascasarjana UNISSULA",
-    description:
-      "Panduan praktis akses pangkalan data jurnal hukum internasional gratis, sitasi Mendeley, dan teknik penelusuran putusan Mahkamah Agung untuk penyusunan tesis.",
-    fullDescription:
-      "Mahasiswa dilatih langsung menggunakan akun berlangganan kampus untuk mengunduh literatur primer dan sekunder bereputasi tinggi guna mendukung kelulusan tepat waktu.",
-    image:
-      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/pelatihan-literasi",
-    cp: "Perpustakaan: 024-6583584 ext. 221",
-    isFeatured: false,
-  },
-  {
-    id: 7,
-    slug: "yudisium-dan-pelepasan-calon-wisudawan-mkn-2026",
-    title: "Upacara Yudisium & Pelepasan Calon Wisudawan Magister Kenotariatan Periode September 2026",
-    date: "2026-09-22",
-    time: "08:00 - 13:00 WIB",
-    category: "Akademik & Kemahasiswaan",
-    venue: "Ballroom Hotel Grasia Semarang / Ruang Sidang Utama UNISSULA",
-    speaker: "Dekan Fakultas Hukum UNISSULA & Ketua Program Studi MKn",
-    organizer: "Program Studi Magister Kenotariatan UNISSULA",
-    description:
-      "Pengukuhan gelar Magister Kenotariatan (M.Kn.) bagi para lulusan yang telah menyelesaikan seluruh kurikulum dan publikasi ilmiah.",
-    fullDescription:
-      "Rangkaian acara sakral penetapan kelulusan, penyerahan transkrip akademik, serta pembekalan ikrar kesiapan memasuki dunia profesi hukum dan asosiasi kenotariatan.",
-    image:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/yudisium-mkn",
-    cp: "Panitia Yudisium: 0812-9988-7766",
-    isFeatured: true,
-  },
-  {
-    id: 8,
-    slug: "workshop-penulisan-jurnal-ilmiah-bereputasi-sinta-2",
-    title: "Coaching Clinic Penulisan Naskah Jurnal Hukum Kenotariatan Menuju SINTA 2 & Scopus",
-    date: "2026-09-28",
-    time: "09:00 - 15:30 WIB",
-    category: "Workshop & Praktik",
-    venue: "Student Research Center MKn Lantai 2",
-    speaker: "Editor in Chief Jurnal Hukum & Kenotariatan Terakreditasi SINTA 2",
-    organizer: "Student Research Center MKn UNISSULA",
-    description:
-      "Bimbingan one-on-one perbaikan naskah artikel mahasiswa, analisis novelty, dan strategi lolos peer review jurnal hukum nasional terakreditasi.",
-    fullDescription:
-      "Peserta wajib membawa draf naskah artikel tesis yang siap disunting bersama reviewer berpengalaman guna memenuhi syarat kelulusan magister.",
-    image:
-      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
-    registrationUrl: "https://unissula.ac.id/coaching-clinic",
-    cp: "Pusat Riset Mahasiswa: 0877-3344-5566",
-    isFeatured: false,
-  },
-  {
     id: 9,
     slug: "sultan-agung-fun-run-2026",
-    title: "Sultan Agung Fun Run",
+    // Naskah diambil dari dokumen prodi "Deskripsi Sultan Agung Fun Run 5.5K
+    // MKn UNISSULA", disiapkan khusus untuk publikasi di situs ini.
+    title: "Sultan Agung Fun Run 5.5K",
     date: "2026-09-27",
-    time: "06:00 - 10:00 WIB",
+    time: "05.00 WIB sampai selesai",
     category: "Akademik & Kemahasiswaan",
     venue:
       "Halaman Kantor Gubernur Jawa Tengah, Jl. Pahlawan No.9, Kota Semarang",
     organizer: "Universitas Islam Sultan Agung (UNISSULA)",
     description:
-      "Ajang lari bersama yang mempertemukan sivitas akademika UNISSULA, alumni, dan masyarakat umum dalam suasana sehat dan penuh silaturahmi di kawasan Kantor Gubernur Jawa Tengah.",
+      "Lari bersama sejauh 5,5 kilometer bertajuk “Bergerak Tanpa Batas”, dengan titik " +
+      "start dan finis di Kantor Gubernur Jawa Tengah, Kota Semarang.",
     fullDescription:
-      "Universitas Islam Sultan Agung menyelenggarakan Sultan Agung Fun Run sebagai ajang olahraga " +
-      "bersama yang terbuka bagi sivitas akademika, alumni, mitra, serta masyarakat umum. Kegiatan " +
-      "ini menjadi ruang temu lintas fakultas dan lintas angkatan dalam suasana yang sehat, santai, " +
-      "dan penuh kekeluargaan.\n\n" +
-      "Titik start dan finis mengambil tempat di halaman Kantor Gubernur Jawa Tengah, Jl. Pahlawan " +
-      "No.9, Kota Semarang, dengan rute yang melintasi ruas jalan protokol kota. Peserta diimbau " +
-      "hadir lebih awal untuk registrasi ulang, pengambilan nomor peserta, dan pemanasan bersama " +
-      "sebelum pelepasan.\n\n" +
-      "Bagi keluarga besar Magister Kenotariatan FH UNISSULA, kegiatan ini menjadi kesempatan " +
-      "mempererat silaturahmi antara mahasiswa, dosen, tenaga kependidikan, dan alumni di luar ruang " +
-      "kuliah, sekaligus mendukung budaya hidup sehat sebagai bagian dari kesiapan menjalankan " +
-      "profesi.\n\n" +
-      "Dengan semangat Bismillah Membangun Generasi Khaira Ummah, Sultan Agung Fun Run diharapkan " +
-      "tidak hanya menjadi perayaan olahraga, tetapi juga sarana memperkenalkan UNISSULA lebih dekat " +
-      "kepada masyarakat Kota Semarang.",
+      "Dalam rangka membangun semangat hidup sehat, kebersamaan, dan mempererat silaturahmi " +
+      "keluarga besar Sultan Agung bersama masyarakat, Sultan Agung Fun Run 5.5K akan " +
+      "diselenggarakan pada Minggu, 27 September 2026, mulai pukul 05.00 WIB hingga selesai, " +
+      "dengan titik start dan finish di Kantor Gubernur Jawa Tengah, Kota Semarang. Mengusung " +
+      "semangat “Bergerak Tanpa Batas”, kegiatan ini mengajak seluruh peserta menikmati " +
+      "olahraga lari sejauh 5,5 kilometer dalam suasana yang sehat, menyenangkan, dan penuh " +
+      "kebersamaan.\n\n" +
+      "Rute Fun Run akan melintasi sejumlah ruas utama Kota Semarang, dimulai dari Kantor " +
+      "Gubernur Jawa Tengah menuju Jl. Gajah Mada, Jl. Depok, Jl. Pemuda, Tugu Muda, " +
+      "Jl. Pandanaran, Jl. Tri Lomba Juang, Taman Indonesia Kaya, Jl. Pahlawan, kemudian " +
+      "kembali finis di Kantor Gubernur Jawa Tengah.\n\n" +
+      "Dengan biaya pendaftaran sebesar Rp125.000, peserta akan memperoleh berbagai fasilitas, " +
+      "antara lain jersey, medali, BIB, goodie bag, voucher MCU, refreshment, official photo, " +
+      "serta kesempatan mendapatkan beragam doorprize menarik. Hadiah yang disiapkan antara lain " +
+      "2 tiket umrah, 5 motor Scoopy, 10 sepeda listrik, 10 kulkas, 10 mesin cuci, 10 rice " +
+      "cooker, 10 LED TV, serta 10 logam mulia.\n\n" +
+      "Program Studi Magister Kenotariatan Fakultas Hukum UNISSULA turut mendukung semangat " +
+      "Sultan Agung Fun Run sebagai bagian dari upaya membangun budaya hidup sehat, memperkuat " +
+      "kebersamaan, serta menghadirkan interaksi positif antara sivitas akademika dan " +
+      "masyarakat. Melalui kegiatan ini, diharapkan semangat “Bergerak Tanpa Batas” " +
+      "tidak hanya diwujudkan melalui aktivitas olahraga, tetapi juga menjadi inspirasi untuk " +
+      "terus bergerak, berkarya, dan memberikan manfaat bagi sesama.",
     image: funrun,
+    cp: "+62 823-1222-8181 (Ikrom, S.H., M.H.)",
     isFeatured: true,
   },
 ];

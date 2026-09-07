@@ -98,6 +98,145 @@ const KATEGORI_TABS = [
   { key: "pengumuman", label: { id: "Pengumuman", en: "Announcements" } },
 ];
 
+/**
+ * Satu baris pengumuman, dengan dua varian tampilan.
+ *
+ * Tidak semua pengumuman menyertakan flyer. Entri tanpa gambar karena itu tidak
+ * dipaksa memakai kotak placeholder kosong: kartunya memakai lebar penuh dan
+ * diberi pita aksen di tepi kiri supaya bobot visualnya tetap setara dengan
+ * kartu bergambar. Bagian lainnya — kategori, tanggal, masa berlaku, judul,
+ * ringkasan, lampiran, dan tautan detail — identik di kedua varian sehingga
+ * daftarnya tetap terbaca sebagai satu ritme.
+ */
+function PengumumanCard({ item }) {
+  // getBeritaImage() punya fallback ke gambar berita utama saat path tidak
+  // ketemu, jadi "tanpa gambar" harus ditentukan dari datanya, bukan dari
+  // hasil resolusi path.
+  const itemImage = item.gambar ? getBeritaImage(item.gambar) : "";
+  const itemSlug = generateSlug(item.title, item.slug);
+  const lampiran = Array.isArray(item.lampiran) ? item.lampiran : [];
+
+  return (
+    <article className="group bg-white border border-gray-200 rounded-xs overflow-hidden hover:border-primary/40 hover:shadow-xs transition-all flex flex-col md:flex-row">
+      {itemImage ? (
+        /* Varian bergambar: kolom flyer di kiri (di atas pada layar kecil) */
+        <Link
+          to={`/berita/${itemSlug}`}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="relative shrink-0 overflow-hidden bg-gray-100 border-b md:border-b-0 md:border-r border-gray-200 h-48 sm:h-56 md:h-auto md:w-64 lg:w-72"
+        >
+          <Img
+            src={itemImage}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          />
+        </Link>
+      ) : (
+        /* Varian tanpa gambar: pita aksen sebagai pengganti kolom flyer */
+        <div
+          aria-hidden="true"
+          className="shrink-0 bg-primary h-1 w-full md:h-auto md:w-1.5"
+        />
+      )}
+
+      {/* Konten & Lampiran Pengumuman */}
+      <div className="p-5 sm:p-6 lg:p-7 flex-grow min-w-0 flex flex-col justify-between gap-4">
+        <div className="space-y-3">
+          {/* Metadata bar — kategori ikut di sini supaya entri tanpa flyer
+              tetap menampilkannya */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-gray-500">
+            {item.kategori && (
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-primary bg-red-50 border border-primary/20 px-2 py-0.5 rounded-xs">
+                <FiFileText className="text-[11px]" />
+                {item.kategori}
+              </span>
+            )}
+            <span className="font-bold text-primary uppercase tracking-wider tabular-nums">
+              {item.tanggal}
+            </span>
+            {item.berlakuHingga && item.berlakuHingga !== "—" && (
+              <>
+                <span className="text-gray-300">&bull;</span>
+                <span className="inline-flex items-center gap-1 text-[11px] bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-xs">
+                  <FiClock className="text-xs" />
+                  Berlaku s.d. {item.berlakuHingga}
+                </span>
+              </>
+            )}
+          </div>
+
+          {/* Judul Pengumuman */}
+          <h3 className="font-heading text-xl sm:text-2xl text-heading font-normal leading-snug group-hover:text-primary transition-colors">
+            <Link to={`/berita/${itemSlug}`}>{item.title}</Link>
+          </h3>
+
+          {/* Ringkasan Konten — kartu tanpa flyer punya ruang lebih lega,
+              jadi ringkasannya boleh satu baris lebih panjang */}
+          {item.content && (
+            <p
+              className={`text-sm text-body/80 leading-relaxed ${
+                itemImage
+                  ? "line-clamp-2 sm:line-clamp-3"
+                  : "line-clamp-3 sm:line-clamp-4"
+              }`}
+            >
+              {item.content}
+            </p>
+          )}
+        </div>
+
+        {/* Section Lampiran & Tombol Aksi */}
+        <div
+          className={`pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center gap-3 ${
+            lampiran.length > 0 ? "justify-between" : "justify-end"
+          }`}
+        >
+          {lampiran.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1">
+                <FiPaperclip className="text-primary text-xs" />
+                Lampiran:
+              </span>
+              {lampiran.map((file, idx) => (
+                <a
+                  key={idx}
+                  href={file.url}
+                  download={file.nama}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50/70 hover:bg-primary text-primary hover:text-white border border-primary/20 text-xs font-semibold rounded-xs transition-colors"
+                  title={`Unduh ${file.nama}`}
+                >
+                  <FiFileText className="text-xs" />
+                  <span className="truncate max-w-[150px] sm:max-w-[200px]">
+                    {file.judul || file.nama}
+                  </span>
+                  {file.ukuran && (
+                    <span className="text-[10px] opacity-75 font-normal">
+                      ({file.ukuran})
+                    </span>
+                  )}
+                  <FiDownload className="text-xs shrink-0" />
+                </a>
+              ))}
+            </div>
+          )}
+
+          {/* Tautan detail */}
+          <Link
+            to={`/berita/${itemSlug}`}
+            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-[#680000] transition-colors shrink-0 self-start sm:self-auto"
+          >
+            <span>Selengkapnya</span>
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function BeritaIndex() {
   const t = useT();
   const ui = useUi();
@@ -358,125 +497,9 @@ export default function BeritaIndex() {
 
               {pengumumanItems.length > 0 ? (
                 <div className="space-y-6">
-                  {pengumumanItems.map((item) => {
-                    const itemImage = getBeritaImage(item.gambar);
-                    const itemSlug = generateSlug(item.title, item.slug);
-
-                    return (
-                      <article
-                        key={item.id}
-                        className="group bg-white border border-gray-200 rounded-xs overflow-hidden hover:border-primary/40 hover:shadow-xs transition-all flex flex-col md:flex-row"
-                      >
-                        {/* Gambar / Flyer Pengumuman */}
-                        <div className="md:w-72 lg:w-80 shrink-0 bg-gray-100 overflow-hidden relative border-b md:border-b-0 md:border-r border-gray-200">
-                          <Link
-                            to={`/berita/${itemSlug}`}
-                            className="block h-52 sm:h-56 md:h-full w-full relative overflow-hidden"
-                            tabIndex={-1}
-                          >
-                            {itemImage ? (
-                              <Img
-                                src={itemImage}
-                                alt={item.title}
-                                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-red-50/50 text-primary/40 p-6 text-center">
-                                <FiFileText className="text-5xl" />
-                              </div>
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity md:hidden" />
-                          </Link>
-
-                          {/* Kategori Badge di sudut gambar */}
-                          {item.kategori && (
-                            <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-primary text-white px-2.5 py-0.5 rounded-xs shadow-2xs">
-                              {item.kategori}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Konten & Lampiran Pengumuman */}
-                        <div className="p-5 sm:p-6 lg:p-7 flex-grow flex flex-col justify-between space-y-4">
-                          <div className="space-y-3">
-                            {/* Metadata bar */}
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
-                              <span className="font-bold text-primary uppercase tracking-wider tabular-nums">
-                                {item.tanggal}
-                              </span>
-                              {item.berlakuHingga && item.berlakuHingga !== "—" && (
-                                <>
-                                  <span className="text-gray-300">&bull;</span>
-                                  <span className="inline-flex items-center gap-1 text-[11px] bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-xs">
-                                    <FiClock className="text-xs" />
-                                    Berlaku s.d. {item.berlakuHingga}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-
-                            {/* Judul Pengumuman */}
-                            <h3 className="font-heading text-xl sm:text-2xl text-heading font-normal leading-snug group-hover:text-primary transition-colors">
-                              <Link to={`/berita/${itemSlug}`}>
-                                {item.title}
-                              </Link>
-                            </h3>
-
-                            {/* Ringkasan Konten */}
-                            {item.content && (
-                              <p className="text-sm text-body/80 line-clamp-2 sm:line-clamp-3 leading-relaxed">
-                                {item.content}
-                              </p>
-                            )}
-                          </div>
-
-                          {/* Section Lampiran & Tombol Aksi */}
-                          <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            {/* Lampiran files jika ada */}
-                            {item.lampiran && item.lampiran.length > 0 ? (
-                              <div className="flex flex-wrap items-center gap-2">
-                                <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1">
-                                  <FiPaperclip className="text-primary text-xs" />
-                                  Lampiran:
-                                </span>
-                                {item.lampiran.map((file, idx) => (
-                                  <a
-                                    key={idx}
-                                    href={file.url}
-                                    download={file.nama}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50/70 hover:bg-primary text-primary hover:text-white border border-primary/20 text-xs font-semibold rounded-xs transition-colors group/btn"
-                                    title={`Unduh ${file.nama}`}
-                                  >
-                                    <FiFileText className="text-xs" />
-                                    <span className="truncate max-w-[150px] sm:max-w-[200px]">
-                                      {file.judul || file.nama}
-                                    </span>
-                                    <span className="text-[10px] opacity-75 font-normal">
-                                      ({file.ukuran})
-                                    </span>
-                                    <FiDownload className="text-xs shrink-0" />
-                                  </a>
-                                ))}
-                              </div>
-                            ) : (
-                              <div />
-                            )}
-
-                            {/* Tautan detail */}
-                            <Link
-                              to={`/berita/${itemSlug}`}
-                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-[#680000] transition-colors shrink-0 self-start sm:self-auto"
-                            >
-                              <span>Selengkapnya</span>
-                              <span aria-hidden="true">&rarr;</span>
-                            </Link>
-                          </div>
-                        </div>
-                      </article>
-                    );
-                  })}
+                  {pengumumanItems.map((item) => (
+                    <PengumumanCard key={item.id} item={item} />
+                  ))}
                 </div>
               ) : (
                 <div className="border border-dashed border-gray-300 bg-white p-10 sm:p-14 text-center rounded-xs">

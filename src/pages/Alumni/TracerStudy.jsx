@@ -23,7 +23,7 @@ export default function TracerStudy() {
 
         <hr className="border-t border-gray-800 my-4" />
 
-        <p className="text-sm sm:text-base text-body leading-relaxed max-w-4xl">
+        <p className="text-sm sm:text-base text-body text-justify leading-relaxed">
           Pemantauan berkala dan pelacakan jejak karir lulusan guna mengevaluasi efektivitas kurikulum,
           menjamin mutu lulusan, dan memperluas jejaring profesional kenotariatan di seluruh Indonesia.
         </p>

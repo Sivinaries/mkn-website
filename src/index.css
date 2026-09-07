@@ -89,3 +89,15 @@
     .img-skeleton { animation: none; }
     .img-fade-in { animation: none; }
 }
+
+/* Menyembunyikan batang gulir pada wadah yang digulir mendatar — tab, sidebar,
+   dan galeri geser. Kelas ini sudah dipakai di beberapa berkas sejak lama
+   tetapi belum pernah didefinisikan, sehingga selama ini tidak berefek. */
+@utility scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

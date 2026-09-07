@@ -20,10 +20,9 @@ export const fasilitasTabs = [
   },
   {
     label: { id: "PODCAST KENOTARIATAN", en: "NOTARY PODCAST" },
-    path: "/fasilitas/podcast-kenotarian",
+    path: "/fasilitas/podcast-kenotariatan",
   },
   { label: { id: "PERPUSTAKAAN", en: "LIBRARY" }, path: "/fasilitas/perpustakaan" },
-
 ];
 
 export default function FasilitasTabs({

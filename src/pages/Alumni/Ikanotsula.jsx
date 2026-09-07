@@ -6,6 +6,11 @@ import Keg1 from "../../assets/images/ikanot/keg1.jpeg";
 import Keg2 from "../../assets/images/ikanot/keg2.jpeg";
 import Keg3 from "../../assets/images/ikanot/keg3.jpeg";
 import Keg4 from "../../assets/images/ikanot/keg4.jpeg";
+import Keg5 from "../../assets/images/ikanot/keg5.jpg";
+import Keg6 from "../../assets/images/ikanot/keg6.jpg";
+import Keg7 from "../../assets/images/ikanot/keg7.jpg";
+import Keg8 from "../../assets/images/ikanot/keg8.jpg";
+import Keg9 from "../../assets/images/ikanot/keg9.jpg";
 
 // Data resmi IKANOTSULA & Lowongan Pekerjaan
 const ikanotsulaData = {
@@ -83,9 +88,14 @@ const ikanotsulaData = {
   ],
   gallery: [
     { id: 1, image: Keg1 },
-    { id: 2, image: Keg2 },
+    // { id: 2, image: Keg2 },
     { id: 3, image: Keg3 },
-    { id: 4, image: Keg4 },
+    // { id: 4, image: Keg4 },
+    { id: 5, image: Keg5 },
+    { id: 6, image: Keg6 },
+    { id: 7, image: Keg7 },
+    { id: 8, image: Keg8 },
+    { id: 9, image: Keg9 },
   ],
   pengurusInti: [
     {
@@ -189,7 +199,7 @@ export default function IkanotsulaDetail() {
           )}
 
           {/* NARASI & KUTIPAN */}
-          <section className="space-y-6 text-sm sm:text-base text-body leading-relaxed">
+          <section className="space-y-6 text-sm sm:text-base text-body text-justify leading-relaxed">
             {organization.narrative?.map((paragraph, idx) => (
               <p key={idx}>{paragraph}</p>
             ))}

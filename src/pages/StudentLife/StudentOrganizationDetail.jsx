@@ -1,12 +1,174 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { FiImage } from "react-icons/fi";
+import { FiImage, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Breadcrumb from "../../components/ui/Breadcrumb";
 import { studentOrganizationsData } from "../../data/studentOrganizationsData";
 import Img from "../../components/ui/Img";
+
+/** Jeda geser otomatis galeri, dalam milidetik. */
+const JEDA_GESER = 4000;
+
+/**
+ * Galeri geser mendatar.
+ *
+ * Memakai gulir asli peramban dengan scroll-snap, bukan transformasi manual:
+ * tata letak "tiga foto sekaligus" cukup diatur lewat `basis`, gulir sentuh
+ * dan papan ketik bekerja apa adanya, dan tidak perlu mengukur lebar elemen.
+ *
+ * Geser tetikus ditangani sendiri lewat pointer event karena gulir asli hanya
+ * merespons roda dan sentuhan, bukan seretan tetikus. Sentuhan sengaja
+ * dilewatkan agar tidak bentrok dengan gulir bawaan.
+ *
+ * Geser otomatis berhenti saat kursor berada di atas galeri, saat foto sedang
+ * diseret, dan saat pengguna memilih "kurangi gerakan" di sistemnya.
+ */
+function GaleriGeser({ foto }) {
+  const trekRef = useRef(null);
+  const [disorot, setDisorot] = useState(false);
+  const [sedangGeser, setSedangGeser] = useState(false);
+  const seret = useRef({ aktif: false, mulaiX: 0, mulaiGulir: 0 });
+
+  const lebarKartu = () => trekRef.current?.firstElementChild?.offsetWidth ?? 0;
+
+  // Berputar: sampai ujung kanan kembali ke awal, begitu pula sebaliknya.
+  // Dibungkus useCallback agar acuannya tetap, sehingga interval geser otomatis
+  // tidak disetel ulang pada tiap render. Isinya hanya menyentuh ref.
+  const geser = useCallback((arah) => {
+    const el = trekRef.current;
+    if (!el) return;
+
+    const maksimum = el.scrollWidth - el.clientWidth;
+    if (maksimum <= 0) return;
+
+    const langkah = lebarKartu();
+    let tujuan;
+
+    if (arah > 0) {
+      tujuan = el.scrollLeft >= maksimum - 1 ? 0 : Math.min(el.scrollLeft + langkah, maksimum);
+    } else {
+      tujuan = el.scrollLeft <= 1 ? maksimum : Math.max(el.scrollLeft - langkah, 0);
+    }
+
+    el.scrollTo({ left: tujuan, behavior: "smooth" });
+  }, []);
+
+  // Geser otomatis.
+  useEffect(() => {
+    if (disorot || sedangGeser) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = setInterval(() => geser(1), JEDA_GESER);
+    return () => clearInterval(id);
+  }, [disorot, sedangGeser, geser]);
+
+  const mulaiSeret = (e) => {
+    if (e.pointerType !== "mouse") return;
+    const el = trekRef.current;
+    if (!el) return;
+
+    seret.current = { aktif: true, mulaiX: e.clientX, mulaiGulir: el.scrollLeft };
+    setSedangGeser(true);
+    el.setPointerCapture(e.pointerId);
+  };
+
+  const selamaSeret = (e) => {
+    if (!seret.current.aktif) return;
+    const el = trekRef.current;
+    if (!el) return;
+
+    el.scrollLeft = seret.current.mulaiGulir - (e.clientX - seret.current.mulaiX);
+  };
+
+  const akhiriSeret = (e) => {
+    if (!seret.current.aktif) return;
+    seret.current.aktif = false;
+    setSedangGeser(false);
+
+    const el = trekRef.current;
+    if (el?.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+  };
+
+  return (
+    <section
+      className="w-full my-8 sm:my-14"
+      onMouseEnter={() => setDisorot(true)}
+      onMouseLeave={() => setDisorot(false)}
+      aria-roledescription="carousel"
+      aria-label="Galeri kegiatan"
+    >
+      <div
+        ref={trekRef}
+        tabIndex={0}
+        onPointerDown={mulaiSeret}
+        onPointerMove={selamaSeret}
+        onPointerUp={akhiriSeret}
+        onPointerCancel={akhiriSeret}
+        className={`flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-none select-none outline-none ${
+          sedangGeser ? "cursor-grabbing" : "cursor-grab"
+        }`}
+      >
+        {foto.map((item) => (
+          <div
+            key={item.id}
+            className="group relative shrink-0 basis-full md:basis-1/3 snap-start aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-[380px] xl:h-[440px] bg-gray-200 overflow-hidden border-r border-white/20 last:border-r-0"
+          >
+            {item.image ? (
+              <>
+                <Img
+                  src={item.image}
+                  alt={item.title}
+                  draggable={false}
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent flex items-end p-6 sm:p-8">
+                  <span className="text-sm sm:text-base md:text-lg font-medium text-white tracking-wide drop-shadow-md">
+                    {item.title}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className="absolute inset-0 bg-gray-100 border border-dashed border-gray-300 flex flex-col items-center justify-center text-center gap-2 p-6">
+                <FiImage className="text-3xl text-gray-300" />
+                <span className="text-sm sm:text-base font-medium text-heading">{item.title}</span>
+                <span className="text-xs text-gray-400 uppercase tracking-[0.14em]">
+                  Foto menyusul
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Tombol arah — cadangan bagi yang tidak menyeret; muncul hanya bila
+          fotonya memang lebih banyak daripada yang muat sekali tampil. */}
+      {foto.length > 3 && (
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => geser(-1)}
+              aria-label="Foto sebelumnya"
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 bg-white text-heading hover:border-primary hover:bg-primary hover:text-white rounded-xs transition-colors cursor-pointer active:scale-95"
+            >
+              <FiChevronLeft className="text-lg" />
+            </button>
+            <button
+              type="button"
+              onClick={() => geser(1)}
+              aria-label="Foto berikutnya"
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 bg-white text-heading hover:border-primary hover:bg-primary hover:text-white rounded-xs transition-colors cursor-pointer active:scale-95"
+            >
+              <FiChevronRight className="text-lg" />
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
 
 /** Judul seksi dengan garis tebal, dipakai berulang di kolom utama. */
 function JudulSeksi({ children }) {
@@ -55,7 +217,16 @@ export default function StudentOrganizationDetail() {
         <meta name="description" content={organization.description} />
       </Helmet>
 
-      <main className="flex flex-col min-h-screen bg-banner font-body text-body overflow-x-hidden">
+      {/*
+        overflow-x-CLIP, bukan -hidden.
+
+        `overflow-x: hidden` membuat overflow-y ikut terhitung `auto`, sehingga
+        <main> berubah menjadi kotak penggulung. Navbar yang `sticky top-0` lalu
+        menempel pada kotak itu — yang ikut tergulung — bukan pada viewport,
+        jadi navbar-nya tampak tidak sticky. `clip` menahan luapan mendatar
+        tanpa menjadikan elemen ini kotak penggulung.
+      */}
+      <main className="flex flex-col min-h-screen bg-banner font-body text-body overflow-x-clip">
         <Navbar />
 
         {/* ========================================================================= */}
@@ -231,47 +402,9 @@ export default function StudentOrganizationDetail() {
         </div>
 
         {/* ========================================================================= */}
-        {/* FULL BLEED GALLERY: Mentok Kanan & Kiri Layar Penuh (Edge-to-Edge) */}
-        {/* Selama `image` kosong, tampil bingkai penampung agar tata letaknya   */}
-        {/* sudah terlihat sebelum foto asli dipasang.                           */}
+        {/* FULL BLEED GALLERY: geser mendatar, mentok kanan & kiri layar penuh */}
         {/* ========================================================================= */}
-        {organization.gallery?.length > 0 && (
-          <section className="w-full my-8 sm:my-14">
-            <div className="grid grid-cols-1 md:grid-cols-3 w-full gap-0">
-              {organization.gallery.map((item) => (
-                <div
-                  key={item.id}
-                  className="group relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:h-[380px] xl:h-[440px] bg-gray-200 overflow-hidden border-r border-white/20 last:border-r-0"
-                >
-                  {item.image ? (
-                    <>
-                      <Img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent flex items-end p-6 sm:p-8">
-                        <span className="text-sm sm:text-base md:text-lg font-medium text-white tracking-wide drop-shadow-md">
-                          {item.title}
-                        </span>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 bg-gray-100 border border-dashed border-gray-300 flex flex-col items-center justify-center text-center gap-2 p-6">
-                      <FiImage className="text-3xl text-gray-300" />
-                      <span className="text-sm sm:text-base font-medium text-heading">
-                        {item.title}
-                      </span>
-                      <span className="text-xs text-gray-400 uppercase tracking-[0.14em]">
-                        Foto menyusul
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {organization.gallery?.length > 0 && <GaleriGeser foto={organization.gallery} />}
 
         {/* ========================================================================= */}
         {/* STRUKTUR ORGANISASI (Pengurus Inti & Divisi) */}

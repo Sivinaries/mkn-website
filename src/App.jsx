@@ -61,7 +61,8 @@ const LaboratoriumManajemenKantor = lazy(() =>
 );
 const ResearchCenter = lazy(() => import("./pages/Fasilitas/ResearchCenter"));
 const Perpustakaan = lazy(() => import("./pages/Fasilitas/Perpustakaan"));
-const MootCourt = lazy(() => import("./pages/Fasilitas/MootCourt"));
+const RuangSeminar = lazy(() => import("./pages/Fasilitas/RuangSeminar"));
+const Podcast = lazy(() => import("./pages/Fasilitas/Podcast"));
 
 // Quality Assurance Unit sub-pages
 const QualityAssuranceLayout = lazy(() => import("./pages/QualityAssurance/index"));
@@ -186,16 +187,20 @@ export default function App() {
         <Route path="/fasilitas" element={<FasilitasLayout />}>
           <Route index element={<Navigate to="ruang-kelas" replace />} />
           <Route path="ruang-kelas" element={<RuangKelas />} />
+          <Route path="ruang-seminar" element={<RuangSeminar />} />
           <Route path="laboratorium-akta" element={<LaboratoriumAkta />} />
           <Route
             path="laboratorium-manajemen-kantor"
             element={<LaboratoriumManajemenKantor />}
           />
           <Route path="student-research-center" element={<ResearchCenter />} />
+          <Route path="podcast-kenotariatan" element={<Podcast />} />
           <Route path="perpustakaan" element={<Perpustakaan />} />
-          <Route path="moot-court" element={<MootCourt />} />
           {/* Tautan lama sebelum laboratorium dipecah menjadi dua halaman. */}
           <Route path="laboratorium" element={<Navigate to="/fasilitas/laboratorium-akta" replace />} />
+          {/* Peradilan semu sudah tidak lagi menjadi fasilitas program studi;
+              tautan lamanya diarahkan ke daftar fasilitas agar tidak jadi 404. */}
+          <Route path="moot-court" element={<Navigate to="/fasilitas/ruang-kelas" replace />} />
         </Route>
 
         {/* Quality Assurance Unit — nested routes */}

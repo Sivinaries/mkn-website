@@ -12,7 +12,7 @@ export default function FasilitasLayout() {
         <title>Fasilitas Kampus | Magister Kenotariatan UNISSULA</title>
         <meta
           name="description"
-          content="Fasilitas Ruang Kelas, Laboratorium Kenotariatan, Student Research Center, dan Perpustakaan Program Studi Magister Kenotariatan (MKn) UNISSULA."
+          content="Fasilitas Ruang Kelas, Ruang Seminar, Laboratorium Kenotariatan, Student Research Center, Ruang Podcast, dan Perpustakaan Program Studi Magister Kenotariatan (MKn) UNISSULA."
         />
       </Helmet>
 

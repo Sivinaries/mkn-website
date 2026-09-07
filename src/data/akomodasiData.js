@@ -6,8 +6,25 @@
  *
  * Dokumen sumber tidak memuat tarif, tipe kamar, alamat, maupun narahubung
  * pengelola, sehingga bagian-bagian itu tidak dicantumkan di sini — bukan
- * dikira-kira. Foto kedua akomodasi juga belum diserahkan.
+ * dikira-kira.
+ *
+ * Foto tersimpan di assets/images/akomodasi. Keterangannya sengaja hanya
+ * menyebut apa yang terlihat di gambar, karena dokumen sumber tidak memuat
+ * nama ruangan maupun tipe kamar.
  */
+
+import asrama1 from "../assets/images/akomodasi/asrama-1.png";
+import asrama2 from "../assets/images/akomodasi/asrama-2.png";
+import asrama3 from "../assets/images/akomodasi/asrama-3.png";
+
+import guestHouse1 from "../assets/images/akomodasi/bh-1.jpg";
+import guestHouse2 from "../assets/images/akomodasi/bh-2.jpg";
+import guestHouse3 from "../assets/images/akomodasi/bh-3.png";
+import guestHouse4 from "../assets/images/akomodasi/bh-4.png";
+import guestHouse5 from "../assets/images/akomodasi/bh-5.png";
+import guestHouse6 from "../assets/images/akomodasi/bh-6.png";
+import guestHouse7 from "../assets/images/akomodasi/bh-7.png";
+
 export const akomodasiData = {
   asrama: {
     id: "asrama",
@@ -21,6 +38,17 @@ export const akomodasiData = {
         "Selain sebagai tempat tinggal, asrama ini berfungsi sebagai Pesantren Mahasiswa yang bertujuan membentuk karakter khaira ummah berakhlakul karimah serta membiasakan kedisiplinan beribadah.",
       ],
     },
+    galeri: [
+      { src: asrama1, keterangan: "Koridor unit kamar di lantai atas asrama." },
+      {
+        src: asrama2,
+        keterangan: "Kamar asrama berisi empat tempat tidur dengan jendela ke arah luar.",
+      },
+      {
+        src: asrama3,
+        keterangan: "Kamar asrama dengan meja belajar dan kursi untuk tiap penghuni.",
+      },
+    ],
     fasilitas: [
       "Kamar asrama yang didesain nyaman untuk kebutuhan istirahat mahasiswa.",
       "Ruang tunggu tamu.",
@@ -43,6 +71,28 @@ export const akomodasiData = {
         "Guest house ini menyediakan tempat menginap yang nyaman dan strategis bagi tamu universitas, sekaligus menjadi lokasi transit praktis untuk acara wisuda, seminar nasional, atau kunjungan kerja.",
       ],
     },
+    galeri: [
+      {
+        src: guestHouse2,
+        keterangan:
+          "Tampak gedung dari seberang danau kampus, bersebelahan dengan Fakultas Kedokteran Gigi.",
+      },
+      {
+        src: guestHouse1,
+        keterangan: "Halaman depan gedung dengan lapangan basket dan area parkir kendaraan.",
+      },
+      { src: guestHouse3, keterangan: "Kamar dengan televisi dan meja kerja." },
+      {
+        src: guestHouse4,
+        keterangan: "Kamar ber-AC dengan lemari pakaian dan meja kerja.",
+      },
+      { src: guestHouse7, keterangan: "Kamar mandi dalam dengan shower." },
+      { src: guestHouse5, keterangan: "Gerai kuliner di area dalam gedung." },
+      {
+        src: guestHouse6,
+        keterangan: "Minimarket untuk kebutuhan harian penghuni.",
+      },
+    ],
     fasilitas: [
       "Kamar nyaman yang dilengkapi AC, televisi, dan kamar mandi dalam.",
       "Restoran atau kantin yang menyediakan layanan konsumsi dan sarapan bagi para tamu.",
@@ -50,3 +100,22 @@ export const akomodasiData = {
     ],
   },
 };
+
+/**
+ * Foto latar hero halaman Akomodasi: satu putaran yang sama untuk kedua tab,
+ * berisi foto pilihan dari asrama maupun guest house secara berselang-seling.
+ *
+ * Hanya foto berorientasi lanskap yang dipakai. Foto kamar dan kamar mandi
+ * guest house berorientasi potret, sehingga akan terpotong parah pada hero
+ * yang lebar — foto-foto itu tetap tampil utuh di galeri isi halaman.
+ *
+ * Cukup `src` karena hero memperlakukan gambarnya sebagai dekorasi dan
+ * menyembunyikannya dari pembaca layar; keterangannya ada di galeri.
+ */
+export const akomodasiHeroSlides = [
+  { src: guestHouse2 },
+  { src: asrama1 },
+  { src: guestHouse1 },
+  { src: asrama2 },
+  { src: asrama3 },
+];
